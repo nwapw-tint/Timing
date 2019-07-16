@@ -2,14 +2,49 @@
 <html>
 	<head>
 		<script src="popup.js"></script>
+		<script src="background.js"></script>
 	</head>
 	<body bgcolor="#59D490">
-		<b><p style="color:#FFFB11">Enter the time in minutes for the session:</p></b>
-		<input type="text" id="time_input"><br>
+		<table>
+			<tr>
+				<th><p style="color:#FFFB11">Enter the time in minutes for the session:</p></th>
+			</tr>
+			<tr>
+				<td><input type="text" id="time_input"></td>
+				<td><button id="add_button">Add</button></td>
+			</tr>
+		</table>
 		
-		<button id="add_button">Add</button>
-		<p id="sessions_text"></p></td>
+		<table>
+			<tr>
+				<th style="color:#FFFB11"></th>
+				<th style="color:#FFFB11">Whitelisted</th>
+				<th style="color:#FFFB11">Blacklisted</th>
+			</tr>
+			<tr>
+				<td><b><p style="color:#FFFB11">Red</p></b></td>
+				<td><input type="range" min="0" max="255" value="100" id="w_slider_r"></td>
+				<td><input type="range" min="0" max="255" value="100" id="b_slider_r"></td>
+			</tr>
+			<tr>
+				<td><b><p style="color:#FFFB11">Green</p></b></td>
+				<td><input type="range" min="0" max="255" value="100" id="w_slider_g"></td>
+				<td><input type="range" min="0" max="255" value="100" id="b_slider_g"></td>
+			</tr>
+			<tr>
+				<td><b><p style="color:#FFFB11">Blue</p></b></td>
+				<td><input type="range" min="0" max="255" value="100" id="w_slider_b"></td>
+				<td><input type="range" min="0" max="255" value="100" id="b_slider_b"></td>
+			</tr>
+			<tr>
+				<td><b><p style="color:#FFFB11">Alpha</p></b></td>
+				<td><input type="range" min="0" max="255" value="100" id="w_slider_a"></td>
+				<td><input type="range" min="0" max="255" value="100" id="b_slider_a"></td>
+			</tr>
+		</table>
 		
-		<br><button id="start_session_button">Start<br>
+		<button id="start_session_button">Start</button>
+		<b><p style="color:#FFFB11">Sessions:</p></b>
+		<p style="color:#FFFB11" id="sessions_text"></p>
 	</body>
 </html>

@@ -2,6 +2,9 @@ var sessions = [];
 var currentSessionTime = 0;
 var sessionRunning = false;
 
+var whitelistedColor = {"r": 0, "g": 255, "b": 0, "a": 100};
+var blacklistedColor = {"r": 255, "g": 0, "b": 0, "a": 100};
+
 document.addEventListener('DOMContentLoaded', () => {
 	addClickListener('add_button', () => {
 		var input = document.getElementById('time_input').value;
@@ -27,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 }, false);
 
+
 function startSession() {
 	sessionRunning = true;
 	showSecondTimeout();
@@ -34,7 +38,7 @@ function startSession() {
 
 function timeToDigital(seconds) {
 	let h = Math.floor(seconds / 3600);
-	let m = Math.floor(seconds / 60);
+	let m = Math.floor((seconds / 60) % 60);
 	let s = Math.floor(seconds % 60);
 	return h + ":" + m + ":" + s;
 }
