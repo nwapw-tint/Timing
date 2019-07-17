@@ -3,40 +3,59 @@
 	
 	<head>
 		<script src="popup.js"></script>
-		<style>
-			tr {color:red;}
-		</style>
+		
 	</head>
 	<body bgcolor="#F8F9FA">
 		<table>
-			<td>
-				<th><p style="color:#93B4FB">Sessions:</p></th>
-				<p style="color:#93B4FB" id="sessions_text"></p>
+			<tr>
+				<td> <!-- word-->
+					<table>
+						<tr>
+							<b><p style="color:#93B4FB">Sessions:</p></b>
+						</tr>
+						<tr>
+							<p style="color:#93B4FB" id="sessions_text"></p>
+						</tr>
+						<tr>
+							<button id="start_session_button">Start</button>
+						</tr>
+					</table>
+				</td>
+				<td>
+					<table>
+						<tr>
+							<p style="color:#93B4FB" align="left">Time in Minutes----------<button id="add_button">+</button></p>
+							<input type="text" id="time_input">
+							<p style="color:#93B4FB" align="left"><input type="checkbox" name="option1" value="color?">option 1<input type="checkbox" name="option1" value="color?">option 2</p>
+						</tr>
+						<tr>
+							<center><img src="wheel.png"></center>
+							<br>
+							<br>
+						</tr>
+						<tr>
+							<p style="color:#93B4FB" align="left">blacklisted sites-----------<button id="add_button">+</button></p>
+							<input type="text" id="site_input">
+						</tr>
+					</table>
 				
-			</td>
-			<td>
-				<table>
-					<tr>
-						<th><p style="color:#93B4FB" align="left">Time in Minutes----------<button id="add_button">+</button></p>
-						<input type="text" id="time_input">
-						<p style="color:#93B4FB" align="left"><input type="checkbox" name="option1" value="color?">option 1<input type="checkbox" name="option1" value="color?">option 2</p>
-						<center><img src="wheel.png"></center>
-						<br>
-						<br>
-						<p style="color:#93B4FB" align="left">blacklisted sites-----------<button id="add_button">+</button></p>
-						<input type="text" id="site_input"></th>
-						
-					</tr>
-					
-				</table>
-			</td>
-			
+				</td> 
+				
+			</tr>
 		</table>
 		
 		
 		
+		
+		
+		
+		
+		
+	
+		
+		
 
-		<button id="start_session_button">Start</button>
+		
 		
 	</body>
 </html>
