@@ -1,19 +1,46 @@
 var ports = [];
+var popupConnected = false;
 
 //Called something connects to this
 chrome.extension.onConnect.addListener((port) => {
 	//Creates the capability to receive messages from
 	port.onMessage.addListener((msg) => {
+		console.log("background receive");
 		if (msg.to == "background") {
-			if (msg.action == "open") {
+			switch (msg.action) {
+			case "open":
+				console.log("background accept");
 				console.log("The port \"" + port.name + "\" has been connected");
+				if (port.name == "popup") {
+					popupConnected = true;
+					updatePopupSessions();
+				}
 				sendMessage({
 					to: port.name,
 					from: "background",
 					action: "connected"
 				});
-			} else {
-				console.log("ERROR");
+				break;
+			case "update":
+				console.log("background accept");
+				if (msg.place == "sessions") {
+					switch (msg.mode) {
+					case "push":
+						sessions.push(msg.value);
+						break;
+					default:
+						console.log("background reject");
+						console.log(msg);
+					}
+				}
+				break;
+			case "start":
+				if (msg.place == "timer") {
+					startSession();
+				}
+				break;
+			default:
+				console.log("background reject");
 				console.log(msg);
 			}
 		}
@@ -21,6 +48,8 @@ chrome.extension.onConnect.addListener((port) => {
 	port.index = ports.length;
 	
 	port.onDisconnect.addListener((msg) => {
+		if (port.name == "popup")
+			popupConnected = false;
 		ports.splice(port.index, 1);
 		console.log("The port \"" + port.name + "\" has been disconnected");
 	});
@@ -46,3 +75,40 @@ var sessionRunning = false;
 var whitelistedColor = {"r": 0, "g": 255, "b": 0, "a": 100};
 var blacklistedColor = {"r": 255, "g": 0, "b": 0, "a": 100};
 var blacklistedSites = [];
+
+function showSecondTimeout() {
+	setTimeout(() => {
+		sessions[0] = Math.max(sessions[0] - 1, 0);
+		if (sessions[0] == 0) {
+			const s = sessions;
+			sessions.shift();
+			updatePopupSessions();
+			if (sessions.length == 0) {
+				alert("All sessions finished!");
+				sessionRunning = false;
+			} else {
+				alert("Session finished!");
+				sessions = s;
+				showSecondTimeout();
+			}
+		} else {
+			updatePopupSessions();
+			showSecondTimeout();
+		}
+	}, 1000);
+}
+
+function startSession() {
+	sessionRunning = true;
+	showSecondTimeout();
+}
+
+function updatePopupSessions() {
+	sendMessage({
+		to: "popup",
+		from: "background",
+		action: "update",
+		place: "sessions",
+		value: sessions
+	});
+}
