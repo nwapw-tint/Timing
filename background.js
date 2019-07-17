@@ -76,7 +76,7 @@ function sendMessage(msg) {
 
 
 
-const clearColor = {
+const CLEAR_COLOR = {
 	r: 255,
 	g: 255,
 	b: 255,
@@ -84,8 +84,9 @@ const clearColor = {
 };
 
 var sessions = [];
-var currentSessionTime = 0;
 var sessionRunning = false;
+
+var currentSessionTime = 0;
 var sessionsWColors = [];
 var sessionsBColors = [];
 var blacklistedSites = [];
@@ -150,8 +151,8 @@ function updateContentColors() {
 			from: "background",
 			action: "update",
 			place: "colors",
-			wColor: clearColor,
-			bColor: clearColor
+			wColor: CLEAR_COLOR,
+			bColor: CLEAR_COLOR
 		});
 	}
 }

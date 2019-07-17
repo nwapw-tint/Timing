@@ -17,6 +17,8 @@ port.onMessage.addListener((msg) => {
 		console.log(msg);
 		if (msg.action == "update" && msg.place == "sessions") {
 			sessions = msg.value;
+			if (sessions.length == 0)
+				sessionRunning = false;
 			updateSessionText();
 		}
 	} else
@@ -37,16 +39,23 @@ function sendMessage(msg) {
 
 //Local copies
 var sessions = [];
-var currentSessionTime = 0;
 var sessionRunning = false;
 
 var wColor = {"r": 0, "g": 255, "b": 0, "a": 100};
 var bColor = {"r": 255, "g": 0, "b": 0, "a": 100};
 var blacklistedSites = [];
 
+var mouseX = 0, mouseY = 0;
+
 
 
 document.addEventListener('DOMContentLoaded', () => {
+	window.addEventListener('click', (e) => {
+		mouseX = e.screenX - window.screenX - 7;
+		mouseY = e.screenY - window.screenY - 5;
+		console.log("X = " + mouseX + " Y = " + mouseY);
+	}, false);
+	
 	addClickListener('add_button', () => {
 		var input = document.getElementById('time_input').value;
 		if (isNaN(input))
@@ -64,6 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		} else if (sessionRunning) {
 			showError("Already started");
 		} else {
+			sessionRunning = true;
 			sendMessage({
 				to: "background",
 				from: "popup",
