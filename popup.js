@@ -2,7 +2,7 @@ var port = chrome.extension.connect({
 	name: "popup"
 });
 
-//Tells the background script the popup script has opened
+//Tells the background script the content script has opened
 sendMessage({
 	to: "background",
 	from: "popup",
@@ -20,7 +20,7 @@ port.onMessage.addListener((msg) => {
 			updateSessionText();
 		}
 	} else
-		console.log("popup reject");
+		console.log("popup ignore");
 });
 
 //Creates the capability to send messages to the background script
@@ -40,8 +40,8 @@ var sessions = [];
 var currentSessionTime = 0;
 var sessionRunning = false;
 
-var whitelistedColor = {"r": 0, "g": 255, "b": 0, "a": 100};
-var blacklistedColor = {"r": 255, "g": 0, "b": 0, "a": 100};
+var wColor = {"r": 0, "g": 255, "b": 0, "a": 100};
+var bColor = {"r": 255, "g": 0, "b": 0, "a": 100};
 var blacklistedSites = [];
 
 
@@ -57,8 +57,6 @@ document.addEventListener('DOMContentLoaded', () => {
 			addSession(input);
 		}
 	});
-	
-	
 	
 	addClickListener('start_session_button', () => {
 		if (sessions.length == 0) {
@@ -103,6 +101,14 @@ function addSession(time) {
 		place: "sessions",
 		mode: "push",
 		value: time
+	});
+	sendMessage({
+		to: "background",
+		from: "popup",
+		action: "push",
+		place: "colors",
+		wColor: wColor,
+		bColor: bColor
 	});
 	updateSessionText();
 }

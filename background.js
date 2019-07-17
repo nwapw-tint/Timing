@@ -15,11 +15,11 @@ chrome.extension.onConnect.addListener((port) => {
 					popupConnected = true;
 					updatePopupSessions();
 				}
-				sendMessage({
+				/*sendMessage({
 					to: port.name,
 					from: "background",
 					action: "connected"
-				});
+				});*/
 				break;
 			case "update":
 				console.log("background accept");
@@ -35,12 +35,20 @@ chrome.extension.onConnect.addListener((port) => {
 				}
 				break;
 			case "start":
+				console.log("background accept");
 				if (msg.place == "timer") {
 					startSession();
 				}
 				break;
+			case "push":
+				console.log("background accept");
+				if (msg.place == "colors") {
+					sessionsWColors.push(msg.wColor);
+					sessionsBColors.push(msg.bColor);
+				}
+				break;
 			default:
-				console.log("background reject");
+				console.log("background ignore");
 				console.log(msg);
 			}
 		}
@@ -68,12 +76,18 @@ function sendMessage(msg) {
 
 
 
+const clearColor = {
+	r: 255,
+	g: 255,
+	b: 255,
+	a: 0
+};
+
 var sessions = [];
 var currentSessionTime = 0;
 var sessionRunning = false;
-
-var whitelistedColor = {"r": 0, "g": 255, "b": 0, "a": 100};
-var blacklistedColor = {"r": 255, "g": 0, "b": 0, "a": 100};
+var sessionsWColors = [];
+var sessionsBColors = [];
 var blacklistedSites = [];
 
 function showSecondTimeout() {
@@ -81,14 +95,21 @@ function showSecondTimeout() {
 		sessions[0] = Math.max(sessions[0] - 1, 0);
 		if (sessions[0] == 0) {
 			const s = sessions;
+			const w = sessionsWColors;
+			const b = sessionsBColors;
 			sessions.shift();
+			sessionsWColors.shift();
+			sessionsBColors.shift();
 			updatePopupSessions();
+			updateContentColors();
 			if (sessions.length == 0) {
 				alert("All sessions finished!");
 				sessionRunning = false;
 			} else {
 				alert("Session finished!");
 				sessions = s;
+				sessionsWColors = w;
+				sessionsBColors = b;
 				showSecondTimeout();
 			}
 		} else {
@@ -111,4 +132,26 @@ function updatePopupSessions() {
 		place: "sessions",
 		value: sessions
 	});
+}
+
+function updateContentColors() {
+	if (sessionsWColors.length > 0) {
+		sendMessage({
+			to: "content",
+			from: "background",
+			action: "update",
+			place: "colors",
+			wColor: sessionsWColors[0],
+			bColor: sessionsBColors[0]
+		});
+	} else {
+		sendMessage({
+			to: "content",
+			from: "background",
+			action: "update",
+			place: "colors",
+			wColor: clearColor,
+			bColor: clearColor
+		});
+	}
 }

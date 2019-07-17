@@ -15,8 +15,12 @@ port.onMessage.addListener((msg) => {
 	if (msg.to == "content") {
 		console.log("content accept");
 		console.log(msg);
+		if (msg.place == "colors") {
+			wColor = msg.wColor;
+			bColor = msg.bColor;
+		}
 	} else
-		console.log("content reject");
+		console.log("content ignore");
 });
 
 //Creates the capability to send messages to the background script
@@ -31,3 +35,5 @@ function sendMessage(msg) {
 
 
 
+var wColor;
+var bColor;
