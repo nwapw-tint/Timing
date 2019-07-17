@@ -1,49 +1,42 @@
 <!DOCTYPE html>
 <html>
+	
 	<head>
 		<script src="popup.js"></script>
+		<style>
+			tr {color:red;}
+		</style>
 	</head>
-	<body bgcolor="#59D490">
+	<body bgcolor="#F8F9FA">
 		<table>
-			<tr>
-				<th><p style="color:#FFFB11">Enter the time in minutes for the session:</p></th>
-			</tr>
-			<tr>
-				<td><input type="text" id="time_input"></td>
-				<td><button id="add_button">Add</button></td>
-			</tr>
+			<td>
+				<th><p style="color:#93B4FB">Sessions:</p></th>
+				<p style="color:#93B4FB" id="sessions_text"></p>
+				
+			</td>
+			<td>
+				<table>
+					<tr>
+						<th><p style="color:#93B4FB" align="left">Time in Minutes----------<button id="add_button">+</button></p>
+						<input type="text" id="time_input">
+						<p style="color:#93B4FB" align="left"><input type="checkbox" name="option1" value="color?">option 1<input type="checkbox" name="option1" value="color?">option 2</p>
+						<center><img src="wheel.png"></center>
+						<br>
+						<br>
+						<p style="color:#93B4FB" align="left">blacklisted sites-----------<button id="add_button">+</button></p>
+						<input type="text" id="site_input"></th>
+						
+					</tr>
+					
+				</table>
+			</td>
+			
 		</table>
 		
-		<table>
-			<tr>
-				<th style="color:#FFFB11"></th>
-				<th style="color:#FFFB11">Whitelisted</th>
-				<th style="color:#FFFB11">Blacklisted</th>
-			</tr>
-			<tr>
-				<td><b><p style="color:#FFFB11">Red</p></b></td>
-				<td><input type="range" min="0" max="255" value="100" id="w_slider_r"></td>
-				<td><input type="range" min="0" max="255" value="100" id="b_slider_r"></td>
-			</tr>
-			<tr>
-				<td><b><p style="color:#FFFB11">Green</p></b></td>
-				<td><input type="range" min="0" max="255" value="100" id="w_slider_g"></td>
-				<td><input type="range" min="0" max="255" value="100" id="b_slider_g"></td>
-			</tr>
-			<tr>
-				<td><b><p style="color:#FFFB11">Blue</p></b></td>
-				<td><input type="range" min="0" max="255" value="100" id="w_slider_b"></td>
-				<td><input type="range" min="0" max="255" value="100" id="b_slider_b"></td>
-			</tr>
-			<tr>
-				<td><b><p style="color:#FFFB11">Alpha</p></b></td>
-				<td><input type="range" min="0" max="255" value="100" id="w_slider_a"></td>
-				<td><input type="range" min="0" max="255" value="100" id="b_slider_a"></td>
-			</tr>
-		</table>
 		
+		
+
 		<button id="start_session_button">Start</button>
-		<b><p style="color:#FFFB11">Sessions:</p></b>
-		<p style="color:#FFFB11" id="sessions_text"></p>
+		
 	</body>
 </html>
