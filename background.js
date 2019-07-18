@@ -96,7 +96,6 @@ const CLEAR_COLOR = {
 var sessions = [];
 var sessionRunning = false;
 
-var currentSessionTime = 0;
 var sessionsWColors = [];
 var sessionsBColors = [];
 var blacklistedSites = [];
@@ -257,7 +256,6 @@ function isCurrentTabBlacklisted() {
 
 
 /*-------------------------Experimental-------------------------*/
-
 taskText = "make skynet";
 chrome.omnibox.onInputEntered.addListener((txt) => {
 	alert(txt);
@@ -275,7 +273,7 @@ function displayText(taskText){
 		to: "addText",
 		from: "background",
 		action: "addText",
-		text: taskText+currentSessionTime, //TODO: convert to readable time
+		text: taskText+sessions[0] //TODO: convert to readable time
 	});
 
 }
