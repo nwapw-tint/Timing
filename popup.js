@@ -2,7 +2,7 @@
 var sessions = [];
 var sessionRunning = false;
 
-const alpha = 1;
+const alpha = 0.2;
 var wColor = "rgba(0, 255, 0, " + alpha + ")";
 var bColor = "rgba(255, 0, 0, " + alpha + ")";
 var blacklistedSites = [];

@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	window.addEventListener('mousemove', (e) => {
 		mouseX = e.screenX - window.screenX - 7;
 		mouseY = e.screenY - window.screenY - 5;
-		//console.log("X = " + mouseX + " Y = " + mouseY);
 	}, false);
 
 	window.addEventListener('click', (e) => {
