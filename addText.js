@@ -3,6 +3,7 @@ text = "English HW 3:27";
 addText(text);
 function addText(text)
 {
+    
     textDiv = document.getElementById("textDiv")
     if(textDiv != null)
     {

@@ -265,7 +265,7 @@ chrome.omnibox.onInputEntered.addListener((txt) => {
 	alert(txt);
 });
 chrome.commands.onCommand.addListener((command) => {
-	if(command == "displayText")
+	if(command == "display_text")
 	{
 		chrome.tabs.executeScript({
 			file: 'addText.js'
