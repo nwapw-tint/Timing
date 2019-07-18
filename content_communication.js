@@ -15,11 +15,11 @@ port.onMessage.addListener((msg) => {
 		console.log(msg);
 		if (msg.action == "tint") {
 			if (msg.mode == "enable")
-				enableTint(msg.id, msg.color, msg.duration);
+				enableTint(msg.id, msg.color, msg.opacity, msg.duration);
 			else if (msg.mode == "disable")
 				disableTint();
 			else if (msg.mode == "change")
-				setTintColor(msg.color);
+				setTintColor(rgbToHex(msg.color));
 		} else if (msg.action == "add_text") {
             addText(msg.text);
         }

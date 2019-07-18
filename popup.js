@@ -2,25 +2,30 @@
 var sessions = [];
 var sessionRunning = false;
 
-var wColor = "rgba(0,255,0,0.2)";
-var bColor = "rgba(255,0,0,0.2)";
+var wColor = {"r": 0, "g": 255, "b": 0, "a": 100};
+var bColor = {"r": 255, "g": 0, "b": 0, "a": 100};
 var blacklistedSites = [];
 
 var mouseX = 0, mouseY = 0;
 
 function updateSessionText() {
-	var sessionText = "";
-	for (let i = 0; i < sessions.length; i++) {
-		sessionText += timeToDigital(sessions[i]);
-		if (i != sessions.length - 1)
-			sessionText += "<br>";
-	}
-	if (document.getElementById('sessions_text'))
-		document.getElementById('sessions_text').innerHTML = sessionText;
-	else
-		document.addEventListener('DOMContentLoaded', () => {
-			document.getElementById('sessions_text').innerHTML = sessionText;
+	if (document.getElementById('sessions_text')) {
+		ust();
+	} else {
+		document.addEventListener('DOMContentLoaded').addEventListener(() => {
+			ust();
 		}, false);
+	}
+
+	function ust() {
+		let sessionText = "";
+		for (let i = 0; i < sessions.length; i++) {
+			sessionText += timeToDigital(sessions[i]);
+			if (i != sessions.length - 1)
+				sessionText += "<br>";
+		}
+		document.getElementById('sessions_text').innerHTML = sessionText;
+	}
 }
 
 function addSession(time) {

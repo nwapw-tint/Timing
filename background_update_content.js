@@ -4,7 +4,7 @@ function updateContentColor() {
 		from: "background",
 		action: "tint",
 		mode: "change",
-		color: getNextTintColor()
+		color: getTintColor()
 	});
 }
 
@@ -13,6 +13,6 @@ function displayText(taskText) {
 		to: "content",
 		from: "background",
 		action: "add_text",
-		text: taskText + " "+timeToDigital(sessions[0])
+		text: taskText + sessions[0] //TODO: convert to readable time
 	});
 }
