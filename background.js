@@ -164,8 +164,6 @@ function stopSession() {
 		mode: "disable"
 	});
 }
-
-
 /*-------------------------Update Popup-------------------------*/
 
 
@@ -260,15 +258,24 @@ function isCurrentTabBlacklisted() {
 
 /*-------------------------Experimental-------------------------*/
 
-
+taskText = "make skynet";
 chrome.omnibox.onInputEntered.addListener((txt) => {
 	alert(txt);
 });
 chrome.commands.onCommand.addListener((command) => {
 	if(command == "display_text")
 	{
-		chrome.tabs.executeScript({
-			file: 'addText.js'
-		});
+		alert("sending message to addText");
+		displayText(taskText);
 	}
 });
+/*-------------------------Display Text (ctrl+space)-------------------------*/
+function displayText(taskText){
+	sendMessage({
+		to: "addText",
+		from: "background",
+		action: "addText",
+		text: taskText+currentSessionTime, //TODO: convert to readable time
+	});
+
+}
