@@ -16,3 +16,4 @@ function displayText(taskText) {
 		text: taskText + timeToDigital(sessions[0])//TODO: convert to readable time
 	});
 }
+
