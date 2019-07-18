@@ -39,7 +39,7 @@ function enableTint(id, color, duration) {
 			textDiv.style.transform="translate(-50%, -50%)";
 			textDiv.style.backgroundColor = "rgba(255,255,255,1)";
 			textDiv.style.fontFamily = "'Roboto', Sans Serif";
-			textDiv.style.color = "#000"; //TODO: set automatically based on tint shade
+			textDiv.style.color = "rgba(0,0,0,1)"; //TODO: set automatically based on tint shade
 			textDiv.style.fontSize = "60px"; //TODO: self adjusting size. rn, just set a cap
 			textDiv.style.zIndex = 100;
 			tintDiv.appendChild(textDiv);
