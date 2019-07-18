@@ -8,14 +8,12 @@ function setTintColor(color) {
 }
 
 //Enables the tint
-function enableTint(id, color, opacity, duration) {
+function enableTint(id, color, duration) {
 	//Defaults
 	if (!id)
 		id = "tint-default";
 	if (!color)
 		color = "rgba(0,0,0,0.2)"; //default, default value
-	if (!opacity) //0 - Low, 1 - High
-		opacity = 0.3; //deprecated
 	if (!duration) //Seconds
 		duration = 100;
 	

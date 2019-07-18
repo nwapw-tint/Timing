@@ -1,4 +1,4 @@
-function rgbToHex(color) {
+/*function rgbToHex(color) {
 	return "#" + byteToHex(color.r) + byteToHex(color.g) + byteToHex(color.b);
 	function byteToHex(c) {
 		let hex = Number(c).toString(16);
@@ -6,7 +6,7 @@ function rgbToHex(color) {
 			hex = "0" + hex;
 		return hex;
 	}
-}
+}*/ //please use RGBA formatting from now on.
 //takes an integer amount of time (seconds) and converts it into human readable string format
 function timeToDigital(seconds) {
 	let h = Math.floor(seconds / 3600);
