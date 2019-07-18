@@ -1,9 +1,28 @@
 document.addEventListener('DOMContentLoaded', () => {
+	let canvas = document.createElement('canvas');
+	let context = canvas.getContext('2d');
+	colorWheelImg = document.getElementById('wheel_img');
+	canvas.width = colorWheelImg.width;
+	canvas.height = colorWheelImg.height;
+	context.drawImage(colorWheelImg, 0, 0);
+	colorWheelData = context.getImageData(0, 0, colorWheelImg.width, colorWheelImg.height);
+
 	window.addEventListener('mousemove', (e) => {
 		mouseX = e.screenX - window.screenX - 7;
 		mouseY = e.screenY - window.screenY - 5;
-		console.log("X = " + mouseX + " Y = " + mouseY);
+		//console.log("X = " + mouseX + " Y = " + mouseY);
 	}, false);
+
+	window.addEventListener('click', (e) => {
+		let color = getColorFromWheel(mouseX - colorWheelImg.x, mouseY - colorWheelImg.y);
+		if (color) {
+			if (addToBlacklisted) {
+				bColor = color;
+			} else {
+				wColor = color;
+			}
+		}
+	});
 	
 	addClickListener('add_session_button', () => {
 		var input = document.getElementById('time_input').value;
@@ -70,28 +89,10 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 	
 	addClickListener('whitelisted_radio', () => {
-		let color = getColorFromWheel(mouseX, mouseY);
-		if (color) {
-			wColor.r = color.r;
-			wColor.g = color.g;
-			wColor.b = color.b;
-		}
+		addToBlacklisted = false;
 	});
 	
 	addClickListener('blacklisted_radio', () => {
-		let color = getColorFromWheel(mouseX, mouseY);
-		if (color) {
-			bColor.r = color.r;
-			bColor.g = color.g;
-			bColor.b = color.b;
-		}
+		addToBlacklisted = true;
 	});
-	
-	let canvas = document.createElement('canvas');
-	let context = canvas.getContext('2d');
-	colorWheelImg = document.getElementById('wheel_img');
-	canvas.width = colorWheelImg.width;
-	canvas.height = colorWheelImg.height;
-	context.drawImage(colorWheelImg, 0, 0);
-	colorWheelData = context.getImageData(0, 0, colorWheelImg.width, colorWheelImg.height);
 }, false);

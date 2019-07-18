@@ -2,12 +2,13 @@
 var sessions = [];
 var sessionRunning = false;
 
-var alpha = 0.2;
+const alpha = 1;
 var wColor = "rgba(0, 255, 0, " + alpha + ")";
 var bColor = "rgba(255, 0, 0, " + alpha + ")";
 var blacklistedSites = [];
 
 var mouseX = 0, mouseY = 0;
+var addToBlacklisted = false;
 
 function updateSessionText() {
 	if (document.getElementById('sessions_text')) {
