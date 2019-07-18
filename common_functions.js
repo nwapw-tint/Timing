@@ -7,15 +7,18 @@ function rgbToHex(color) {
 		return hex;
 	}
 }
-
+//takes an integer amount of time (seconds) and converts it into human readable string format
 function timeToDigital(seconds) {
 	let h = Math.floor(seconds / 3600);
 	let m = Math.floor((seconds / 60) % 60);
 	let s = Math.floor(seconds % 60);
 	let str = "";
-	if (h < 10)
-		str += "0";
-	str += h + ":";
+	if(h!= 0)
+	{
+		if (h < 10)
+			str += "0";
+		str += h + ":";
+	}
 	if (m < 10)
 		str += "0";
 	str += m + ":";
