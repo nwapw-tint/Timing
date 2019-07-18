@@ -54,7 +54,11 @@ function setTintColor(color) {
 	if (div && color)
 		div.style.background = color;
 }
-
+//roboto font
+var robotoFont = document.createElement('link');
+robotoFont.setAttribute('rel', 'stylesheet');
+robotoFont.setAttribute('type', 'text/css');
+robotoFont.setAttribute('href', "https://fonts.googleapis.com/css?family=Roboto&display=swap");
 
 //Enables the tint
 function enableTint(id, color, opacity, duration) {
@@ -75,20 +79,38 @@ function enableTint(id, color, opacity, duration) {
 		tintId = id;
 		tintDiv.style.opacity = opacity;
 		tintDiv.style.background = color;
-		makeTint(tintDiv);
+		styleTint(tintDiv);
+		setupText();
 		document.body.appendChild(tintDiv);
 	} else
 		setTintColor(color);
 	
-	function makeTint(div) {
-		div.style.width = "100%";
-		div.style.height = "100%";
-		div.style.pointerEvents = "none";
-		div.style.zIndex = 10000; //TODO: something about this
-		div.style.top = 0;
-		div.style.left = 0;
-		div.style.position = "fixed";
-	}
+		function setupText() //creates an empty text wrapper, allowing innerHTML to be added.
+		{
+			var textDiv = document.createElement("div");
+			textDiv.id = "textDiv";
+			textDiv.style.position = "absolute";
+			textDiv.style.top = "50%";
+			textDiv.style.left = "50%";
+			textDiv.style.marginRight = "-50%";
+			textDiv.style.transform="translate(-50%, -50%)";
+			textDiv.style.backgroundColor = "rgba(255,255,255,1)";
+			textDiv.style.fontFamily = "'Roboto', Sans Serif";
+			textDiv.style.color = "#000"; //TODO: set automatically based on tint shade
+			textDiv.style.fontSize = "60px"; //TODO: self adjusting size. rn, just set a cap
+			textDiv.style.zIndex = 100;
+			tintDiv.appendChild(textDiv);
+		}
+		function styleTint(div) {
+			div.style.width = "100%";
+			div.style.height = "100%";
+			div.style.pointerEvents = "none";
+			div.style.zIndex = 10000; //TODO: something about this
+			div.style.top = 0;
+			div.style.left = 0;
+			div.style.position = "fixed";
+			div.style.display = "inline-block";
+		}
 }
 
 //Disables the tint
