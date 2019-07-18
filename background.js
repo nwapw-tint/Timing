@@ -29,7 +29,7 @@ function showSecondTimeout() {
 				sessionsBColors.shift();
 				updatePopupSessions();
 				if (sessions.length == 0) {
-					alert("All sessions finished!");
+					//alert("All sessions finished!");
 					sessionRunning = false;
 					sendMessage({
 						to: "content",
@@ -38,7 +38,7 @@ function showSecondTimeout() {
 						mode: "disable"
 					});
 				} else {
-					alert("Session finished!");
+					//alert("Session finished!");
 					sessions = s;
 					sessionsWColors = w;
 					sessionsBColors = b;
