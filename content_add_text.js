@@ -5,7 +5,7 @@ function addText(text)
         textDiv.innerHTML = text;
         setTimeout(() => {
             textDiv.innerHTML = "";
-        }, 2000);
+        }, 1200);
     } else {
         //alert("the user tried to display the time but there is no filter active currently");
     }
