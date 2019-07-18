@@ -1,64 +1,11 @@
-var port = chrome.extension.connect({
-	name: "content"
-});
-
-//Tells the background script the content script has opened
-sendMessage({
-	to: "background",
-	from: "content",
-	action: "open"
-});
-
-//Creates the capability to receive messages from the background script
-port.onMessage.addListener((msg) => {
-	if (msg.to == "content") {
-		console.log(msg);
-		if (msg.action == "tint") {
-			if (msg.mode == "enable")
-				enableTint(msg.id, msg.color, msg.opacity, msg.duration);
-			else if (msg.mode == "disable")
-				disableTint();
-			else if (msg.mode == "change")
-				setTintColor(rgbToHex(msg.color));
-		}
-	}
-});
-
-//Creates the capability to send messages to the background script
-function sendMessage(msg) {
-	port.postMessage(msg);
-}
-
-
-
-/*-------------------------End of Communication-------------------------*/
-
-
-
-document.addEventListener('DOMContentLoaded', () => {
-	sendMessage({
-		to: "background",
-		from: "content",
-		action: "checkRunning"
-	});
-}, false);
-
-
-
 var tintId;
 
-
-
+//Sets the tint's color
 function setTintColor(color) {
 	let div = document.getElementById(tintId);
 	if (div && color)
 		div.style.background = color;
 }
-//roboto font
-var robotoFont = document.createElement('link');
-robotoFont.setAttribute('rel', 'stylesheet');
-robotoFont.setAttribute('type', 'text/css');
-robotoFont.setAttribute('href', "https://fonts.googleapis.com/css?family=Roboto&display=swap");
 
 //Enables the tint
 function enableTint(id, color, opacity, duration) {
@@ -85,8 +32,7 @@ function enableTint(id, color, opacity, duration) {
 	} else
 		setTintColor(color);
 	
-		function setupText() //creates an empty text wrapper, allowing innerHTML to be added.
-		{
+		function setupText() { //creates an empty text wrapper, allowing innerHTML to be added.
 			var textDiv = document.createElement("div");
 			textDiv.id = "textDiv";
 			textDiv.style.position = "absolute";
@@ -101,6 +47,7 @@ function enableTint(id, color, opacity, duration) {
 			textDiv.style.zIndex = 100;
 			tintDiv.appendChild(textDiv);
 		}
+
 		function styleTint(div) {
 			div.style.width = "100%";
 			div.style.height = "100%";
@@ -118,14 +65,4 @@ function disableTint() {
 	let div = document.getElementById(tintId);
 	if (div)
 		div.parentNode.removeChild(div);
-}
-
-function rgbToHex(color) {
-	return "#" + byteToHex(color.r) + byteToHex(color.g) + byteToHex(color.b);
-	function byteToHex(c) {
-		let hex = Number(c).toString(16);
-		if (hex.length < 2)
-			hex = "0" + hex;
-		return hex;
-	}
 }
