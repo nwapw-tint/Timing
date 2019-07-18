@@ -42,6 +42,7 @@ function enableTint(id, color, duration) {
 			textDiv.style.color = "rgba(0,0,0,1)"; //TODO: set automatically based on tint shade
 			textDiv.style.fontSize = "80px"; //TODO: self adjusting size. rn, just set a cap
 			textDiv.style.zIndex = 100;
+			textDiv.style.opacity == 0;
 			tintDiv.appendChild(textDiv);
 		}
 
