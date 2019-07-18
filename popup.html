@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html>
-	
 	<head>
 		<script src="popup.js"></script>
-		
 	</head>
 	<body bgcolor="#F8F9FA">
 		<table>
@@ -11,51 +9,38 @@
 				<td> <!-- word-->
 					<table>
 						<tr>
+							<button id="start_session_button">Start</button>
+						</tr>
+						<tr>
+							<button id="stop_session_button">Stop</button>
+						</tr>
+						<tr>
 							<b><p style="color:#93B4FB">Sessions:</p></b>
 						</tr>
 						<tr>
 							<p style="color:#93B4FB" id="sessions_text"></p>
-						</tr>
-						<tr>
-							<button id="start_session_button">Start</button>
 						</tr>
 					</table>
 				</td>
 				<td>
 					<table>
 						<tr>
-							<p style="color:#93B4FB" align="left">Time in Minutes----------<button id="add_button">+</button></p>
+							<p style="color:#93B4FB" align="left">Time in Minutes----------<button id="add_session_button">+</button></p>
 							<input type="text" id="time_input">
-							<p style="color:#93B4FB" align="left"><input type="checkbox" name="option1" value="color?">option 1<input type="checkbox" name="option1" value="color?">option 2</p>
+							<p style="color:#93B4FB" align="left">
+							<input type="radio" name="colorRadio" value="whitelisted" checked id="whitelisted_radio">Whitelisted
+							<input type="radio" name="colorRadio" value="blacklisted" id="blacklisted_radio">Blacklisted</p>
 						</tr>
 						<tr>
-							<center><img src="wheel.png"></center>
-							<br>
-							<br>
+							<center><img width="100px" height="100px" src="wheel.png" id="wheel_img"></center>
 						</tr>
 						<tr>
-							<p style="color:#93B4FB" align="left">blacklisted sites-----------<button id="add_button">+</button></p>
+							<p style="color:#93B4FB" align="left">Blacklisted Sites-----------<button id="add_site_button">+</button></p>
 							<input type="text" id="site_input">
 						</tr>
 					</table>
-				
 				</td> 
-				
 			</tr>
 		</table>
-		
-		
-		
-		
-		
-		
-		
-		
-	
-		
-		
-
-		
-		
 	</body>
 </html>
