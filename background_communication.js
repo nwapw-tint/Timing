@@ -5,7 +5,7 @@ chrome.extension.onConnect.addListener((port) => {
 	//Creates the capability to receive messages from
 	port.onMessage.addListener((msg) => {
 		if (msg.to == "background") {
-			console.log(msg);
+			//console.log(msg);
 			switch (msg.action) {
 			case "open":
 				console.log("The port \"" + port.name + "\" has been connected");
@@ -13,8 +13,6 @@ chrome.extension.onConnect.addListener((port) => {
 					updatePopupSessions();
 					updatePopupBlacklistedSites();
 					updatePopupSessionRunning();
-				} else if (port.name == "content") {
-					// sitesVisited.push();
 				}
 				break;
 			case "timer":
@@ -86,11 +84,4 @@ chrome.tabs.onActivated.addListener((activeInfo) => {
 			console.log("tabs are null");
 		}
 	});
-	// for (port of ports)
-	// 	if (port.name == "content") {
-	// 		port.index = -1;
-	// 		console.log("The port \"" + port.name + "\" has been disconnected");
-	// 		ports.splice(port.index, 1);
-	// 	}
-	// chrome.tabs.reload(activeInfo.tabId);
 });

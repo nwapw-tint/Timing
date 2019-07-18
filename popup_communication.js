@@ -12,7 +12,7 @@ sendMessage({
 //Creates the capability to receive messages from the background script
 port.onMessage.addListener((msg) => {
 	if (msg.to == "popup") {
-		console.log(msg);
+		//console.log(msg);
 		if (msg.action == "update") {
 			switch (msg.place) {
 			case "sessions":

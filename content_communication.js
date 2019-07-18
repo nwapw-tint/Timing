@@ -12,7 +12,7 @@ sendMessage({
 //Creates the capability to receive messages from the background script
 port.onMessage.addListener((msg) => {
 	if (msg.to == "content") {
-		console.log(msg);
+		//console.log(msg);
 		if (msg.action == "tint") {
 			if (msg.mode == "enable")
 				enableTint(msg.id, msg.color, msg.duration);
