@@ -3,6 +3,7 @@ var sessions = [];
 var sessionRunning = false;
 
 var wColor = {"r": 0, "g": 255, "b": 0, "a": 100};
+//wColor = rgba(0,255,0,0.1);
 var bColor = {"r": 255, "g": 0, "b": 0, "a": 100};
 var blacklistedSites = [];
 

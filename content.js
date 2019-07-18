@@ -13,9 +13,9 @@ function enableTint(id, color, opacity, duration) {
 	if (!id)
 		id = "tint-default";
 	if (!color)
-		color = "#fa8072";
+		color = "rgba(0,0,0,0.2)"; //default, default value
 	if (!opacity) //0 - Low, 1 - High
-		opacity = 0.3;
+		opacity = 0.3; //deprecated
 	if (!duration) //Seconds
 		duration = 100;
 	
@@ -24,7 +24,6 @@ function enableTint(id, color, opacity, duration) {
 		var tintDiv = document.createElement("div");
 		tintDiv.id = id; //allows removal by id
 		tintId = id;
-		tintDiv.style.opacity = opacity;
 		tintDiv.style.background = color;
 		styleTint(tintDiv);
 		setupText();
@@ -42,8 +41,8 @@ function enableTint(id, color, opacity, duration) {
 			textDiv.style.transform="translate(-50%, -50%)";
 			textDiv.style.backgroundColor = "rgba(255,255,255,1)";
 			textDiv.style.fontFamily = "'Roboto', Sans Serif";
-			textDiv.style.color = "#000"; //TODO: set automatically based on tint shade
-			textDiv.style.fontSize = "60px"; //TODO: self adjusting size. rn, just set a cap
+			textDiv.style.color = "rgba(0,0,0,1)"; //TODO: set automatically based on tint shade
+			textDiv.style.fontSize = "120px"; //TODO: self adjusting size. rn, just set a cap
 			textDiv.style.zIndex = 100;
 			tintDiv.appendChild(textDiv);
 		}
