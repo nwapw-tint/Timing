@@ -1,13 +1,3 @@
-function rgbToHex(color) {
-	return "#" + byteToHex(color.r) + byteToHex(color.g) + byteToHex(color.b);
-	function byteToHex(c) {
-		let hex = Number(c).toString(16);
-		if (hex.length < 2)
-			hex = "0" + hex;
-		return hex;
-	}
-}
-
 function timeToDigital(seconds) {
 	let h = Math.floor(seconds / 3600);
 	let m = Math.floor((seconds / 60) % 60);

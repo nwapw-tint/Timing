@@ -63,8 +63,7 @@ function startSession() {
 		action: "tint",
 		mode: "enable",
 		id: "tint-color",
-		color: rgbToHex(getTintColor()),
-		opacity: getTintColor().a / 255,
+		color: getTintColor(),
 		duration: 100
 	});
 }

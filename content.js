@@ -8,14 +8,12 @@ function setTintColor(color) {
 }
 
 //Enables the tint
-function enableTint(id, color, opacity, duration) {
+function enableTint(id, color, duration) {
 	//Defaults
 	if (!id)
 		id = "tint-default";
 	if (!color)
-		color = "#fa8072";
-	if (!opacity) //0 - Low, 1 - High
-		opacity = 0.3;
+		color = "rgba(0,0,0,0.2)"; //Default color
 	if (!duration) //Seconds
 		duration = 100;
 	
@@ -24,7 +22,6 @@ function enableTint(id, color, opacity, duration) {
 		var tintDiv = document.createElement("div");
 		tintDiv.id = id; //allows removal by id
 		tintId = id;
-		tintDiv.style.opacity = opacity;
 		tintDiv.style.background = color;
 		styleTint(tintDiv);
 		setupText();

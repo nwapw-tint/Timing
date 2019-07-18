@@ -7,10 +7,5 @@ function getColorFromWheel(x, y) {
 	let index = (y * colorWheelImg.width + x) * 4;
 	if (colorWheelData.data[index + 3] < 255)
 		return null;
-	return {
-		"r": colorWheelData.data[index],
-		"g": colorWheelData.data[index + 1],
-		"b": colorWheelData.data[index + 2],
-		"a": 100
-	};
+	return "rgba(" + colorWheelData.data[index] + "," + colorWheelData.data[index + 1] + "," + colorWheelData.data[index + 2] + ", " + alpha + ")"
 }
