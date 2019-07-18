@@ -14,6 +14,8 @@ var sessionsBColors = [];
 var blacklistedSites = [];
 var onBlacklistedSite = false;
 
+var sitesVisited = [];
+
 function showSecondTimeout() {
 	setTimeout(() => {
 		if (sessionRunning) {
@@ -61,8 +63,8 @@ function startSession() {
 		action: "tint",
 		mode: "enable",
 		id: "tint-color",
-		color: rgbToHex(getNextTintColor()),
-		opacity: getNextTintColor().a / 255,
+		color: rgbToHex(getTintColor()),
+		opacity: getTintColor().a / 255,
 		duration: 100
 	});
 }
@@ -77,11 +79,12 @@ function stopSession() {
 	});
 }
 
-function getNextTintColor() {
+function getTintColor() {
+	// isCurrentTabBlacklisted();
 	if (sessions.length > 0)
-		if (onBlacklistedSite)
-			return sessionsBColors[0];
-		else
+		// if (onBlacklistedSite)
+		// 	return sessionsBColors[0];
+		// else
 			return sessionsWColors[0];
 	else
 		return CLEAR_COLOR;

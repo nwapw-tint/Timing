@@ -13,6 +13,8 @@ chrome.extension.onConnect.addListener((port) => {
 					updatePopupSessions();
 					updatePopupBlacklistedSites();
 					updatePopupSessionRunning();
+				} else if (port.name == "content") {
+					// sitesVisited.push();
 				}
 				break;
 			case "timer":
@@ -36,12 +38,13 @@ chrome.extension.onConnect.addListener((port) => {
 					break;
 				case "blacklistedSites":
 					blacklistedSites.push(msg.blacklistedSite);
+					updateContentColor();
 				}
 			case "checkRunning":
-				// if (sessionRunning) {
-				// 	stopSession();
-				// 	startSession();
-				// }
+				if (sessionRunning) {
+					stopSession();
+					startSession();
+				}
 				// isCurrentTabBlacklisted();
 				// console.log(onBlacklistedSite);
 				break;
@@ -58,7 +61,6 @@ chrome.extension.onConnect.addListener((port) => {
 		ports.splice(port.index, 1);
 	});
 	ports.push(port);
-	console.log(ports.length);
 });
 
 //Sends a message through all of its ports
@@ -70,11 +72,25 @@ function sendMessage(msg) {
 
 //Detects when the user changes tabs
 chrome.tabs.onActivated.addListener((activeInfo) => {
-	for (port of ports)
-		if (port.name == "content") {
-			port.index = -1;
-			console.log("The port \"" + port.name + "\" has been disconnected");
-			ports.splice(port.index, 1);
+	chrome.tabs.query({
+		currentWindow: true,
+		active: true
+	}, (tabs) => {
+		try {
+			let currentSite = tabs[0].url;
+			if (sitesVisited.indexOf(currentSite) == -1) {
+				sitesVisited.push(currentSite);
+				chrome.tabs.reload(activeInfo.tabId);
+			}
+		} catch (error) {
+			console.log("tabs are null");
 		}
-	chrome.tabs.reload(activeInfo.tabId);
+	});
+	// for (port of ports)
+	// 	if (port.name == "content") {
+	// 		port.index = -1;
+	// 		console.log("The port \"" + port.name + "\" has been disconnected");
+	// 		ports.splice(port.index, 1);
+	// 	}
+	// chrome.tabs.reload(activeInfo.tabId);
 });

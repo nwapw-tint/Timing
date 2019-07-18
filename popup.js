@@ -9,18 +9,23 @@ var blacklistedSites = [];
 var mouseX = 0, mouseY = 0;
 
 function updateSessionText() {
-	var sessionText = "";
-	for (let i = 0; i < sessions.length; i++) {
-		sessionText += timeToDigital(sessions[i]);
-		if (i != sessions.length - 1)
-			sessionText += "<br>";
-	}
-	if (document.getElementById('sessions_text'))
-		document.getElementById('sessions_text').innerHTML = sessionText;
-	else
-		document.addEventListener('DOMContentLoaded', () => {
-			document.getElementById('sessions_text').innerHTML = sessionText;
+	if (document.getElementById('sessions_text')) {
+		ust();
+	} else {
+		document.addEventListener('DOMContentLoaded').addEventListener(() => {
+			ust();
 		}, false);
+	}
+
+	function ust() {
+		let sessionText = "";
+		for (let i = 0; i < sessions.length; i++) {
+			sessionText += timeToDigital(sessions[i]);
+			if (i != sessions.length - 1)
+				sessionText += "<br>";
+		}
+		document.getElementById('sessions_text').innerHTML = sessionText;
+	}
 }
 
 function addSession(time) {

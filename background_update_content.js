@@ -4,7 +4,7 @@ function updateContentColor() {
 		from: "background",
 		action: "tint",
 		mode: "change",
-		color: getNextTintColor()
+		color: getTintColor()
 	});
 }
 
