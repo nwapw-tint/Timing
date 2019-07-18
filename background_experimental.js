@@ -1,9 +1,16 @@
-var taskText = "make skynet";
 
 chrome.omnibox.onInputEntered.addListener((txt) => {
 	alert(txt);
 });
+var taskText = "make skynet";
 chrome.commands.onCommand.addListener((command) => {
 	if (command == "display_text")
-        displayText(taskText);
+	{
+	sendMessage({
+		to: "content",
+		from: "background",
+		action: "add_text",
+		text: taskText + timeToDigital(sessions[0])//TODO: convert to readable time
+	})
+	}
 });
