@@ -10,7 +10,8 @@ chrome.commands.onCommand.addListener((command) => {
 		to: "content",
 		from: "background",
 		action: "add_text",
-		text: taskText + timeToDigital(sessions[0])//TODO: convert to readable time
+		text: taskText,
+		time: sessions[0]
 	})
 	}
 });

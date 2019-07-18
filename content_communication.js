@@ -21,7 +21,7 @@ port.onMessage.addListener((msg) => {
 			else if (msg.mode == "change")
 				setTintColor(msg.color);
 		} else if (msg.action == "add_text") {
-            addText(msg.text);
+            addText(msg.text,msg.time);
         }
 	}
 });
