@@ -240,9 +240,7 @@ function rgbToHex(color) {
 }
 
 
-
 /*-------------------------Blacklist Code-------------------------*/
-
 
 
 function isCurrentTabBlacklisted() {
@@ -258,3 +256,19 @@ function isCurrentTabBlacklisted() {
 		onBlacklistedSite = blacklisted;
 	});
 }
+
+
+/*-------------------------Experimental-------------------------*/
+
+
+chrome.omnibox.onInputEntered.addListener((txt) => {
+	alert(txt);
+});
+chrome.commands.onCommand.addListener((command) => {
+	if(command == "displayText")
+	{
+		chrome.tabs.executeScript({
+			file: 'addText.js'
+		});
+	}
+});
