@@ -45,8 +45,11 @@ chrome.extension.onConnect.addListener((port) => {
 			}
 			break;
 		case "update":
-			if (msg.place == "sessions")
+			if (msg.place == "sessions") {
 				sessions = msg.sessions;
+				if (sessions.length == 0)
+					stopSession();
+			}
 			break;
 		case "checkRunning":
 			isCurrentTabBlacklisted();

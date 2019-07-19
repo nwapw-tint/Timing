@@ -33,6 +33,8 @@ function updateSessionText() {
 		for (let i = 0; i < sessions.length; i++)
 			addClickListener(id + i, () => {
 				sessions.splice(i, 1);
+				if (sessions.length == 0)
+					sessionRunning = false;
 				updateSessionText();
 				sendMessage({
 					to: "background",
@@ -42,6 +44,10 @@ function updateSessionText() {
 					sessions: sessions
 				});
 			});
+		
+		function shortenSring(text, maxLength) {
+			//TODO
+		}
 	}
 }
 //adds a session to the queue
