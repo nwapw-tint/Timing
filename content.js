@@ -1,5 +1,5 @@
 var tintId;
-addRoboto();
+
 //Sets the tint's color
 function setTintColor(color) {
 	let div = document.getElementById(tintId);

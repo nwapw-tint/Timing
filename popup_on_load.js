@@ -85,23 +85,6 @@ document.addEventListener('DOMContentLoaded', () => {
 			});
 		}
 	});
-
-	addClickListener('cancel_session_button', () => {
-		if (sessions.length == 0)
-			showError("No sessions!");
-		else {
-			sessions.shift();
-			if (sessions.length == 0)
-				sessionRunning = false;
-			updateSessionText();
-			sendMessage({
-				to: "background",
-				from: "popup",
-				action: "shift",
-				place: "sessions"
-			});
-		}
-	});
 	
 	addClickListener('whitelisted_radio', () => {
 		addToBlacklisted = false;
