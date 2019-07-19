@@ -1,12 +1,12 @@
-var colorWheelImg;
-var colorWheelData;
+var colorImg;
+var colorData;
 
 //Returns the color found in the image at the coordinate (x, y)
-function getColorFromWheel (x, y) {
-	if (x < 0 || x >= colorWheelImg.width || y < 0 || y >= colorWheelImg.height)
+function getColorFrom (x, y) {
+	if (x < 0 || x >= colorImg.width || y < 0 || y >= colorImg.height)
 		return null;
-	let index = (y * colorWheelImg.width + x) * 4; //*4 because each color is 4 elements (r, g, b, and a)
-	if (colorWheelData.data[index + 3] < 255)
+	let index = (y * colorImg.width + x) * 4; //*4 because each color is 4 elements (r, g, b, and a)
+	if (colorData.data[index + 3] < 255)
 		return null;
-	return "rgba(" + colorWheelData.data[index] + "," + colorWheelData.data[index + 1] + "," + colorWheelData.data[index + 2] + ", " + alpha + ")";
+	return "rgba(" + colorData.data[index] + "," + colorData.data[index + 1] + "," + colorData.data[index + 2] + ", " + alpha + ")";
 }

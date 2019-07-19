@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
 	let canvas = document.createElement('canvas');
 	let context = canvas.getContext('2d');
-	colorWheelImg = document.getElementById('wheel_img');
-	canvas.width = colorWheelImg.width;
-	canvas.height = colorWheelImg.height;
-	context.drawImage(colorWheelImg, 0, 0);
-	colorWheelData = context.getImageData(0, 0, colorWheelImg.width, colorWheelImg.height);
+	colorImg = document.getElementById('color_img');
+	canvas.width = colorImg.width;
+	canvas.height = colorImg.height;
+	context.drawImage(colorImg, 0, 0);
+	colorData = context.getImageData(0, 0, colorImg.width, colorImg.height);
 
 	window.addEventListener('mousemove', (e) => {
 		mouseX = e.screenX - window.screenX - 11;
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	}, false);
 
 	window.addEventListener('click', (e) => {
-		let color = getColorFromWheel(mouseX - colorWheelImg.x, mouseY - colorWheelImg.y);
+		let color = getColorFrom(mouseX - colorImg.x, mouseY - colorImg.y);
 		if (color)
 			if (addToBlacklisted)
 				bColor = color;
