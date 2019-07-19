@@ -28,7 +28,7 @@ function updateSessionText() {
 		document.getElementById('sessions_text').innerHTML = sessionText;
 	}
 }
-
+//adds a session to the queue
 function addSession(time) {
 	time *= 60;
 	sessions.push(time);
