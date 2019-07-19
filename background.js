@@ -74,11 +74,11 @@ function stopSession() {
 }
 
 function getTintColor() {
-	// isCurrentTabBlacklisted();
+	isCurrentTabBlacklisted();
 	if (sessions.length > 0)
-		// if (onBlacklistedSite)
-		// 	return sessionsBColors[0];
-		// else
+		if (onBlacklistedSite)
+			return sessionsBColors[0];
+		else
 			return sessionsWColors[0];
 	else
 		return CLEAR_COLOR;

@@ -8,6 +8,8 @@ function updatePopupSessions() {
 	});
 }
 
+// TODO: Don't need the ports to the popup, just include the same file with all the variables
+
 function updatePopupSessionRunning() {
 	sendMessage({
 		to: "popup",

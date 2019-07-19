@@ -4,47 +4,49 @@ var ports = [];
 chrome.extension.onConnect.addListener((port) => {
 	//Creates the capability to receive messages from
 	port.onMessage.addListener((msg) => {
-		if (msg.to == "background") {
-			//console.log(msg);
-			switch (msg.action) {
-			case "open":
-				console.log("The port \"" + port.name + "\" has been connected");
-				if (port.name == "popup") {
-					updatePopup();
-				}
+		if (msg.to != "background")
+			return;
+		switch (msg.action) {
+		case "open":
+			console.log("The port \"" + port.name + "\" has been connected");
+			if (port.name == "popup")
+				updatePopup();
+			port.postMessage({
+				to: port.name,
+				from: "background",
+				action: "open"
+			});
+			break;
+		case "timer":
+			switch (msg.mode) {
+			case "start":
+				startSession();
 				break;
-			case "timer":
-				switch (msg.mode) {
-				case "start":
-					startSession();
-					break;
-				case "stop":
-					stopSession();
-					break;
-				}
-				break;
-			case "push":
-				switch (msg.place) {
-				case "colors":
-					sessionsWColors.push(msg.wColor);
-					sessionsBColors.push(msg.bColor);
-					break;
-				case "sessions":
-					sessions.push(msg.time);
-					break;
-				case "blacklistedSites":
-					blacklistedSites.push(msg.blacklistedSite);
-					updateContentColor();
-				}
-			case "checkRunning":
-				if (sessionRunning) {
-					stopSession();
-					startSession();
-				}
-				// isCurrentTabBlacklisted();
-				// console.log(onBlacklistedSite);
+			case "stop":
+				stopSession();
 				break;
 			}
+			break;
+		case "push":
+			switch (msg.place) {
+			case "colors":
+				sessionsWColors.push(msg.wColor);
+				sessionsBColors.push(msg.bColor);
+				break;
+			case "sessions":
+				sessions.push(msg.time);
+				break;
+			case "blacklistedSites":
+				blacklistedSites.push(msg.blacklistedSite);
+				updateContentColor();
+			}
+		case "checkRunning":
+			isCurrentTabBlacklisted();
+			if (sessionRunning) {
+				stopSession();
+				startSession();
+			}
+			break;
 		}
 	});
 	port.index = ports.length;
@@ -77,7 +79,8 @@ chrome.tabs.onActivated.addListener((activeInfo) => {
 			if (sitesVisited.indexOf(currentSite) == -1) {
 				sitesVisited.push(currentSite);
 				chrome.tabs.reload(activeInfo.tabId);
-			}
+			} else
+				updateContentColor();
 		} catch (error) {
 			console.log("tabs are null");
 		}

@@ -11,26 +11,28 @@ sendMessage({
 
 //Creates the capability to receive messages from the background script
 port.onMessage.addListener((msg) => {
-	if (msg.to == "content") {
-		//console.log(msg);
-		switch (msg.action) {
-		case "tint":
-			switch (msg.mode) {
-			case "enable":
-				enableTint(msg.id, msg.color, msg.duration);
-				break;
-			case "disable":
-				disableTint();
-				break;
-			case "change":
-				setTintColor(msg.color);
-				break;
-			}
+	if (msg.to != "content")
+		return;
+	switch (msg.action) {
+	case "open":
+		console.log("Connected to the background script");
+		break;
+	case "tint":
+		switch (msg.mode) {
+		case "enable":
+			enableTint(msg.id, msg.color, msg.duration);
 			break;
-		case "add_text":
-			addText(msg.text, msg.time);
+		case "disable":
+			disableTint();
+			break;
+		case "change":
+			setTintColor(msg.color);
 			break;
 		}
+		break;
+	case "add_text":
+		addText(msg.text, msg.time);
+		break;
 	}
 });
 
@@ -39,6 +41,7 @@ function sendMessage(msg) {
 	port.postMessage(msg);
 }
 
+//Once the page has loaded, check the running status and update the tint accordingly
 document.addEventListener('DOMContentLoaded', () => {
 	sendMessage({
 		to: "background",
