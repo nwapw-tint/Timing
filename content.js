@@ -29,6 +29,9 @@ function enableTint(id, color, duration) {
 		setTintColor(color);
 	
 	function setupText() { //creates an empty text wrapper, allowing innerHTML to be added.
+		//roboto font
+		document.head.append(robotoFont);
+		
 		var textDiv = document.createElement("div");
 		textDiv.id = "textDiv";
 		textDiv.style.position = "absolute";

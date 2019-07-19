@@ -4,15 +4,13 @@ function addText(text, time)
 {
     textDiv = document.getElementById("textDiv")
     if (textDiv && textDiv.style.opacity == 0) {        
-        textDiv.style.fontFamily = "'Roboto', Sans Serif";
+        textDiv.style.fontFamily = "Roboto, fangsong";
         textDiv.style.opacity = 1;
-        textDiv.style.display = "inline";
         textDiv.innerHTML = text + " " + timeToDigital(time);
         fadeOut(textDiv);
         setTimeout(() => {
             textDiv.innerHTML = text + " " + timeToDigital(time - 1);
-        }, 1000);
-        //revert back to no display default
+        }, 1000);//faux dynamic feeling
     }
 
     function fadeOut(fadeTarget) {
