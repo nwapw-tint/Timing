@@ -2,9 +2,15 @@ duration = 1400;
 step = 200;
 function addText(text, time)
 {
+    var robotoFont = document.createElement('link');
+    robotoFont.setAttribute('rel', 'stylesheet');
+    robotoFont.setAttribute('type', 'text/css');
+    robotoFont.setAttribute('href', "https://fonts.googleapis.com/css?family=Roboto&display=swap");
+    document.head.append(robotoFont);  
+    
     textDiv = document.getElementById("textDiv")
-    if (textDiv && textDiv.style.opacity == 0) {        
-        textDiv.style.fontFamily = "Roboto, fangsong";
+    if (textDiv && textDiv.style.opacity == 0) {      
+        //roboto font
         textDiv.style.opacity = 1;
         textDiv.innerHTML = text + " " + timeToDigital(time);
         fadeOut(textDiv);
