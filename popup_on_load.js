@@ -14,13 +14,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	window.addEventListener('click', (e) => {
 		let color = getColorFromWheel(mouseX - colorWheelImg.x, mouseY - colorWheelImg.y);
-		if (color) {
-			if (addToBlacklisted) {
+		if (color)
+			if (addToBlacklisted)
 				bColor = color;
-			} else {
+			else
 				wColor = color;
-			}
-		}
 	});
 	
 	addClickListener('add_session_button', () => {
@@ -29,9 +27,8 @@ document.addEventListener('DOMContentLoaded', () => {
 			showError("Input is not a number!");
 		else if (input.length == 0)
 			showError("Input is empty!");
-		else {
+		else
 			addSession(input);
-		}
 	});
 	
 	addClickListener('add_site_button', () => {
@@ -52,17 +49,17 @@ document.addEventListener('DOMContentLoaded', () => {
 					place: "blacklistedSites",
 					blacklistedSite: site
 				});
+				document.getElementById('site_input').value = "";
 			}
-			document.getElementById('site_input').value = "";
 		}
 	});
 	
 	addClickListener('start_session_button', () => {
-		if (sessions.length == 0) {
+		if (sessions.length == 0)
 			showError("No sessions!");
-		} else if (sessionRunning) {
+		else if (sessionRunning)
 			showError("Session already started!");
-		} else {
+		else {
 			sessionRunning = true;
 			sendMessage({
 				to: "background",
@@ -74,9 +71,9 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 	
 	addClickListener('stop_session_button', () => {
-		if (!sessionRunning) {
+		if (!sessionRunning)
 			showError("Session not started!");
-		} else {
+		else {
 			sessionRunning = false;
 			sendMessage({
 				to: "background",

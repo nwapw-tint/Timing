@@ -2,7 +2,7 @@
 var sessions = [];
 var sessionRunning = false;
 
-const alpha = 0.2;
+const alpha = 0.3;
 var wColor = "rgba(0, 255, 0, " + alpha + ")";
 var bColor = "rgba(255, 0, 0, " + alpha + ")";
 var blacklistedSites = [];
@@ -11,13 +11,12 @@ var mouseX = 0, mouseY = 0;
 var addToBlacklisted = false;
 
 function updateSessionText() {
-	if (document.getElementById('sessions_text')) {
+	if (document.getElementById('sessions_text'))
 		ust();
-	} else {
+	else
 		document.addEventListener('DOMContentLoaded', () => {
 			ust();
 		}, false);
-	}
 
 	function ust() {
 		let sessionText = "";

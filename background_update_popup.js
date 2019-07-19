@@ -8,6 +8,16 @@ function updatePopupSessions() {
 	});
 }
 
+function updatePopupSessionRunning() {
+	sendMessage({
+		to: "popup",
+		from: "background",
+		action: "update",
+		place: "sessionRunning",
+		sessionRunning: sessionRunning
+	});
+}
+
 function updatePopupBlacklistedSites() {
 	sendMessage({
 		to: "popup",
@@ -18,12 +28,8 @@ function updatePopupBlacklistedSites() {
 	});
 }
 
-function updatePopupSessionRunning() {
-	sendMessage({
-		to: "popup",
-		from: "background",
-		action: "update",
-		place: "sessionRunning",
-		sessionRunning: sessionRunning
-	});
+function updatePopup() {
+	updatePopupSessions();
+	updatePopupSessionRunning();
+	updatePopupBlacklistedSites();
 }

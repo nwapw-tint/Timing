@@ -75,7 +75,7 @@ chrome.tabs.onActivated.addListener((activeInfo) => {
 		active: true
 	}, (tabs) => {
 		try {
-			let currentSite = tabs[0].url;
+			currentSite = tabs[0].url;
 			if (sitesVisited.indexOf(currentSite) == -1) {
 				sitesVisited.push(currentSite);
 				chrome.tabs.reload(activeInfo.tabId);

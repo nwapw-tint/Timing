@@ -14,6 +14,7 @@ var sessionsBColors = [];
 var blacklistedSites = [];
 var onBlacklistedSite = false;
 
+var currentSite = "";
 var sitesVisited = [];
 
 function showSecondTimeout() {
@@ -30,13 +31,7 @@ function showSecondTimeout() {
 				updatePopupSessions();
 				if (sessions.length == 0) {
 					//alert("All sessions finished!");
-					sessionRunning = false;
-					sendMessage({
-						to: "content",
-						from: "background",
-						action: "tint",
-						mode: "disable"
-					});
+					stopSession();
 				} else {
 					//alert("Session finished!");
 					sessions = s;

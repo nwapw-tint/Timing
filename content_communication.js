@@ -13,16 +13,24 @@ sendMessage({
 port.onMessage.addListener((msg) => {
 	if (msg.to == "content") {
 		//console.log(msg);
-		if (msg.action == "tint") {
-			if (msg.mode == "enable")
+		switch (msg.action) {
+		case "tint":
+			switch (msg.mode) {
+			case "enable":
 				enableTint(msg.id, msg.color, msg.duration);
-			else if (msg.mode == "disable")
+				break;
+			case "disable":
 				disableTint();
-			else if (msg.mode == "change")
+				break;
+			case "change":
 				setTintColor(msg.color);
-		} else if (msg.action == "add_text") {
-            addText(msg.text,msg.time);
-        }
+				break;
+			}
+			break;
+		case "add_text":
+			addText(msg.text, msg.time);
+			break;
+		}
 	}
 });
 
