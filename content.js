@@ -44,7 +44,7 @@ function enableTint(id, color, duration) {
 		textDiv.style.opacity == 0;
 		tintDiv.appendChild(textDiv);
 	}
-
+	//styles the tint div
 	function styleTint(div) {
 		div.style.width = "100%";
 		div.style.height = "100%";
