@@ -11,42 +11,40 @@
 				src: url("Windows-Regular.ttf");
 				font-family: WinReg;
 			}
-			
-			html,td {border-style: outset;}
-			
-			html{
-				height:410px;
+			html, td {
+				border-style: outset;
 			}
-			
+			html {
+				height: 410px;
+			}
 			.topbar{
-				width:290px;
-				position:absolute;
-				left:2px;
-				top:2px;
-				color:white;
-				text-align:left;
+				width: 290px;
+				position: absolute;
+				left: 2px;
+				top: 2px;
+				color: white;
+				text-align: left;
 				
 			}
-			
-			button{
+			button {
 				border-style: outset;
 				background-color: #D4D0C8;
 				font-family: 'WinReg';
-				outline-color:black;
+				outline-color: black;
 			}
-			
-			p{font-family: WinReg;}
-			
-			input{
+			p {
+				font-family: WinReg;
+			}
+			input {
 				font-family: WinReg;
 				border: 2.5px inset;
 			}
-			
-			.checkbox-label input{opacity: 0;}
-			
+			.checkbox-label input{
+				opacity: 0;
+			}
 			.checkbox-label .custom-check {
 				position: relative;
-				left:6.5px;
+				left: 6.5px;
 				top: -50px;
 				background-color: #D4D0C8;
 				border-style: inset;
@@ -54,100 +52,100 @@
 				width: 11px;
 				height: 11px;
 			}
-			
 			.checkbox-label input:checked ~ .custom-check {
 				background-image: url("x.png");
 				border-style: inset;
 				-webkit-transform: rotate(0deg) scale(1);
 				-ms-transform: rotate(0deg) scale(1);
-				transform:rotate(0deg) scale(1);
-				opacity:1;
+				transform: rotate(0deg) scale(1);
+				opacity: 1;
 			}
-			.square{
+			.square {
 				border-style: inset;
-				width:165px;
+				width: 165px;
 				height: 110px;
 				position: relative;
 				top: -125px;
 			}
-			#session_label{
+			#session_label {
 				position: fixed;
-				top:22px;
-				left:19px;
-				padding-left:10px;
-				padding-right:10px;
+				top: 22px;
+				left: 19px;
+				padding-left: 10px;
+				padding-right: 10px;
 				font-size: 13px;
 			}
-			
-			#sessions_bar{
-				padding-left:35px;
-				padding-right:35px;
-			
+			#sessions_bar {
+				padding-left: 35px;
+				padding-right: 35px;
 			}
 			
-			#setup_bar{
-				padding-left:90px;
-				padding-right:90px;
+			#setup_bar {
+				padding-left: 90px;
+				padding-right: 90px;
 			}
-			
-			#title{
-				position:relative;
+			#title {
+				position: relative;
 				left: 6px;
-				font-size:13px;
+				font-size: 13px;
 			}	
-			#name_input{
-				position:relative;
-				top:-20px;
-				left:5px;
+			#name_input {
+				position: relative;
+				top: -20px;
+				left: 5px;
 			}
-			#time_input{
-				position:relative;
-				left:5px;
+			#time_input {
+				position: relative;
+				left: 5px;
 			}
-			.add_button{
+			.add_button {
 				position: relative;
 				left: 13px;
 				top: -35px;
 				width: 40px;
 				height: 22px;
 			}
-			#buttontxt{
+			#add_session_button_text {
 				position: relative;
 				top: -15px;
 				left: -1px;
 				font-size: 14px;
 			}
-			#start_session_button{
+			#add_site_button_text {
+				position: relative;
+				top: -15px;
+				left: -1px;
+				font-size: 14px;
+			}
+			#start_session_button {
 				position: fixed;
-				top:303px;
-				left:19px;
+				top: 303px;
+				left: 19px;
 				width: 65px;
 			}
-			
-			#stop_session_button{
+			#pause_session_button {
 				position: fixed;
-				top:333px;
-				left:19px;
+				top: 333px;
+				left: 19px;
 				width: 65px;
 			}
-			#cancel_session_button{
+			#cancel_session_button {
 				position: fixed;
-				top:363px;
-				left:19px;
+				top: 363px;
+				left: 19px;
 				width: 65px;
 			}
-			sesh-top{
-				position:relative;
-				top:-2px;
+			sesh-top {
+				position: relative;
+				top: -2px;
 			}
-				
 		</style>
 	</head>
 	<body bgcolor="#D4D0C8" id="body">
-			<div class="topbar">
-		<img src="bluebar.png" style="width:291px"></img>
-		<p style="position:relative; top: -31px; left:4px;">PLACE YOUR HEADER TEXT HERE RAWRR</p>
-			</div>
+		<div class="topbar">
+			<img src="bluebar.png" style="width:291px"></img>
+			<p style="position: relative; top: -31px; left: 4px;">Create, start, and stop sessions here!</p>
+		</div>
 		<br>
 		<table>
 			<tr>
@@ -155,17 +153,16 @@
 					<table id="sessions_bar">
 						<tr>
 							<p id="session_label">Sessions:</p>
-							<hr style="border: 1.5px inset; position:fixed; top:50px; left:19px; padding-left:61px;" >
+							<hr style="border: 1.5px inset; position: fixed; top: 50px; left: 19px; padding-left: 61px;">
 						</tr>
 						<tr>
-							<p id="sessions_text" style="position:fixed; top:54px; left:20px;"></p>
-							
+							<p id="sessions_text" style="position: fixed; top: 54px; left: 20px;"></p>
 						</tr>
 						<tr>
 							<button id="start_session_button">Start</button>
 						</tr>
 						<tr>
-							<button id="stop_session_button">Stop</button>
+							<button id="pause_session_button">Pause</button>
 						</tr>
 						<tr>
 							<button id="cancel_session_button">Cancel</button>
@@ -175,35 +172,34 @@
 				<td>
 					<table id="setup_bar">
 						<tr>
-							<p align="left" id="title" style="top:-9px">Session Name</p>
-							<input type="text" id="name_input" style="border-style:inset">
+							<p align="left" id="title" style="top: -9px">Session Name</p>
+							<input type="text" id="name_input" style="border-style: inset">
 						</tr>
 						<tr>
-							<p align="left" id="title" style="top:-25px;">Time in Minutes</p>
-							<input type="text" id="time_input" style="position:relative; top:-50px;">
-							<button class="add_button" id="add_session_button"><p id="buttontxt">Add</p></button>
+							<p align="left" id="title" style="top: -25px;">Time in Minutes</p>
+							<input type="text" id="time_input" style="position: relative; top: -50px;">
+							<button class="add_button" id="add_session_button"><p id="add_session_button_text">Add</p></button>
 						</tr>
 						<tr>
 							<br>
 							<label class="checkbox-label">
 							<input type="radio" name="colorRadio" value="whitelisted" checked id="whitelisted_radio">
 							<span class="custom-check"></span>
-							<p id="title" style="position:relative; top:-80px;left: 30px;">Whitelist Color</p>
+							<p id="title" style="position: relative; top: -80px; left: 30px;">Whitelist Color</p>
 						</tr>
 						<tr>
 							<label class="checkbox-label">
 							<input type="radio" name="colorRadio" value="blacklisted" class="box_two" id="blacklisted_radio">
-							<span class="custom-check"style="position:relative; top:-100px;left: 6px;"></span>
-							<p id="title" style="position:relative; top:-130px;left: 30px;">Blacklist Color</p>
+							<span class="custom-check"style="position: relative; top: -100px; left: 6px;"></span>
+							<p id="title" style="position: relative; top: -130px; left: 30px;">Blacklist Color</p>
 						</tr>
 						<tr>
 							<center><img src="colorsquare-export.png" class="square" id="wheel_img"></center>
 						</tr>
 						<tr>
-							<p align="left" id="title" style="top:-130px;">Blacklisted Sites</p>
-							<input type="text" id="site_input" style="position:relative; top: -148px; left:6px;">
-							<button class="add_button" id="add_site_button" style="top: -132px;"><p id="buttontxt">Add</p></button>
-							
+							<p align="left" id="title" style="top: -130px;">Blacklisted Sites</p>
+							<input type="text" id="site_input" style="position: relative; top: -148px; left: 6px;">
+							<button class="add_button" id="add_site_button" style="top: -132px;"><p id="add_site_button_text">Add</p></button>
 						</tr>
 					</table>
 				</td> 
