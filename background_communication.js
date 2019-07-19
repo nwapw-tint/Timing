@@ -72,6 +72,7 @@ function sendMessage(msg) {
 			port.postMessage(msg);
 }
 
+//checks the current site to see if it has been filtered. If it hasn't been visited, add it to visited.
 //Detects when the user changes tabs
 chrome.tabs.onActivated.addListener((activeInfo) => {
 	chrome.tabs.query({
