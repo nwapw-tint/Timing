@@ -1,5 +1,7 @@
 var tintId;
 
+addRoboto();
+
 //Sets the tint's color
 function setTintColor(color) {
 	let div = document.getElementById(tintId);
@@ -7,16 +9,13 @@ function setTintColor(color) {
 		div.style.background = color;
 }
 
+document.addEventListener('keydown', function (evt) {
+	if (evt.keyCode === 81) {
+	  console.log('The "Q" key is being held down...?');
+	}
+  });
 //Enables the tint
 function enableTint(id, color, duration) {
-	//Defaults
-	if (!id)
-		id = "tint-default";
-	if (!color)
-		color = "rgba(0, 0, 0, 0.3)"; //Default color
-	if (!duration) //Seconds
-		duration = 100;
-	
 	if (document.querySelector('[id^="tint-"]') == null)
 	{
 		var tintDiv = document.createElement("div");
@@ -24,7 +23,6 @@ function enableTint(id, color, duration) {
 		tintDiv.style.background = color;
 		styleTint(tintDiv);
 		setupText();
-		document.body.appendChild(tintDiv);
 	} else
 		setTintColor(color);
 	
@@ -48,6 +46,7 @@ function enableTint(id, color, duration) {
 		tintDiv.appendChild(textDiv);
 	}
 
+	//Styles the tint div
 	function styleTint(div) {
 		div.style.width = "100%";
 		div.style.height = "100%";
@@ -57,6 +56,7 @@ function enableTint(id, color, duration) {
 		div.style.left = 0;
 		div.style.position = "fixed";
 		div.style.display = "inline-block";
+		document.body.appendChild(tintDiv);
 	}
 }
 

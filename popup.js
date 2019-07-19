@@ -29,7 +29,7 @@ function updateSessionText() {
 		document.getElementById('sessions_text').innerHTML = sessionText;
 	}
 }
-
+//adds a session to the queue
 function addSession(time) {
 	let name = document.getElementById('name_input').value;
 	if (name.length == 0)

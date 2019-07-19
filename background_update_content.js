@@ -1,3 +1,4 @@
+//updates the 
 function updateContentColor() {
 	sendMessage({
 		to: "content",
