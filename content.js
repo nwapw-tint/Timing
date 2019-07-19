@@ -1,5 +1,5 @@
 var tintId;
-
+addRoboto();
 //Sets the tint's color
 function setTintColor(color) {
 	let div = document.getElementById(tintId);
@@ -7,10 +7,6 @@ function setTintColor(color) {
 		div.style.background = color;
 }
 
-document.addEventListener('keydown', (evt) => {
-	if (evt.keyCode === 81)
-	  console.log('The "Q" key is being held down');
-  });
 //Enables the tint
 function enableTint(id, color, duration) {
 	if (document.querySelector('[id^="tint-"]') == null)
@@ -24,9 +20,6 @@ function enableTint(id, color, duration) {
 		setTintColor(color);
 	
 	function setupText() { //creates an empty text wrapper, allowing innerHTML to be added.
-		//roboto font
-		document.head.append(robotoFont);
-		
 		var textDiv = document.createElement("div");
 		textDiv.id = "textDiv";
 		textDiv.style.position = "absolute";
@@ -42,8 +35,7 @@ function enableTint(id, color, duration) {
 		textDiv.style.opacity == 0;
 		tintDiv.appendChild(textDiv);
 	}
-
-	//Styles the tint div
+	//styles the tint div
 	function styleTint(div) {
 		div.style.width = "100%";
 		div.style.height = "100%";
