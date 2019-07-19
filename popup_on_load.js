@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	});
 	
-	addClickListener('stop_session_button', () => {
+	addClickListener('pause_session_button', () => {
 		if (!sessionRunning)
 			showError("Session not started!");
 		else {
@@ -80,6 +80,23 @@ document.addEventListener('DOMContentLoaded', () => {
 				from: "popup",
 				action: "timer",
 				mode: "stop"
+			});
+		}
+	});
+
+	addClickListener('cancel_session_button', () => {
+		if (sessions.length == 0)
+			showError("No sessions!");
+		else {
+			sessions.shift();
+			if (sessions.length == 0)
+				sessionRunning = false;
+			updateSessionText();
+			sendMessage({
+				to: "background",
+				from: "popup",
+				action: "shift",
+				place: "sessions"
 			});
 		}
 	});

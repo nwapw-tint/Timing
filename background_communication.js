@@ -40,10 +40,18 @@ chrome.extension.onConnect.addListener((port) => {
 				blacklistedSites.push(msg.blacklistedSite);
 				updateContentColor();
 			}
+			break;
+		case "shift":
+			if (msg.place == "sessions")
+				sessions.shift();
+			if (sessions.length == 0)
+				stopSession();
+			break;
 		case "checkRunning":
 			isCurrentTabBlacklisted();
 			if (sessionRunning) {
 				stopSession();
+				sessionRunning = true;
 				startSession();
 			}
 			break;
