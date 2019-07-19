@@ -20,15 +20,21 @@ document.addEventListener('DOMContentLoaded', () => {
 			if (addToBlacklisted)
 				bColor = color;
 			else
-				wColor = color;
+				nColor = color;
 	});
 	
 	addClickListener('add_session_button', () => {
 		var input = document.getElementById('time_input').value;
 		if (input.length == 0)
 			showError("Input is empty!");
-		else if (isNaN(input)){showError("Input is not a number!");document.getElementById('time_input').value = "";}
-		else if (input > maxInput){showError("Input is too high!");document.getElementById('time_input').value = "";}
+		else if (isNaN(input)) {
+			showError("Input is not a number!");
+			document.getElementById('time_input').value = "";
+		}
+		else if (input > maxInput) {
+			showError("Input is too high!");
+			document.getElementById('time_input').value = "";
+		}
 		else
 			addSession(input);
 	});

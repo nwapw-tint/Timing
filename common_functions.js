@@ -15,7 +15,3 @@ function timeToDigital(seconds) {
 		str += "0";
 	return str + s;
 }
-var robotoFont = document.createElement('link');
-robotoFont.setAttribute('rel', 'stylesheet');
-robotoFont.setAttribute('type', 'text/css');
-robotoFont.setAttribute('href', "https://fonts.googleapis.com/css?family=Roboto&display=swap");

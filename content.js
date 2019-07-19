@@ -58,6 +58,11 @@ function enableTint(id, color, duration) {
 		div.style.position = "fixed";
 		div.style.display = "inline-block";
 	}
+	
+	var robotoFont = document.createElement('link');
+	robotoFont.setAttribute('rel', 'stylesheet');
+	robotoFont.setAttribute('type', 'text/css');
+	robotoFont.setAttribute('href', "https://fonts.googleapis.com/css?family=Roboto&display=swap");
 }
 
 //Disables the tint

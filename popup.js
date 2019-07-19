@@ -3,12 +3,12 @@ var sessions = [];
 var sessionRunning = false;
 
 const alpha = 0.3;
-var wColor = "rgba(0, 255, 0, " + alpha + ")";
+var nColor = "rgba(0, 255, 0, " + alpha + ")";
 var bColor = "rgba(255, 0, 0, " + alpha + ")";
-var blacklistedSites = [];
 
 var mouseX = 0, mouseY = 0;
-var addToBlacklisted = false;
+
+var blacklistedSites = [];
 
 function updateSessionText() {
 	if (document.getElementById('sessions_text'))
@@ -17,7 +17,7 @@ function updateSessionText() {
 		document.addEventListener('DOMContentLoaded', () => {
 			ust();
 		}, false);
-//update session text
+	//update session text
 	function ust() {
 		let sessionText = "";
 		for (let i = 0; i < sessions.length; i++) {
@@ -37,15 +37,11 @@ function addSession(time) {
 		from: "popup",
 		action: "push",
 		place: "sessions",
-		time: time
-	});
-	sendMessage({
-		to: "background",
-		from: "popup",
-		action: "push",
-		place: "colors",
-		wColor: wColor,
-		bColor: bColor
+		session: {
+			time: time,
+			name: "make skynet",
+			color: nColor
+		}
 	});
 	updateSessionText();
 }

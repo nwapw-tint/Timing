@@ -29,12 +29,8 @@ chrome.extension.onConnect.addListener((port) => {
 			break;
 		case "push":
 			switch (msg.place) {
-			case "colors":
-				sessionsWColors.push(msg.wColor);
-				sessionsBColors.push(msg.bColor);
-				break;
 			case "sessions":
-				sessions.push(msg.time);
+				sessions.push(msg.session);
 				break;
 			case "blacklistedSites":
 				blacklistedSites.push(msg.blacklistedSite);
