@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<link type="text/css" rel="stylesheet" href="CSS/windows_theme.css"/>
+		<link type="text/css" rel="stylesheet" href="windows_theme.css"/>
+		<script src="common_functions.js"></script>
 		<script src="popup.js"></script>
 		<script src="popup_communication.js"></script>
 		<script src="popup_color_selection.js"></script>
 		<script src="popup_on_load.js"></script>
-		<script src="common_functions.js"></script>
 	</head>
 	<body bgcolor="#D4D0C8">
 			<div class="topbar">
@@ -42,7 +42,7 @@
 						</tr>
 						<tr>
 							<p align="left" class="title" style="top:70px">Time in Minutes</p>
-							<input type="text" id="time_input" style="">
+							<input type="text" id="time_input">
 							<button class="add_button" id="add_session_button" style="top:105px;"><p id="buttontxt">Add</p></button>
 						</tr>
 						<tr>
@@ -59,7 +59,7 @@
 							<p class="title" style="top:157px; left:153px;">Blacklist Color</p>
 						</tr>
 						<tr>
-							<center><img src="colorsquare-export.png" class="square" id="wheel_img"></center>
+							<center><img src="colorsquare-export.png" class="square" id="color_img"></center>
 						</tr>
 						<tr>
 							<p align="left" class="title" style="top:310px">Blacklisted Sites</p>
