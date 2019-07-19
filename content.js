@@ -1,5 +1,5 @@
 var tintId;
-
+addRoboto();
 //Sets the tint's color
 function setTintColor(color) {
 	let div = document.getElementById(tintId);
@@ -9,14 +9,6 @@ function setTintColor(color) {
 
 //Enables the tint
 function enableTint(id, color, duration) {
-	//Defaults
-	if (!id)
-		id = "tint-default";
-	if (!color)
-		color = "rgba(0,0,0,0.2)"; //Default color
-	if (!duration) //Seconds
-		duration = 100;
-	
 	if (document.querySelector('[id^="tint-"]') == null)
 	{
 		var tintDiv = document.createElement("div");
@@ -24,7 +16,6 @@ function enableTint(id, color, duration) {
 		tintDiv.style.background = color;
 		styleTint(tintDiv);
 		setupText();
-		document.body.appendChild(tintDiv);
 	} else
 		setTintColor(color);
 	
@@ -54,12 +45,8 @@ function enableTint(id, color, duration) {
 		div.style.left = 0;
 		div.style.position = "fixed";
 		div.style.display = "inline-block";
+		document.body.appendChild(tintDiv);
 	}
-	
-	var robotoFont = document.createElement('link');
-	robotoFont.setAttribute('rel', 'stylesheet');
-	robotoFont.setAttribute('type', 'text/css');
-	robotoFont.setAttribute('href', "https://fonts.googleapis.com/css?family=Roboto&display=swap");
 }
 
 //Disables the tint

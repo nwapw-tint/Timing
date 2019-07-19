@@ -32,6 +32,6 @@ function addRoboto() {
     robotoFont.setAttribute('rel', 'stylesheet');
     robotoFont.setAttribute('type', 'text/css');
     robotoFont.setAttribute('href', "https://fonts.googleapis.com/css?family=Roboto&display=swap");
-    document.head.append(robotoFont);
+    document.documentElement.append(robotoFont);
 }
 
