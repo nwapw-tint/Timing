@@ -10,9 +10,7 @@ chrome.extension.onConnect.addListener((port) => {
 			case "open":
 				console.log("The port \"" + port.name + "\" has been connected");
 				if (port.name == "popup") {
-					updatePopupSessions();
-					updatePopupBlacklistedSites();
-					updatePopupSessionRunning();
+					updatePopup();
 				}
 				break;
 			case "timer":
