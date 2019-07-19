@@ -8,7 +8,6 @@ robotoFont.setAttribute('href', "https://fonts.googleapis.com/css?family=Roboto&
 
 function addText(text, time)
 {
-    addRoboto();
     textDiv = document.getElementById("textDiv")
     if (textDiv && textDiv.style.opacity == 0) {    
         textDiv.style.opacity = 1;
@@ -31,12 +30,4 @@ function addText(text, time)
             }
         }, step);
     }
-}
-
-function addRoboto() {
-    var robotoFont = document.createElement('link');
-    robotoFont.setAttribute('rel', 'stylesheet');
-    robotoFont.setAttribute('type', 'text/css');
-    robotoFont.setAttribute('href', "https://fonts.googleapis.com/css?family=Roboto&display=swap");
-    document.documentElement.append(robotoFont);
 }

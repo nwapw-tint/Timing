@@ -1,4 +1,3 @@
-shortcut.add("Space")
 chrome.omnibox.onInputEntered.addListener((txt) => {
 	alert(txt);
 });
