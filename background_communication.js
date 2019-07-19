@@ -45,10 +45,16 @@ chrome.extension.onConnect.addListener((port) => {
 			}
 			break;
 		case "update":
-			if (msg.place == "sessions") {
+			switch (msg.place) {
+			case "sessions":
 				sessions = msg.sessions;
 				if (sessions.length == 0)
 					stopSession();
+				break;
+			case "color":
+				sessions[0].color = msg.color;
+				updateContentColor();
+				break;
 			}
 			break;
 		case "checkRunning":

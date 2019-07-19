@@ -13,11 +13,18 @@ document.addEventListener('DOMContentLoaded', () => {
 	}, false);
 
 	window.addEventListener('click', (e) => {
-		let color = getColorFrom(mouseX - colorImg.x, mouseY - colorImg.y);
+		let color = getColorFrom(Math.floor((mouseX - colorImg.x) / 4), Math.floor((mouseY - colorImg.y) / 4));
 		if (color)
-			if (addToBlacklisted)
+			if (addToBlacklisted) {
 				bColor = color;
-			else
+				sendMessage({
+					to: "background",
+					from: "popup",
+					action: "update",
+					place: "bColor",
+					bColor: color
+				});
+			} else
 				nColor = color;
 	});
 	

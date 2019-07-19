@@ -3,7 +3,7 @@ var sessions = [];
 var sessionRunning = false;
 
 const maxTime = 1440;
-const maxLength = 60;
+const maxLength = 70;
 
 var nColor = "rgba(0, 255, 0, " + alpha + ")";
 var bColor = "rgba(255, 0, 0, " + alpha + ")";
@@ -11,6 +11,7 @@ var bColor = "rgba(255, 0, 0, " + alpha + ")";
 var mouseX = 0, mouseY = 0;
 
 var blacklistedSites = [];
+var addToBlacklisted = false;
 
 function updateSessionText() {
 	if (document.getElementById('sessions_text'))
@@ -50,6 +51,13 @@ function updateSessionText() {
 					action: "update",
 					place: "sessions",
 					sessions: sessions
+				});
+				sendMessage({
+					to: "background",
+					from: "popup",
+					action: "update",
+					place: "color",
+					color: nColor
 				});
 			});
 	}
