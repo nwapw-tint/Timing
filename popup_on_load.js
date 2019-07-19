@@ -1,3 +1,4 @@
+maxInput = 10000;
 document.addEventListener('DOMContentLoaded', () => {
 	let canvas = document.createElement('canvas');
 	let context = canvas.getContext('2d');
@@ -24,10 +25,10 @@ document.addEventListener('DOMContentLoaded', () => {
 	
 	addClickListener('add_session_button', () => {
 		var input = document.getElementById('time_input').value;
-		if (isNaN(input))
-			showError("Input is not a number!");
-		else if (input.length == 0)
+		if (input.length == 0)
 			showError("Input is empty!");
+		else if (isNaN(input)){showError("Input is not a number!");document.getElementById('time_input').value = "";}
+		else if (input > maxInput){showError("Input is too high!");document.getElementById('time_input').value = "";}
 		else
 			addSession(input);
 	});

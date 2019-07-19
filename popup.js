@@ -17,7 +17,7 @@ function updateSessionText() {
 		document.addEventListener('DOMContentLoaded', () => {
 			ust();
 		}, false);
-
+//update session text
 	function ust() {
 		let sessionText = "";
 		for (let i = 0; i < sessions.length; i++) {
