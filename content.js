@@ -13,7 +13,7 @@ function enableTint(id, color, duration) {
 	if (!id)
 		id = "tint-default";
 	if (!color)
-		color = "rgba(0,0,0,0.2)"; //Default color
+		color = "rgba(0, 0, 0, 0.3)"; //Default color
 	if (!duration) //Seconds
 		duration = 100;
 	
@@ -29,6 +29,9 @@ function enableTint(id, color, duration) {
 		setTintColor(color);
 	
 	function setupText() { //creates an empty text wrapper, allowing innerHTML to be added.
+		//roboto font
+		document.head.append(robotoFont);
+		
 		var textDiv = document.createElement("div");
 		textDiv.id = "textDiv";
 		textDiv.style.position = "absolute";
@@ -55,11 +58,6 @@ function enableTint(id, color, duration) {
 		div.style.position = "fixed";
 		div.style.display = "inline-block";
 	}
-	
-	var robotoFont = document.createElement('link');
-	robotoFont.setAttribute('rel', 'stylesheet');
-	robotoFont.setAttribute('type', 'text/css');
-	robotoFont.setAttribute('href', "https://fonts.googleapis.com/css?family=Roboto&display=swap");
 }
 
 //Disables the tint

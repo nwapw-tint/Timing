@@ -15,3 +15,12 @@ function timeToDigital(seconds) {
 		str += "0";
 	return str + s;
 }
+
+const alpha = 0.3;
+
+const CLEAR_COLOR = {
+	r: 255,
+	g: 255,
+	b: 255,
+	a: 0
+};

@@ -2,7 +2,8 @@
 var sessions = [];
 var sessionRunning = false;
 
-const alpha = 0.3;
+const maxTime = 1440;
+
 var nColor = "rgba(0, 255, 0, " + alpha + ")";
 var bColor = "rgba(255, 0, 0, " + alpha + ")";
 
@@ -21,7 +22,7 @@ function updateSessionText() {
 	function ust() {
 		let sessionText = "";
 		for (let i = 0; i < sessions.length; i++) {
-			sessionText += timeToDigital(sessions[i]);
+			sessionText += sessions[0].name + ": " + timeToDigital(sessions[i].time) + '  <button id="close_button_' + i + '">X</button>';
 			if (i != sessions.length - 1)
 				sessionText += "<br>";
 		}
@@ -30,20 +31,27 @@ function updateSessionText() {
 }
 
 function addSession(time) {
-	time *= 60;
-	sessions.push(time);
-	sendMessage({
-		to: "background",
-		from: "popup",
-		action: "push",
-		place: "sessions",
-		session: {
-			time: time,
-			name: "make skynet",
+	let name = document.getElementById('name_input').value;
+	if (name.length == 0)
+		showError("Name is empty!");
+	else {
+		let session = {
+			time: time * 60,
+			name: name,
 			color: nColor
-		}
-	});
-	updateSessionText();
+		};
+		sessions.push(session);
+		sendMessage({
+			to: "background",
+			from: "popup",
+			action: "push",
+			place: "sessions",
+			session: session
+		});
+		updateSessionText();
+		document.getElementById('time_input').value = "";
+		document.getElementById('name_input').value = "";
+	}
 }
 
 function addClickListener(id, callback) {

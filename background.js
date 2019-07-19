@@ -1,15 +1,9 @@
-const CLEAR_COLOR = {
-	r: 255,
-	g: 255,
-	b: 255,
-	a: 0
-};
-
 var sessions = [];
 var sessionRunning = false;
 
 var blacklistedSites = [];
 var onBlacklistedSite = false;
+var bColor = "rgba(255, 0, 0, " + alpha + ")";
 
 var currentSite = "";
 var sitesVisited = [];

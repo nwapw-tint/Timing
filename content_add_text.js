@@ -1,22 +1,24 @@
 duration = 1400;
 step = 200;
+
+var robotoFont = document.createElement('link');
+robotoFont.setAttribute('rel', 'stylesheet');
+robotoFont.setAttribute('type', 'text/css');
+robotoFont.setAttribute('href', "https://fonts.googleapis.com/css?family=Roboto&display=swap");
+
 function addText(text, time)
 {
-    var robotoFont = document.createElement('link');
-    robotoFont.setAttribute('rel', 'stylesheet');
-    robotoFont.setAttribute('type', 'text/css');
-    robotoFont.setAttribute('href', "https://fonts.googleapis.com/css?family=Roboto&display=swap");
-    document.head.append(robotoFont);  
-    
+    document.head.append(robotoFont);
+
     textDiv = document.getElementById("textDiv")
-    if (textDiv && textDiv.style.opacity == 0) {      
+    if (textDiv && textDiv.style.opacity == 0) {
         //roboto font
         textDiv.style.opacity = 1;
         textDiv.innerHTML = text + " " + timeToDigital(time);
         fadeOut(textDiv);
         setTimeout(() => {
             textDiv.innerHTML = text + " " + timeToDigital(time - 1);
-        }, 1000);//faux dynamic feeling
+        }, 1000); //faux dynamic feeling
     }
 
     function fadeOut(fadeTarget) {
@@ -31,5 +33,4 @@ function addText(text, time)
             }
         }, step);
     }
-    
 }

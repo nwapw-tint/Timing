@@ -8,7 +8,7 @@ chrome.commands.onCommand.addListener((command) => {
 			to: "content",
 			from: "background",
 			action: "add_text",
-			text: sessions[0].text,
+			text: sessions[0].name,
 			time: sessions[0].time
 		});
 });

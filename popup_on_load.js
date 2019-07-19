@@ -1,4 +1,3 @@
-maxInput = 10000;
 document.addEventListener('DOMContentLoaded', () => {
 	let canvas = document.createElement('canvas');
 	let context = canvas.getContext('2d');
@@ -24,19 +23,15 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 	
 	addClickListener('add_session_button', () => {
-		var input = document.getElementById('time_input').value;
-		if (input.length == 0)
-			showError("Input is empty!");
-		else if (isNaN(input)) {
-			showError("Input is not a number!");
-			document.getElementById('time_input').value = "";
-		}
-		else if (input > maxInput) {
-			showError("Input is too high!");
-			document.getElementById('time_input').value = "";
-		}
+		var time = document.getElementById('time_input').value;
+		if (time.length == 0)
+			showError("Time is empty!");
+		else if (isNaN(time)) {
+			showError("Time is not a number!");
+		} else if (time > maxTime)
+			showError("Time is too long!");
 		else
-			addSession(input);
+			addSession(time);
 	});
 	
 	addClickListener('add_site_button', () => {
