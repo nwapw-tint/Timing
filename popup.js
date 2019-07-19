@@ -3,6 +3,7 @@ var sessions = [];
 var sessionRunning = false;
 
 const maxTime = 1440;
+const maxLength = 60;
 
 var nColor = "rgba(0, 255, 0, " + alpha + ")";
 var bColor = "rgba(255, 0, 0, " + alpha + ")";
@@ -18,13 +19,20 @@ function updateSessionText() {
 		document.addEventListener('DOMContentLoaded', () => {
 			ust();
 		}, false);
+	
 	//update session text
 	function ust() {
 		let sessionText = "";
 		let id = 'close_button_';
 		for (let i = 0; i < sessions.length; i++) {
-			let nameAndTime = sessions[i].name + ": " + timeToDigital(sessions[i].time);
-			console.log(stringWidth(nameAndTime, "WinReg", 13));
+			let shortName = sessions[i].name;
+			let end = ": " + timeToDigital(sessions[i].time);
+			let nameAndTime = shortName + end;
+			if (stringWidth(nameAndTime, "WinReg", 13) > maxLength) {
+				while (stringWidth(shortName + '...' + end, "WinReg", 13) > maxLength && shortName.length > 0)
+					shortName = shortName.substring(0, shortName.length - 1);
+				nameAndTime = shortName + '...' + end;
+			}
 			sessionText += '<button id="' + id + i + '">X</button>  ' + nameAndTime;
 			if (i != sessions.length - 1)
 				sessionText += "<br>";
@@ -44,10 +52,6 @@ function updateSessionText() {
 					sessions: sessions
 				});
 			});
-		
-		function shortenSring(text, maxLength) {
-			//TODO
-		}
 	}
 }
 //adds a session to the queue
