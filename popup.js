@@ -21,12 +21,27 @@ function updateSessionText() {
 	//update session text
 	function ust() {
 		let sessionText = "";
+		let id = 'close_button_';
 		for (let i = 0; i < sessions.length; i++) {
-			sessionText += sessions[0].name + ": " + timeToDigital(sessions[i].time) + '  <button id="close_button_' + i + '">X</button>';
+			let nameAndTime = sessions[i].name + ": " + timeToDigital(sessions[i].time);
+			console.log(stringWidth(nameAndTime, "WinReg", 13));
+			sessionText += '<button id="' + id + i + '">X</button>  ' + nameAndTime;
 			if (i != sessions.length - 1)
 				sessionText += "<br>";
 		}
 		document.getElementById('sessions_text').innerHTML = sessionText;
+		for (let i = 0; i < sessions.length; i++)
+			addClickListener(id + i, () => {
+				sessions.splice(i, 1);
+				updateSessionText();
+				sendMessage({
+					to: "background",
+					from: "popup",
+					action: "update",
+					place: "sessions",
+					sessions: sessions
+				});
+			});
 	}
 }
 //adds a session to the queue

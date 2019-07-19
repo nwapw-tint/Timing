@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	colorWheelImg = document.getElementById('wheel_img');
 	canvas.width = colorWheelImg.width;
 	canvas.height = colorWheelImg.height;
-	console.log(canvas.width, canvas.height);
 	context.drawImage(colorWheelImg, 0, 0);
 	colorWheelData = context.getImageData(0, 0, colorWheelImg.width, colorWheelImg.height);
 

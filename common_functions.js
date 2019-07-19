@@ -16,6 +16,15 @@ function timeToDigital(seconds) {
 	return str + s;
 }
 
+function stringWidth(text, fontName, fontSize) {
+	if (stringWidth.canvas === undefined) {
+		stringWidth.canvas = document.createElement('canvas');
+		stringWidth.context = stringWidth.canvas.getContext('2d');
+	}
+	stringWidth.context.font = fontSize + " " + fontName;
+	return Math.ceil(stringWidth.context.measureText(text).width);
+}
+
 const alpha = 0.3;
 
 const CLEAR_COLOR = {

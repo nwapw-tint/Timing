@@ -7,10 +7,9 @@ function setTintColor(color) {
 		div.style.background = color;
 }
 
-document.addEventListener('keydown', function (evt) {
-	if (evt.keyCode === 81) {
-	  console.log('The "Q" key is being held down...?');
-	}
+document.addEventListener('keydown', (evt) => {
+	if (evt.keyCode === 81)
+	  console.log('The "Q" key is being held down');
   });
 //Enables the tint
 function enableTint(id, color, duration) {
