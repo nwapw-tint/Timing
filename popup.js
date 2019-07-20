@@ -1,19 +1,16 @@
 //Local copies
 var sessions = [];
 var sessionRunning = false;
+var nColor = "rgba(0, 255, 0, " + alpha + ")";
+var bColor = "rgba(255, 0, 0, " + alpha + ")";
 
 const maxTime = 1440;
 const maxLength = 70;
 
-var nColor = "rgba(0, 255, 0, " + alpha + ")";
-var bColor = "rgba(255, 0, 0, " + alpha + ")";
-
-var mouseX = 0, mouseY = 0;
-
 var blacklistedSites = [];
 var addToBlacklisted = false;
 
-//Updates the session text at the right time
+//Updates the session text only after the dom content loads
 function updateSessionText() {
 	if (document.getElementById('sessions_text'))
 		ust();
@@ -25,7 +22,9 @@ function updateSessionText() {
 	//Update session text
 	function ust() {
 		let sessionText = "";
-		let id = 'close_button_';
+		const id = 'close_button_';
+
+		//Adds all the cancel buttons, the name, and the time left for each session
 		for (let i = 0; i < sessions.length; i++) {
 			let shortName = sessions[i].name;
 			let end = ": " + timeToDigital(sessions[i].time);

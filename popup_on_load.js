@@ -1,3 +1,6 @@
+//The mouse coordinates
+var mouseX = 0, mouseY = 0;
+
 //Called when the popup loads
 document.addEventListener('DOMContentLoaded', () => {
 	let canvas = document.createElement('canvas');
@@ -16,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	//Invoked when the mouse is clicked
 	window.addEventListener('click', (e) => {
-		let color = getColorFrom(Math.floor((mouseX - colorImg.x) / 4), Math.floor((mouseY - colorImg.y) / 4));
+		let color = getColorFromImage(Math.floor((mouseX - colorImg.x) / 4), Math.floor((mouseY - colorImg.y) / 4));
 		if (color)
 			if (addToBlacklisted) {
 				bColor = color;
@@ -100,10 +103,12 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	});
 	
+	//Sets the add color mode to the normal color
 	addClickListener('normal_radio', () => {
 		addToBlacklisted = false;
 	});
 	
+	//Sets the add color mode to change the blacklisted color
 	addClickListener('blacklisted_radio', () => {
 		addToBlacklisted = true;
 	});

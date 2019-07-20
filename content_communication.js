@@ -1,3 +1,4 @@
+//Creates the port
 var port = chrome.extension.connect({
 	name: "content"
 });

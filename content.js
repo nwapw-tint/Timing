@@ -11,7 +11,7 @@ function setTintColor(color) {
 function enableTint(id, color) {
 	if (document.querySelector('[id^="tint-"]') == null) {
 		var tintDiv = document.createElement("div");
-		tintDiv.id = (tintId = id); //allows removal by id
+		tintDiv.id = (tintId = id); //Allows removal by id
 		tintDiv.style.background = color;
 		styleTint(tintDiv);
 		setupText();

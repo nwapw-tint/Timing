@@ -2,7 +2,7 @@
 	"manifest_version": 2,
 	"name": "NWAPW Tint",
 	"description": "This extension will allow you to tint chrome to a color based on what task you're supposed to be doing. You can add, remove, and edit tasks, and even add parental controls.",
-	"version": "0.6",
+	"version": "0.7",
 	"content_scripts": [
 		{
 			"matches": [

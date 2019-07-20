@@ -1,5 +1,5 @@
-duration = 1400;
-step = 200;
+const duration = 1400;
+const step = 200;
 
 var robotoFont = document.createElement('link');
 robotoFont.setAttribute('rel', 'stylesheet');
