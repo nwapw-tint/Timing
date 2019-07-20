@@ -1,3 +1,4 @@
+//Called when the popup loads
 document.addEventListener('DOMContentLoaded', () => {
 	let canvas = document.createElement('canvas');
 	let context = canvas.getContext('2d');
@@ -7,11 +8,13 @@ document.addEventListener('DOMContentLoaded', () => {
 	context.drawImage(colorImg, 0, 0);
 	colorData = context.getImageData(0, 0, colorImg.width, colorImg.height);
 
+	//Invoked when the mouse is moved
 	window.addEventListener('mousemove', (e) => {
 		mouseX = e.screenX - window.screenX - 11;
 		mouseY = e.screenY - window.screenY - 9;
 	}, false);
 
+	//Invoked when the mouse is clicked
 	window.addEventListener('click', (e) => {
 		let color = getColorFrom(Math.floor((mouseX - colorImg.x) / 4), Math.floor((mouseY - colorImg.y) / 4));
 		if (color)
@@ -28,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				nColor = color;
 	});
 	
+	//Adds a session to the queue
 	addClickListener('add_session_button', () => {
 		var time = document.getElementById('time_input').value;
 		if (time.length == 0)
@@ -40,6 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			addSession(time);
 	});
 	
+	//Adds a blacklisted site
 	addClickListener('add_site_button', () => {
 		let site = document.getElementById('site_input').value;
 		if (site.length == 0)
@@ -63,6 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	});
 	
+	//Starts the session
 	addClickListener('start_session_button', () => {
 		if (sessions.length == 0)
 			showError("No sessions!");
@@ -79,6 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	});
 	
+	//Pauses the session
 	addClickListener('pause_session_button', () => {
 		if (!sessionRunning)
 			showError("Session not started!");
@@ -93,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	});
 	
-	addClickListener('whitelisted_radio', () => {
+	addClickListener('normal_radio', () => {
 		addToBlacklisted = false;
 	});
 	

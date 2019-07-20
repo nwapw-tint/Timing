@@ -1,3 +1,4 @@
+//Updates the popup sessions
 function updatePopupSessions() {
 	sendMessage({
 		to: "popup",
@@ -8,6 +9,7 @@ function updatePopupSessions() {
 	});
 }
 
+//Updates the popup sessions running
 function updatePopupSessionRunning() {
 	sendMessage({
 		to: "popup",
@@ -18,6 +20,7 @@ function updatePopupSessionRunning() {
 	});
 }
 
+//Updates the popup blacklisted sites
 function updatePopupBlacklistedSites() {
 	sendMessage({
 		to: "popup",
@@ -28,6 +31,7 @@ function updatePopupBlacklistedSites() {
 	});
 }
 
+//Updates the popup
 function updatePopup() {
 	updatePopupSessions();
 	updatePopupSessionRunning();

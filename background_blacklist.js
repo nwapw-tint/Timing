@@ -1,3 +1,4 @@
+//Updates if the current tab is blacklisted
 function isCurrentTabBlacklisted() {
 	let blacklisted = false;
 	for (let i = 0; i < blacklistedSites.length && !blacklisted; i++)

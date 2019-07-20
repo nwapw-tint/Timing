@@ -9,10 +9,10 @@
 		<script src="popup_on_load.js"></script>
 	</head>
 	<body bgcolor="#D4D0C8">
-			<div class="topbar">
-		<img src="bluebar.png" style="width:315.5px"></img>
-		<p style="position:absolute; top: -10px; left:4px;">Color Tint</p>
-			</div>
+		<div class="topbar">
+			<img src="bluebar.png" style="width:315.5px"></img>
+			<p style="position:absolute; top:-10px; left:4px;">Color Tint</p>
+		</div>
 		<br>
 		<table height="355">
 			<tr>
@@ -20,7 +20,7 @@
 					<table id="sessions_bar">
 						<tr>
 							<p id="session_label" style="padding-left:25px;">Sessions</p>
-							<hr style="border: 1.5px inset; position:fixed; top:50px; left:19px; padding-left:91px;" >
+							<hr style="border:1.5px inset; position:fixed; top:50px; left:19px; padding-left:91px;" >
 						</tr>
 						<tr>
 							<p id="sessions_text" draggable="true" style="position:fixed; top:54px; left:20px;"></p>
@@ -48,13 +48,13 @@
 						<tr>
 							<br>
 							<label class="checkbox-label">
-							<input type="radio" name="colorRadio" value="whitelisted" checked id="whitelisted_radio">
-							<span class="custom-check" style="top:140px;" ></span>
-							<p class="title" style="top:127px; left:153px;">Whitelist Color</p>
+							<input type="radio" name="color_radio" value="normal" checked id="normal_radio">
+							<span class="custom-check" style="top:140px;"></span>
+							<p class="title" style="top:127px; left:153px;">Normal Color</p>
 						</tr>
 						<tr>
 							<label class="checkbox-label">
-							<input type="radio" name="colorRadio" value="blacklisted" class="box_two" id="blacklisted_radio">
+							<input type="radio" name="color_radio" value="blacklisted" class="box_two" id="blacklisted_radio">
 							<span class="custom-check" style="top:170px;"></span>
 							<p class="title" style="top:157px; left:153px;">Blacklist Color</p>
 						</tr>
@@ -65,7 +65,6 @@
 							<p align="left" class="title" style="top:310px">Blacklisted Sites</p>
 							<input type="text" id="site_input">
 							<button class="add_button" id="add_site_button" style="top:345px;"><p id="buttontxt">Add</p></button>
-							
 						</tr>
 					</table>
 				</td> 

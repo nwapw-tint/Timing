@@ -2,7 +2,7 @@ var ports = [];
 
 //Called when something connects to this
 chrome.extension.onConnect.addListener((port) => {
-	//Creates the capability to receive messages from
+	//Creates the capability to receive messages from different scripts
 	port.onMessage.addListener((msg) => {
 		if (msg.to != "background")
 			return;
@@ -34,7 +34,7 @@ chrome.extension.onConnect.addListener((port) => {
 				break;
 			case "blacklistedSites":
 				blacklistedSites.push(msg.blacklistedSite);
-				updateContentColor();
+				updateContentTint();
 			}
 			break;
 		case "shift":
@@ -51,9 +51,15 @@ chrome.extension.onConnect.addListener((port) => {
 				if (sessions.length == 0)
 					stopSession();
 				break;
+			case "bColor":
+				bColor = msg.bColor;
+				updateContentTint();
+				break;
 			case "color":
-				sessions[0].color = msg.color;
-				updateContentColor();
+				if (sessions.length > 0) {
+					sessions[0].color = msg.color;
+					updateContentTint();
+				}
 				break;
 			}
 			break;
@@ -99,7 +105,7 @@ chrome.tabs.onActivated.addListener((activeInfo) => {
 				sitesVisited.push(currentSite);
 				chrome.tabs.reload(activeInfo.tabId);
 			} else
-				updateContentColor();
+				updateContentTint();
 		} catch (error) {
 			console.log("tabs are null");
 		}

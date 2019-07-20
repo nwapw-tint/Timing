@@ -13,6 +13,7 @@ var mouseX = 0, mouseY = 0;
 var blacklistedSites = [];
 var addToBlacklisted = false;
 
+//Updates the session text at the right time
 function updateSessionText() {
 	if (document.getElementById('sessions_text'))
 		ust();
@@ -21,7 +22,7 @@ function updateSessionText() {
 			ust();
 		}, false);
 	
-	//update session text
+	//Update session text
 	function ust() {
 		let sessionText = "";
 		let id = 'close_button_';
@@ -39,6 +40,8 @@ function updateSessionText() {
 				sessionText += "<br>";
 		}
 		document.getElementById('sessions_text').innerHTML = sessionText;
+
+		//Sets up the cancel buttons
 		for (let i = 0; i < sessions.length; i++)
 			addClickListener(id + i, () => {
 				sessions.splice(i, 1);
@@ -62,7 +65,8 @@ function updateSessionText() {
 			});
 	}
 }
-//adds a session to the queue
+
+//Adds a session to the queue
 function addSession(time) {
 	let name = document.getElementById('name_input').value;
 	if (name.length == 0)
@@ -87,10 +91,12 @@ function addSession(time) {
 	}
 }
 
+//Adds a click listener to the element with the id
 function addClickListener(id, callback) {
 	document.getElementById(id).addEventListener('click', callback, false);
 }
 
+//Shows an error
 function showError(error) {
 	alert("ERROR: " + error);
 }

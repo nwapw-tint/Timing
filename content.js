@@ -8,9 +8,8 @@ function setTintColor(color) {
 }
 
 //Enables the tint
-function enableTint(id, color, duration) {
-	if (document.querySelector('[id^="tint-"]') == null)
-	{
+function enableTint(id, color) {
+	if (document.querySelector('[id^="tint-"]') == null) {
 		var tintDiv = document.createElement("div");
 		tintDiv.id = (tintId = id); //allows removal by id
 		tintDiv.style.background = color;
@@ -19,23 +18,25 @@ function enableTint(id, color, duration) {
 	} else
 		setTintColor(color);
 	
-	function setupText() { //creates an empty text wrapper, allowing innerHTML to be added.
+	//Creates an empty text wrapper, allowing innerHTML to be added
+	function setupText() {
 		var textDiv = document.createElement("div");
 		textDiv.id = "textDiv";
 		textDiv.style.position = "absolute";
 		textDiv.style.top = "50%";
 		textDiv.style.left = "50%";
 		textDiv.style.marginRight = "-50%";
-		textDiv.style.transform="translate(-50%, -50%)";
+		textDiv.style.transform = "translate(-50%, -50%)";
 		textDiv.style.backgroundColor = "rgba(255, 255, 255, 1)";
 		textDiv.style.fontFamily = "'Roboto', Sans Serif";
 		textDiv.style.color = "rgba(0, 0, 0, 1)"; //TODO: set automatically based on tint shade
 		textDiv.style.fontSize = "80px"; //TODO: self adjusting size. rn, just set a cap
 		textDiv.style.zIndex = 100;
-		textDiv.style.opacity == 0;
+		textDiv.style.opacity = 0;
 		tintDiv.appendChild(textDiv);
 	}
-	//styles the tint div
+
+	//Styles the tint div
 	function styleTint(div) {
 		div.style.width = "100%";
 		div.style.height = "100%";

@@ -8,6 +8,7 @@ var bColor = "rgba(255, 0, 0, " + alpha + ")";
 var currentSite = "";
 var sitesVisited = [];
 
+//The hidden timer
 function showSecondTimeout() {
 	setTimeout(() => {
 		if (sessionRunning) {
@@ -22,7 +23,7 @@ function showSecondTimeout() {
 				} else {
 					//alert("Session finished!");
 					sessions = s;
-					updateContentColor();
+					updateContentTint();
 					showSecondTimeout();
 				}
 			} else {
@@ -33,32 +34,23 @@ function showSecondTimeout() {
 	}, 1000);
 }
 
+//Starts a session
 function startSession() {
-	if (!sessionRunning)
+	if (!sessionRunning) {
+		sessionRunning = true;
 		showSecondTimeout();
-	sessionRunning = true;
-	sendMessage({
-		to: "content",
-		from: "background",
-		action: "tint",
-		mode: "enable",
-		id: "tint-color",
-		color: getTintColor(),
-		duration: 100
-	});
+	}
+	enableContentTint();
 }
 
+//Stops a session
 function stopSession() {
 	sessionRunning = false;
-	sendMessage({
-		to: "content",
-		from: "background",
-		action: "tint",
-		mode: "disable"
-	});
+	disableContentTint();
 }
 
-function getTintColor() {
+//Gets the tint
+function getTint() {
 	isCurrentTabBlacklisted();
 	if (sessions.length > 0)
 		return onBlacklistedSite ? bColor : sessions[0].color;

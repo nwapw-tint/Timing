@@ -6,6 +6,7 @@ robotoFont.setAttribute('rel', 'stylesheet');
 robotoFont.setAttribute('type', 'text/css');
 robotoFont.setAttribute('href', "https://fonts.googleapis.com/css?family=Roboto&display=swap");
 
+//Adds the text to the div
 function addText(text, time)
 {
     textDiv = document.getElementById("textDiv")
@@ -17,6 +18,7 @@ function addText(text, time)
             textDiv.innerHTML = text + " " + timeToDigital(time - 1);
         }, 1000); //faux dynamic feeling
     }
+
     //Fades the target element.
     function fadeOut(fadeTarget) {
         var fadeEffect = setInterval(() => {

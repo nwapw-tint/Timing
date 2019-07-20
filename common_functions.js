@@ -1,3 +1,4 @@
+//Converts a number in seconds to digital time
 function timeToDigital(seconds) {
 	let h = Math.floor(seconds / 3600);
 	let m = Math.floor((seconds / 60) % 60);
@@ -16,6 +17,7 @@ function timeToDigital(seconds) {
 	return str + s;
 }
 
+//Gets the width of a string in pixels
 function stringWidth(text, fontName, fontSize) {
 	if (stringWidth.canvas === undefined) {
 		stringWidth.canvas = document.createElement('canvas');

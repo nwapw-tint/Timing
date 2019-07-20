@@ -20,7 +20,7 @@ port.onMessage.addListener((msg) => {
 	case "tint":
 		switch (msg.mode) {
 		case "enable":
-			enableTint(msg.id, msg.color, msg.duration);
+			enableTint(msg.id, msg.color);
 			break;
 		case "disable":
 			disableTint();
@@ -41,7 +41,7 @@ function sendMessage(msg) {
 	port.postMessage(msg);
 }
 
-//Once the page has loaded, check the running status and update the tint accordingly
+//Once the page has loaded, check the running status and updates the tint accordingly
 document.addEventListener('DOMContentLoaded', () => {
 	sendMessage({
 		to: "background",
