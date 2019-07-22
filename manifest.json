@@ -9,10 +9,9 @@
 				"<all_urls>"
 			],
 			"js": [
-				"content.js",
-				"content_communication.js",
+				"setupTint.js",
 				"common_functions.js",
-				"content_add_text.js"
+				"content.js"
 			],
 			"run_at": "document_start"
 		}
@@ -20,11 +19,6 @@
 	"background": {
 		"scripts": [
 			"background.js",
-			"background_communication.js",
-			"background_update_content.js",
-			"background_update_popup.js",
-			"background_blacklist.js",
-			"background_experimental.js",
 			"common_functions.js"
 		],
 		"persistent": false
