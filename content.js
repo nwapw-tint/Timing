@@ -101,7 +101,6 @@ port.onMessage.addListener((msg) => {
 	case "tint":
 		switch (msg.mode) {
 		case "enable":
-			alert(msg.color+ "is the color that passed from popup to bckgrnd to content")
 			enableTint(msg.id, msg.color,msg.sessionRunning);
 			break;
 		case "disable":
