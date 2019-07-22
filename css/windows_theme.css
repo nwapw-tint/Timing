@@ -1,126 +1,139 @@
 @font-face {
-	src:url("../fonts/Escapists.ttf");
-	font-family:WinReg;
+	src: url("../fonts/Windows-Regular.ttf");
+	font-family: WinReg;
 }
-html, td {
-	border-style:outset;
-}
-html {
-	height:388px;
-}
-.topbar {
-	width:290px;
-	position:absolute;
-	left:3px;
-	top:-4px;
-	color:white;
-	font-size:24px;
-}
-button {
-	border-style:outset;
+html,td {border-style: outset;}
+html{
+	height:390px;
 	background-color:#D4D0C8;
-	font-family:WinReg;
-	font-size:24px;
+	}
+.topbar{
+	width:395.5px;
+	height:20px;
+	position:absolute;
+	left:2px;
+	top:2px;
+	color:white;
+	text-align:left;
+	background-image: url("../images/bluebar.png");
+	background-size: cover;
+}
+
+button{
+	border-style: outset;
+	background-color: #D4D0C8;
+	font-family: 'WinReg';
 	outline-color:black;
 }
-p {
-	font-family:WinReg;
-	font-size:24px;
-}
-input[type=text] {
-	font-family:WinReg;
-	font-size:24px;
-	border:2.5px inset;
+p{font-family: WinReg;}
+input[type=text]{
+	font-family: WinReg;
+	border: 2.5px inset;
 	width:118px;
 	position:absolute;
-	left:100px;
+	left:180px;
 	outline:none;
 	padding:0px;
 	margin:0px;
 }
-.checkbox-label input {
-	opacity:0;
-}
+.checkbox-label input{opacity: 0;}
 .checkbox-label .custom-check {
-	position:absolute;
-	left:130px;
-	background-color:#D4D0C8;
-	border-style:inset;
-	display:block;
-	width:11px;
-	height:11px;
+	position: absolute;
+	left:210px;
+	background-color: #D4D0C8;
+	border-style: inset;
+	display: block;
+	width: 11px;
+	height: 11px;
 }
 .checkbox-label input:checked ~ .custom-check {
-	background-image:url("../images/x.png");
-	border-style:inset;
-	-webkit-transform:rotate(0deg) scale(1);
-	-ms-transform:rotate(0deg) scale(1);
+	background-image: url("../images/x.png");
+	border-style: inset;
+	-webkit-transform: rotate(0deg) scale(1);
+	-ms-transform: rotate(0deg) scale(1);
 	transform:rotate(0deg) scale(1);
 	opacity:1;
 }
-.square {
-	border-style:inset;
+.square{
+	border-style: inset;
 	width:165px;
-	height:110px;
-	position:absolute;
-	top:200px;
-	left:129px;
+	height: 110px;
+	position: absolute;
+	top: 200px;
+	left:209px;
 }
-#session_label {
-	position:fixed;
-	top:11px;
-	left:19px;
+#session_label{
+	position: fixed;
+	top:22px;
+	left:55px;
 	padding-left:10px;
 	padding-right:10px;
-	font-size:24px;
+	font-size: 13px;
+	text-align:center;
 }
-#sessions_bar {
-	width:100px;
-}
-#setup_bar {
+#sessions_bar{
 	width:180px;
 }
-.title {
+#setup_bar{
+	width:180px;
+}
+
+.title{
 	position:absolute;
-	top:11px;
-	left:130px;
-	font-size:24px;
+	top:22px;
+	left:210px;
+	font-size:13px;
 	padding:0px;
 }	
-#name_input {
+#name_input{
 	position:absolute;
-	top:55px;
-	left:130px;
+	top: 55px;
+	left:210px;
 }
-#time_input {
+#time_input{
 	position:absolute;
 	top:105px;
-	left:130px;
+	left:210px;
 }
-#site_input {
+#site_input{
 	position:absolute;
 	top:345px;
-	left:130px;
+	left:210px;
 }
-.add_button {
-	position:absolute;
-	left:260px;
-	width:40px;
-	height:22px;
+.add_button{
+	position: absolute;
+	left:340px;
+	width: 40px;
+	height: 22px;
 }
-#start_session_button {
-	position:fixed;
-	top:320px;
-	left:24px;
-	width:85px;
+#buttontxt{
+	position: relative;
+	top: -15px;
+	left: -1px;
+	font-size: 14px;
 }
-#pause_session_button {
-	position:fixed;
-	top:345px;
-	left:24px;
-	width:85px;
+#start_session_button{
+	position: fixed;
+	top:346px;
+	left:20px;
+	width: 85px;
 }
-sesh-top {
+#pause_session_button{
+	position: fixed;
+	top:346px;
+	left:110px;
+	width: 81px;
+}
+sesh-top{
 	position:absolute;
 	top:-2px;
 }
+
+#divide{
+	border: 1.5px inset; 
+	position:fixed; 
+	top:50px; 
+	left:19px; 
+	padding-left:170px;
+}
+	
