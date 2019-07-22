@@ -5,7 +5,7 @@ var nColor = "rgba(0, 255, 0, " + alpha + ")";
 var bColor = "rgba(255, 0, 0, " + alpha + ")";
 
 const maxTime = 1440;
-const maxLength = 70;
+const maxLength = 147;
 
 var blacklistedSites = [];
 var addToBlacklisted = false;
@@ -26,7 +26,7 @@ function updateSessionText() {
 		//Adds all the cancel buttons, the name, and the time left for each session
 		for (let i = 0; i < sessions.length; i++) {
 			let shortName = sessions[i].name;
-			let end = ": " + timeToDigital(sessions[i].time);
+			let end = "- " + timeToDigital(sessions[i].time);
 			let nameAndTime = shortName + end;
 			if (stringWidth(nameAndTime, "WinReg", 24) > maxLength) {
 				while (stringWidth(shortName + '...' + end, "WinReg", 24) > maxLength && shortName.length > 0)
@@ -152,23 +152,8 @@ function sendMessage(msg) {
 /*-----------------------Color Selection-----------------------*/
 
 
-var colorImg;
-var colorData;
-var notScaledImage;
 
-//Returns the color found in the image at the coordinate (x, y)
-function getColorFromImage (x, y) {
-	x = Math.floor(x / (colorImg.width - 1) * (notScaledImage.width - 1));
-	y = Math.floor(y / (colorImg.height - 1) * (notScaledImage.height - 1));
-	if (x < 0 || x >= notScaledImage.width || y < 0 || y >= notScaledImage.height)
-		return null;
-	console.log(x, y);
-	let index = (y * notScaledImage.width + x) * 4; //*4 because each color is 4 elements (r, g, b, and a)
-	if (colorData[index + 3] < 255)
-		return null;
-	console.log("rgba(" + colorData.data[index] + "," + colorData.data[index + 1] + "," + colorData.data[index + 2] + ", " + alpha + ")");
-	return "rgba(" + colorData.data[index] + "," + colorData.data[index + 1] + "," + colorData.data[index + 2] + ", " + alpha + ")";
-}
+
 
 
 
@@ -181,32 +166,19 @@ var mouseX = 0, mouseY = 0;
 
 //Called when the popup loads
 document.addEventListener('DOMContentLoaded', () => {
-	notScaledImage = new Image();
-	notScaledImage.onload = () => {
-		let canvas = document.createElement('canvas');
-		let context = canvas.getContext('2d');
-		colorImg = document.getElementById('color_img');
-		canvas.width = notScaledImage.width;
-		canvas.height = notScaledImage.height;
-		context.drawImage(notScaledImage, 0, 0);
-		colorData = context.getImageData(0, 0, notScaledImage.width, notScaledImage.height);
-		console.log(colorData);
-		console.log(colorImg.width + "x" + colorImg.height);
-	};
-	notScaledImage.src = "images/color_rectangle.png";
-
-
 	//Invoked when the mouse is moved
 	window.addEventListener('mousemove', (e) => {
 		mouseX = e.screenX - window.screenX - 10;
 		mouseY = e.screenY - window.screenY - 8;
 	}, false);
 
+	document.getElementById('color_chooser').addEventListener('change', () => {
+		nColor = document.getElementById('color_chooser').value;
+	}, false);
+
 	//Invoked when the mouse is clicked
 	window.addEventListener('click', (e) => {
-		let color = getColorFromImage(mouseX - colorImg.x, mouseY - colorImg.y);
-		console.log(colorImg.x, colorImg.y, "IMAGE");
-		console.log(mouseX, mouseY, "MOUSE");
+		let color = nColor;
 		if (color)
 			if (addToBlacklisted) {
 				bColor = color;

@@ -1,13 +1,15 @@
 @font-face {
-	src: url("../fonts/Windows-Regular.ttf");
+	src:url("../fonts/Windows-Regular.ttf");
 	font-family: WinReg;
 }
-html,td {border-style: outset;}
-html{
+html, td {
+	border-style: outset;
+}
+html {
 	height:390px;
 	background-color:#D4D0C8;
-	}
-.topbar{
+}
+.topbar {
 	width:395.5px;
 	height:20px;
 	position:absolute;
@@ -15,20 +17,22 @@ html{
 	top:2px;
 	color:white;
 	text-align:left;
-	background-image: url("../images/bluebar.png");
-	background-size: cover;
+	background-image:url("../images/bluebar.png");
+	background-size:cover;
 }
 
-button{
+button {
 	border-style: outset;
-	background-color: #D4D0C8;
-	font-family: 'WinReg';
+	background-color:#D4D0C8;
+	font-family:WinReg;
 	outline-color:black;
 }
-p{font-family: WinReg;}
-input[type=text]{
-	font-family: WinReg;
-	border: 2.5px inset;
+p {
+	font-family:WinReg;
+}
+input[type=text] {
+	font-family:WinReg;
+	border:2.5px inset;
 	width:118px;
 	position:absolute;
 	left:180px;
@@ -36,15 +40,17 @@ input[type=text]{
 	padding:0px;
 	margin:0px;
 }
-.checkbox-label input{opacity: 0;}
+.checkbox-label input {
+	opacity:0;
+}
 .checkbox-label .custom-check {
-	position: absolute;
+	position:absolute;
 	left:210px;
-	background-color: #D4D0C8;
-	border-style: inset;
-	display: block;
-	width: 11px;
-	height: 11px;
+	background-color:#D4D0C8;
+	border-style:inset;
+	display:block;
+	width:11px;
+	height:11px;
 }
 .checkbox-label input:checked ~ .custom-check {
 	background-image: url("../images/x.png");
@@ -54,83 +60,81 @@ input[type=text]{
 	transform:rotate(0deg) scale(1);
 	opacity:1;
 }
-.square{
-	border-style: inset;
+.square {
+	border-style:inset;
 	width:165px;
-	height: 110px;
-	position: absolute;
-	top: 200px;
+	height:110px;
+	position:absolute;
+	top:200px;
 	left:209px;
 }
-#session_label{
-	position: fixed;
+#session_label {
+	position:fixed;
 	top:22px;
 	left:55px;
 	padding-left:10px;
 	padding-right:10px;
-	font-size: 13px;
+	font-size:13px;
 	text-align:center;
 }
-#sessions_bar{
+#sessions_bar {
 	width:180px;
 }
-#setup_bar{
+#setup_bar {
 	width:180px;
 }
-
-.title{
+.title {
 	position:absolute;
 	top:22px;
 	left:210px;
 	font-size:13px;
 	padding:0px;
 }	
-#name_input{
+#name_input {
 	position:absolute;
 	top: 55px;
 	left:210px;
 }
-#time_input{
+#time_input {
 	position:absolute;
 	top:105px;
 	left:210px;
 }
-#site_input{
+#site_input {
 	position:absolute;
 	top:345px;
 	left:210px;
 }
-.add_button{
-	position: absolute;
+.add_button {
+	position:absolute;
 	left:340px;
-	width: 40px;
-	height: 22px;
+	width:40px;
+	height:22px;
 }
-#buttontxt{
-	position: relative;
-	top: -15px;
-	left: -1px;
-	font-size: 14px;
+#buttontxt {
+	position:relative;
+	top:-15px;
+	left:-1px;
+	font-size:14px;
 }
-#start_session_button{
-	position: fixed;
+#start_session_button {
+	position:fixed;
 	top:346px;
 	left:20px;
-	width: 85px;
+	width:85px;
 }
-#pause_session_button{
-	position: fixed;
+#pause_session_button {
+	position:fixed;
 	top:346px;
 	left:110px;
-	width: 81px;
+	width:81px;
 }
-sesh-top{
+sesh-top {
 	position:absolute;
 	top:-2px;
 }
-
-#divide{
-	border: 1.5px inset; 
+#divide {
+	border:1.5px inset; 
 	position:fixed; 
 	top:50px; 
 	left:19px; 
