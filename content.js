@@ -6,15 +6,29 @@ function setTintColor(color) {
 	if (div && color)
 		div.style.background = color;
 }
-
+function sleep(ms) {
+	return new Promise(resolve => setTimeout(resolve, ms));
+  }
+  
 //Enables the tint
-function enableTint(id, color) {
+async function enableTint(id, color) {
 	if (document.querySelector('[id^="tint-"]') == null) {
 		var tintDiv = document.createElement("div");
 		tintDiv.id = (tintId = id); //Allows removal by id
-		tintDiv.style.background = color;
+		//rgba(0, 255, 0, 0.3)
+		color = color.replace(/[^\d,.]/g, '').split(',')
 		styleTint(tintDiv);
 		setupText();
+		currentColor = 0;
+		//FADER
+		while(currentColor < color[3]-0.005)
+		{
+			//increments the tint until it is close to the desired value, then smoothly moves towards it
+			currentColor+=(Math.min(0.04,(color[3]-currentColor)/2));
+			await sleep(100);
+			rgbaStr ="rgba("+color[0]+","+color[1]+","+color[2]+","+currentColor+")"
+			tintDiv.style.background = rgbaStr;
+		}
 	} else
 		setTintColor(color);
 	
@@ -28,7 +42,6 @@ function enableTint(id, color) {
 		textDiv.style.marginRight = "-50%";
 		textDiv.style.transform = "translate(-50%, -50%)";
 		textDiv.style.backgroundColor = "rgba(255, 255, 255, 1)";
-		textDiv.style.fontFamily = "'Roboto', Sans Serif";
 		textDiv.style.color = "rgba(0, 0, 0, 1)"; //TODO: set automatically based on tint shade
 		textDiv.style.fontSize = "80px"; //TODO: self adjusting size. rn, just set a cap
 		textDiv.style.zIndex = 100;
@@ -125,11 +138,10 @@ document.addEventListener('DOMContentLoaded', () => {
 const duration = 1400;
 const step = 200;
 
-var robotoFont = document.createElement('link');
+/*var robotoFont = document.createElement('link');
 robotoFont.setAttribute('rel', 'stylesheet');
 robotoFont.setAttribute('type', 'text/css');
-robotoFont.setAttribute('href', "https://fonts.googleapis.com/css?family=Roboto&display=swap");
-
+robotoFont.setAttribute('href', "https://fonts.googleapis.com/css?family=Roboto&display=swap");*/
 //Adds the text to the div
 function addText(text, time)
 {
