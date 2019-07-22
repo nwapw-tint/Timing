@@ -23,7 +23,7 @@ function stringWidth(text, fontName, fontSize) {
 		stringWidth.canvas = document.createElement('canvas');
 		stringWidth.context = stringWidth.canvas.getContext('2d');
 	}
-	stringWidth.context.font = fontSize + " " + fontName;
+	stringWidth.context.font = fontSize + "px " + fontName;
 	return Math.ceil(stringWidth.context.measureText(text).width);
 }
 
