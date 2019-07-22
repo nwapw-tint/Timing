@@ -154,6 +154,7 @@ function addText(text, time)
     if (textDiv && textDiv.style.opacity == 0) {    
 		textDiv.style.opacity = 1;
 		textDiv.style.fontSize = (80+(Math.floor(120/charCount)))+"px";
+		textDiv.style.wordWrap = "break-word";
         textDiv.innerHTML = text + " " + timeToDigital(time);
         fadeOut(textDiv);
         setTimeout(() => {
