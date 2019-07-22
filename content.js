@@ -12,6 +12,7 @@ function sleep(ms) {
   
 //Enables the tint
 async function enableTint(id, color) {
+	console.log("filter added");
 	if (document.querySelector('[id^="tint-"]') == null) {
 		var tintDiv = document.createElement("div");
 		tintDiv.id = (tintId = id); //Allows removal by id
@@ -44,7 +45,7 @@ async function enableTint(id, color) {
 		textDiv.style.backgroundColor = "rgba(255, 255, 255, 1)";
 		textDiv.style.color = "rgba(0, 0, 0, 1)"; //TODO: set automatically based on tint shade
 		textDiv.style.fontSize = "80px"; //TODO: self adjusting size. rn, just set a cap
-		textDiv.style.zIndex = 100;
+		textDiv.style.zIndex = 2147483647;
 		textDiv.style.opacity = 0;
 		tintDiv.appendChild(textDiv);
 	}
@@ -53,8 +54,8 @@ async function enableTint(id, color) {
 	function styleTint(div) {
 		div.style.width = "100%";
 		div.style.height = "100%";
-		div.style.pointerEvents = "none";
-		div.style.zIndex = 10000; //TODO: something about this
+		div.style.pointerEvents = "none";	
+		div.style.zIndex = 2147483647; //TODO: something about this
 		div.style.top = 0;
 		div.style.left = 0;
 		div.style.position = "fixed";
