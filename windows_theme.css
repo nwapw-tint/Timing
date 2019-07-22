@@ -1,0 +1,137 @@
+@font-face {
+	src: url("Windows-Regular.ttf");
+	font-family: WinReg;
+}
+html,td {border-style: outset;}
+html{
+	height:390px;
+	background-color:#D4D0C8;
+	}
+.topbar{
+	width:315.5px;
+	height:20px;
+	position:absolute;
+	left:2px;
+	top:2px;
+	color:white;
+	text-align:left;
+	background-image: url("bluebar.png");
+	background-size: cover;
+}
+
+button{
+	border-style: outset;
+	background-color: #D4D0C8;
+	font-family: 'WinReg';
+	outline-color:black;
+}
+p{font-family: WinReg;}
+input[type=text]{
+	font-family: WinReg;
+	border: 2.5px inset;
+	width:118px;
+	position:absolute;
+	left:100px;
+	outline:none;
+	padding:0px;
+	margin:0px;
+}
+.checkbox-label input{opacity: 0;}
+.checkbox-label .custom-check {
+	position: absolute;
+	left:130px;
+	background-color: #D4D0C8;
+	border-style: inset;
+	display: block;
+	width: 11px;
+	height: 11px;
+}
+.checkbox-label input:checked ~ .custom-check {
+	background-image: url("x.png");
+	border-style: inset;
+	-webkit-transform: rotate(0deg) scale(1);
+	-ms-transform: rotate(0deg) scale(1);
+	transform:rotate(0deg) scale(1);
+	opacity:1;
+}
+.square{
+	border-style: inset;
+	width:165px;
+	height: 110px;
+	position: absolute;
+	top: 200px;
+	left:129px;
+}
+#session_label{
+	position: fixed;
+	top:22px;
+	left:19px;
+	padding-left:10px;
+	padding-right:10px;
+	font-size: 13px;
+}
+#sessions_bar{
+	width:100px;
+}
+#setup_bar{
+	width:180px;
+}
+.title{
+	position:absolute;
+	top:22px;
+	left:130px;
+	font-size:13px;
+	padding:0px;
+}	
+#name_input{
+	position:absolute;
+	top: 55px;
+	left:130px;
+}
+#time_input{
+	position:absolute;
+	top:105px;
+	left:130px;
+}
+#site_input{
+	position:absolute;
+	top:345px;
+	left:130px;
+}
+.add_button{
+	position: absolute;
+	left:260px;
+	width: 40px;
+	height: 22px;
+}
+#buttontxt{
+	position: relative;
+	top: -15px;
+	left: -1px;
+	font-size: 14px;
+}
+#start_session_button{
+	position: fixed;
+	top:320px;
+	left:24px;
+	width: 85px;
+}
+#pause_session_button{
+	position: fixed;
+	top:345px;
+	left:24px;
+	width: 85px;
+}
+sesh-top{
+	position:absolute;
+	top:-2px;
+}
+
+#divide{
+	border: 1.5px inset; 
+	position:fixed; 
+	top:50px; 
+	left:19px; 
+	padding-left:91px;
+}
+	
