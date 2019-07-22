@@ -5,11 +5,10 @@
 		<script src="common_functions.js"></script>
 		<script src="popup.js"></script>
 	</head>
-	<body bgcolor="#D4D0C8">
-		<div class="topbar">
-			<img src="images/bluebar.png" draggable="false" style="width:318px"></img>
-			<p style="position:absolute; top:-16px; left:6px;">Color Tint</p>
-		</div>
+	<body>
+			<div class="topbar">
+		<p style="position:absolute; top: -10px; left:4px;">Color Tint</p>
+			</div>
 		<br>
 		<table height="355">
 			<tr>
@@ -17,10 +16,10 @@
 					<table id="sessions_bar">
 						<tr>
 							<p id="session_label" style="padding-left:25px;">Sessions</p>
-							<hr style="border:1.5px inset; position:fixed; top:49px; left:19px; padding-left:91px;">
+							<hr id="divide" >
 						</tr>
 						<tr>
-							<p id="sessions_text" style="position:fixed; top:40px; left:20px;"></p>
+							<p id="sessions_text" draggable="true" style="position:fixed; top:54px; left:20px;"></p>
 						</tr>
 						<tr>
 							<button id="start_session_button">Start</button>
@@ -32,12 +31,13 @@
 				</td>
 				<td>
 					<table id="setup_bar">
+					<div>
 						<tr>
 							<p align="left" class="title">Session Name</p>
 							<input type="text" id="name_input">
 						</tr>
 						<tr>
-							<p align="left" class="title" style="top:59px">Time in Minutes</p>
+							<p align="left" class="title" style="top:70px">Time in Minutes</p>
 							<input type="text" id="time_input">
 							<button class="add_button" id="add_session_button" style="top:105px;">Add</button>
 						</tr>
@@ -45,23 +45,25 @@
 							<br>
 							<label class="checkbox-label">
 							<input type="radio" name="color_radio" value="normal" checked id="normal_radio">
-							<span class="custom-check" style="top:140px;"></span>
-							<p class="title" style="top:116px; left:153px;">Normal Color</p>
+							<span class="custom-check" style="top:140px;" ></span>
+							<p class="title" style="top:125px; left:233px;">Normal Color</p>
 						</tr>
 						<tr>
 							<label class="checkbox-label">
 							<input type="radio" name="color_radio" value="blacklisted" class="box_two" id="blacklisted_radio">
 							<span class="custom-check" style="top:170px;"></span>
-							<p class="title" style="top:146px; left:153px;">Blacklist Color</p>
+							<p class="title" style="top:155px; left:233px;">Blacklist Color</p>
 						</tr>
 						<tr>
 							<center><img src="images/color_rectangle.png" draggable="false" class="square" id="color_img"></center>
 						</tr>
 						<tr>
-							<p align="left" class="title" style="top:299px">Blacklisted Sites</p>
+							<p align="left" class="title" style="top:310px">Blacklisted Sites</p>
 							<input type="text" id="site_input">
 							<button class="add_button" id="add_site_button" style="top:345px;">Add</button>
+							
 						</tr>
+						</div>
 					</table>
 				</td> 
 			</tr>

@@ -109,6 +109,8 @@ port.onMessage.addListener((msg) => {
 		case "change":
 			setTintColor(msg.color);
 			break;
+		case "cycle":
+			runCycle();
 		}
 		break;
 	case "add_text":

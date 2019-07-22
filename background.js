@@ -44,6 +44,7 @@ function startSession() {
 //Stops a session
 function stopSession() {
 	disableContentTint();
+	runColorCycle();
 	sessionRunning = false;
 }
 
@@ -194,6 +195,14 @@ function disableContentTint() {
 		action: "tint",
 		mode: "disable"
 	});
+}
+function runColorCycle(){
+	sendMessage({
+		to: "content",
+		from: "background",
+		action: "tint",
+		mode: "cycle"
+	})
 }
 
 
