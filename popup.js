@@ -22,7 +22,6 @@ function updateSessionText() {
 	//Update session text
 	function ust() {
 		let sessionText = "";
-		const id = 'close_button_';
 
 		//Adds all the cancel buttons, the name, and the time left for each session
 		for (let i = 0; i < sessions.length; i++) {
@@ -34,15 +33,13 @@ function updateSessionText() {
 					shortName = shortName.substring(0, shortName.length - 1);
 				nameAndTime = shortName + '...' + end;
 			}
-			sessionText += '<button id="' + id + i + '">X</button>  ' + nameAndTime;
-			if (i != sessions.length - 1)
-				sessionText += "<br>";
+			sessionText += '<p style="color:' + rgbaToRgb(sessions[i].color) + '; margin:0; padding:0; line-height:20px"><button id="close_button_' + i + '">X</button>  ' + nameAndTime + "</p>";
 		}
 		document.getElementById('sessions_text').innerHTML = sessionText;
 
 		//Sets up the cancel buttons
 		for (let i = 0; i < sessions.length; i++)
-			addClickListener(id + i, () => {
+			addClickListener('close_button_' + i, () => {
 				sessions.splice(i, 1);
 				if (sessions.length == 0)
 					sessionRunning = false;

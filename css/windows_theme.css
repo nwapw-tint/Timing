@@ -39,7 +39,7 @@ input[type=text] {
 	margin:0px;
 }
 .checkbox-label input {
-	opacity: 0;
+	opacity:0;
 }
 .checkbox-label .custom-check {
 	position:absolute;
@@ -51,7 +51,7 @@ input[type=text] {
 	height:11px;
 }
 .checkbox-label input:checked ~ .custom-check {
-	background-image:url("images/x.png");
+	background-image:url("../images/x.png");
 	border-style:inset;
 	-webkit-transform:rotate(0deg) scale(1);
 	-ms-transform:rotate(0deg) scale(1);

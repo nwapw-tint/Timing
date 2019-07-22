@@ -27,6 +27,11 @@ function stringWidth(text, fontName, fontSize) {
 	return Math.ceil(stringWidth.context.measureText(text).width);
 }
 
+//Takes a string with rgba() and takes off the alpha
+function rgbaToRgb(rgba) {
+	return 'rgb' + rgba.substring(rgba.indexOf('('), rgba.lastIndexOf(',')) + ')';
+}
+
 const alpha = 0.3;
 
 const CLEAR_COLOR = {
