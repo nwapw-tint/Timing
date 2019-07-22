@@ -36,17 +36,17 @@ function showSecondTimeout() {
 
 //Starts a session
 function startSession() {
+	enableContentTint();
 	if (!sessionRunning) {
 		sessionRunning = true;
 		showSecondTimeout();
 	}
-	enableContentTint();
 }
 
 //Stops a session
 function stopSession() {
-	sessionRunning = false;
 	disableContentTint();
+	sessionRunning = false;
 }
 
 //Gets the tint
@@ -183,7 +183,8 @@ function enableContentTint() {
 		action: "tint",
 		mode: "enable",
 		id: "tint-color",
-		color: getTint()
+		color: getTint(),
+		sessionRunning: sessionRunning
 	});
 }
 

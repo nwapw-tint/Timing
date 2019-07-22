@@ -11,25 +11,27 @@ function sleep(ms) {
   }
   
 //Enables the tint
-async function enableTint(id, color) {
+async function enableTint(id, color,sessionRunning) {
 	console.log("filter added");
 	if (document.querySelector('[id^="tint-"]') == null) {
 		var tintDiv = document.createElement("div");
 		tintDiv.id = (tintId = id); //Allows removal by id
-		//rgba(0, 255, 0, 0.3)
-		color = color.replace(/[^\d,.]/g, '').split(',')
 		styleTint(tintDiv);
 		setupText();
 		currentColor = 0;
-		//FADER
-		while(currentColor < color[3]-0.005)
+		//FADE in if first, no fade if not first
+		if(!sessionRunning)
+		{
+		//rgba(0, 255, 0, 0.3)
+		color = color.replace(/[^\d,.]/g, '').split(',') //arrayified for editing
+		while(currentColor < color[3]	-0.005)
 		{
 			//increments the tint until it is close to the desired value, then smoothly moves towards it
 			currentColor+=(Math.min(0.02,(color[3]-currentColor)/2));
 			await sleep(20);
 			rgbaStr ="rgba("+color[0]+","+color[1]+","+color[2]+","+currentColor+")"
 			tintDiv.style.background = rgbaStr;
-		}
+		}}else{tintDiv.style.background = color;}
 	} else
 		setTintColor(color);
 	
@@ -100,7 +102,7 @@ port.onMessage.addListener((msg) => {
 	case "tint":
 		switch (msg.mode) {
 		case "enable":
-			enableTint(msg.id, msg.color);
+			enableTint(msg.id, msg.color,msg.sessionRunning);
 			break;
 		case "disable":
 			disableTint();
