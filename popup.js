@@ -160,7 +160,7 @@ var notScaledImage;
 function getColorFromImage (x, y) {
 	x = Math.floor(x / (colorImg.width - 1) * (notScaledImage.width - 1));
 	y = Math.floor(y / (colorImg.height - 1) * (notScaledImage.height - 1));
-	if (x < 0 || x >= colorImg.width || y < 0 || y >= colorImg.height)
+	if (x < 0 || x >= notScaledImage.width || y < 0 || y >= notScaledImage.height)
 		return null;
 	console.log(x, y);
 	let index = (y * notScaledImage.width + x) * 4; //*4 because each color is 4 elements (r, g, b, and a)
@@ -183,7 +183,6 @@ var mouseX = 0, mouseY = 0;
 document.addEventListener('DOMContentLoaded', () => {
 	notScaledImage = new Image();
 	notScaledImage.onload = () => {
-		console.log(notScaledImage.width + "x" + notScaledImage.height);
 		let canvas = document.createElement('canvas');
 		let context = canvas.getContext('2d');
 		colorImg = document.getElementById('color_img');
@@ -206,6 +205,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	//Invoked when the mouse is clicked
 	window.addEventListener('click', (e) => {
 		let color = getColorFromImage(mouseX - colorImg.x, mouseY - colorImg.y);
+		console.log(colorImg.x, colorImg.y, "IMAGE");
+		console.log(mouseX, mouseY, "MOUSE");
 		if (color)
 			if (addToBlacklisted) {
 				bColor = color;
