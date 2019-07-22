@@ -14,7 +14,6 @@ function showSecondTimeout() {
 		if (sessionRunning) {
 			sessions[0].time = Math.max(sessions[0].time - 1, 0);
 			if (sessions[0].time == 0) {
-				const s = sessions;
 				sessions.shift();
 				updatePopupSessions();
 				if (sessions.length == 0) {
@@ -22,7 +21,6 @@ function showSecondTimeout() {
 					stopSession();
 				} else {
 					//alert("Session finished!");
-					sessions = s;
 					updateContentTint();
 					showSecondTimeout();
 				}

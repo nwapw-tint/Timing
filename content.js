@@ -8,37 +8,35 @@ function setTintColor(color) {
 }
 function sleep(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
-  }
+}
   
 //Enables the tint
 async function enableTint(id, color,sessionRunning) {
-	console.log("filter added");
 	if (document.querySelector('[id^="tint-"]') == null) {
 		var tintDiv = document.createElement("div");
 		tintDiv.id = (tintId = id); //Allows removal by id
 		styleTint(tintDiv);
 		setupText();
 		currentColor = 0;
-		//FADE in if first, no fade if not first
-		if(!sessionRunning)
-		{
-		//rgba(0, 255, 0, 0.3)
-		color = color.replace(/[^\d,.]/g, '').split(',') //arrayified for editing
-		while(currentColor < color[3]	-0.005)
-			{
-			//increments the tint until it is close to the desired value, then smoothly moves towards it
-			currentColor+=(Math.min(0.02,(color[3]-currentColor)/2));
-			await sleep(20);
-			rgbaStr ="rgba("+color[0]+","+color[1]+","+color[2]+","+currentColor+")"
-			tintDiv.style.background = rgbaStr;
-			}
-		}
-		else{tintDiv.style.background = color;}
 
+		//FADE in if first, no fade if not first
+		if (!sessionRunning) {
+			//Arrayified for editing
+			color = color.replace(/[^\d,.]/g, '').split(',')
+			//Increments the tint until it is close to the desired value, then smoothly moves towards it
+			while (currentColor < color[3] - 0.005) {
+				currentColor += (Math.min(0.02, (color[3] - currentColor) / 2));
+				await sleep(20);
+				rgbaStr = "rgba(" + color[0] + "," + color[1] + "," + color[2] + "," + currentColor + ")";
+				tintDiv.style.background = rgbaStr;
+			}
+		} else
+			tintDiv.style.background = color;
 	} else
 		setTintColor(color);
-		//Creates an empty text wrapper, allowing innerHTML to be added
-		function setupText() {
+
+	//Creates an empty text wrapper, allowing innerHTML to be added
+	function setupText() {
 		var textDiv = document.createElement("div");
 		textDiv.id = "textDiv";
 		textDiv.style.position = "absolute";
@@ -146,6 +144,7 @@ const step = 200;
 robotoFont.setAttribute('rel', 'stylesheet');
 robotoFont.setAttribute('type', 'text/css');
 robotoFont.setAttribute('href', "https://fonts.googleapis.com/css?family=Roboto&display=swap");*/
+
 //Adds the text to the div
 function addText(text, time)
 {
