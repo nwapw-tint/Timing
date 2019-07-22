@@ -56,7 +56,7 @@ async function enableTint(id, color,sessionRunning) {
 		div.style.width = "100%";
 		div.style.height = "100%";
 		div.style.pointerEvents = "none";	
-		div.style.zIndex = 2147483647; //TODO: something about this
+		div.style.zIndex = 2147483647; //Max z-index possible.
 		div.style.top = 0;
 		div.style.left = 0;
 		div.style.position = "fixed";
@@ -101,6 +101,7 @@ port.onMessage.addListener((msg) => {
 	case "tint":
 		switch (msg.mode) {
 		case "enable":
+			alert(msg.color+ "is the color that passed from popup to bckgrnd to content")
 			enableTint(msg.id, msg.color,msg.sessionRunning);
 			break;
 		case "disable":
