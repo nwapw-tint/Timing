@@ -56,3 +56,104 @@ function disableTint() {
 	if (div)
 		div.parentNode.removeChild(div);
 }
+
+
+
+/*-----------------------Communication-----------------------*/
+
+
+
+//Creates the port
+var port = chrome.extension.connect({
+	name: "content"
+});
+
+//Tells the background script the content script has opened
+sendMessage({
+	to: "background",
+	from: "content",
+	action: "open"
+});
+
+//Creates the capability to receive messages from the background script
+port.onMessage.addListener((msg) => {
+	if (msg.to != "content")
+		return;
+	switch (msg.action) {
+	case "open":
+		console.log("Connected to the background script");
+		break;
+	case "tint":
+		switch (msg.mode) {
+		case "enable":
+			enableTint(msg.id, msg.color);
+			break;
+		case "disable":
+			disableTint();
+			break;
+		case "change":
+			setTintColor(msg.color);
+			break;
+		}
+		break;
+	case "add_text":
+		addText(msg.text, msg.time);
+		break;
+	}
+});
+
+//Creates the capability to send messages to the background script
+function sendMessage(msg) {
+	port.postMessage(msg);
+}
+
+//Once the page has loaded, check the running status and updates the tint accordingly
+document.addEventListener('DOMContentLoaded', () => {
+	sendMessage({
+		to: "background",
+		from: "content",
+		action: "checkRunning"
+	});
+}, false);
+
+
+
+/*-----------------------Add Text-----------------------*/
+
+
+
+const duration = 1400;
+const step = 200;
+
+var robotoFont = document.createElement('link');
+robotoFont.setAttribute('rel', 'stylesheet');
+robotoFont.setAttribute('type', 'text/css');
+robotoFont.setAttribute('href', "https://fonts.googleapis.com/css?family=Roboto&display=swap");
+
+//Adds the text to the div
+function addText(text, time)
+{
+    textDiv = document.getElementById("textDiv")
+    if (textDiv && textDiv.style.opacity == 0) {    
+        textDiv.style.opacity = 1;
+        textDiv.innerHTML = text + " " + timeToDigital(time);
+        fadeOut(textDiv);
+        setTimeout(() => {
+            textDiv.innerHTML = text + " " + timeToDigital(time - 1);
+        }, 1000); //faux dynamic feeling
+    }
+
+    //Fades the target element.
+    function fadeOut(fadeTarget) {
+        var fadeEffect = setInterval(() => {
+            if (!fadeTarget.style.opacity)
+                fadeTarget.style.opacity = 1;
+            if (fadeTarget.style.opacity > 0.001)
+                fadeTarget.style.opacity -= step / duration;
+            else {
+                clearInterval(fadeEffect);
+                fadeTarget.style.opacity = 0;
+            }
+        }, step);
+    }
+}

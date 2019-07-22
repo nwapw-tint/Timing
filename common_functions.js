@@ -27,7 +27,7 @@ function stringWidth(text, fontName, fontSize) {
 	return Math.ceil(stringWidth.context.measureText(text).width);
 }
 
-const alpha = 0.14;
+const alpha = 0.3;
 
 const CLEAR_COLOR = {
 	r: 255,

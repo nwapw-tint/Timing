@@ -99,3 +99,193 @@ function addClickListener(id, callback) {
 function showError(error) {
 	alert("ERROR: " + error);
 }
+
+
+
+/*-----------------------Communication-----------------------*/
+
+
+
+//Creates the port
+var port = chrome.extension.connect({
+	name: "popup"
+});
+
+//Tells the background script the content script has opened
+sendMessage({
+	to: "background",
+	from: "popup",
+	action: "open"
+});
+
+//Creates the capability to receive messages from the background script
+port.onMessage.addListener((msg) => {
+	if (msg.to != "popup")
+		return;
+	switch (msg.action) {
+	case "open":
+		console.log("Connected to the background script");
+		break;
+	case "update":
+		switch (msg.place) {
+		case "sessions":
+			sessions = msg.sessions;
+			if (sessions.length == 0)
+				sessionRunning = false;
+			updateSessionText();
+			break;
+		case "blacklistedSites":
+			blacklistedSites = msg.blacklistedSites;
+			break;
+		case "sessionRunning":
+			sessionRunning = msg.sessionRunning;
+			break;
+		}
+		break;
+	}
+});
+
+//Creates the capability to send messages to the background script
+function sendMessage(msg) {
+	port.postMessage(msg);
+}
+
+
+
+/*-----------------------Color Selection-----------------------*/
+
+
+var colorImg;
+var colorData;
+
+//Returns the color found in the image at the coordinate (x, y)
+function getColorFromImage (x, y) {
+	if (x < 0 || x >= Math.floor(colorImg.width / 4) || y < 0 || y >= Math.floor(colorImg.height / 4))
+		return null;
+	let index = (y * colorImg.width + x) * 4; //*4 because each color is 4 elements (r, g, b, and a)
+	if (colorData.data[index + 3] < 255)
+		return null;
+	return "rgba(" + colorData.data[index] + "," + colorData.data[index + 1] + "," + colorData.data[index + 2] + ", " + alpha + ")";
+}
+
+
+
+/*-----------------------On Load-----------------------*/
+
+
+
+//The mouse coordinates
+var mouseX = 0, mouseY = 0;
+
+//Called when the popup loads
+document.addEventListener('DOMContentLoaded', () => {
+	let canvas = document.createElement('canvas');
+	let context = canvas.getContext('2d');
+	colorImg = document.getElementById('color_img');
+	canvas.width = colorImg.width;
+	canvas.height = colorImg.height;
+	context.drawImage(colorImg, 0, 0);
+	colorData = context.getImageData(0, 0, colorImg.width, colorImg.height);
+
+	//Invoked when the mouse is moved
+	window.addEventListener('mousemove', (e) => {
+		mouseX = e.screenX - window.screenX - 11;
+		mouseY = e.screenY - window.screenY - 9;
+	}, false);
+
+	//Invoked when the mouse is clicked
+	window.addEventListener('click', (e) => {
+		let color = getColorFromImage(Math.floor((mouseX - colorImg.x) / 4), Math.floor((mouseY - colorImg.y) / 4));
+		if (color)
+			if (addToBlacklisted) {
+				bColor = color;
+				sendMessage({
+					to: "background",
+					from: "popup",
+					action: "update",
+					place: "bColor",
+					bColor: color
+				});
+			} else
+				nColor = color;
+	});
+	
+	//Adds a session to the queue
+	addClickListener('add_session_button', () => {
+		var time = document.getElementById('time_input').value;
+		if (time.length == 0)
+			showError("Time is empty!");
+		else if (isNaN(time)) {
+			showError("Time is not a number!");
+		} else if (time > maxTime)
+			showError("Time is too long!");
+		else
+			addSession(time);
+	});
+	
+	//Adds a blacklisted site
+	addClickListener('add_site_button', () => {
+		let site = document.getElementById('site_input').value;
+		if (site.length == 0)
+			showError("Site is empty!");
+		else {
+			let siteAlreadyBlacklisted = false;
+			for (let i = 0; i < blacklistedSites.length && !siteAlreadyBlacklisted; i++)
+				if (blacklistedSites[i] == site)
+					siteAlreadyBlacklisted = true;
+			if (!siteAlreadyBlacklisted) {
+				blacklistedSites.push(site);
+				sendMessage({
+					to: "background",
+					from: "popup",
+					action: "push",
+					place: "blacklistedSites",
+					blacklistedSite: site
+				});
+				document.getElementById('site_input').value = "";
+			}
+		}
+	});
+	
+	//Starts the session
+	addClickListener('start_session_button', () => {
+		if (sessions.length == 0)
+			showError("No sessions!");
+		else if (sessionRunning)
+			showError("Session already started!");
+		else {
+			sessionRunning = true;
+			sendMessage({
+				to: "background",
+				from: "popup",
+				action: "timer",
+				mode: "start"
+			});
+		}
+	});
+	
+	//Pauses the session
+	addClickListener('pause_session_button', () => {
+		if (!sessionRunning)
+			showError("Session not started!");
+		else {
+			sessionRunning = false;
+			sendMessage({
+				to: "background",
+				from: "popup",
+				action: "timer",
+				mode: "stop"
+			});
+		}
+	});
+	
+	//Sets the add color mode to the normal color
+	addClickListener('normal_radio', () => {
+		addToBlacklisted = false;
+	});
+	
+	//Sets the add color mode to change the blacklisted color
+	addClickListener('blacklisted_radio', () => {
+		addToBlacklisted = true;
+	});
+}, false);

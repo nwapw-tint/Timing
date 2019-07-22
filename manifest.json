@@ -10,9 +10,7 @@
 			],
 			"js": [
 				"common_functions.js",
-				"content.js",
-				"content_communication.js",
-				"content_add_text.js"
+				"content.js"
 			],
 			"run_at": "document_start"
 		}
@@ -20,12 +18,7 @@
 	"background": {
 		"scripts": [
 			"common_functions.js",
-			"background.js",
-			"background_communication.js",
-			"background_update_content.js",
-			"background_update_popup.js",
-			"background_blacklist.js",
-			"background_experimental.js"
+			"background.js"
 		],
 		"persistent": false
 	},
