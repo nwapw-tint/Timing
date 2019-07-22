@@ -158,26 +158,6 @@ function sendMessage(msg) {
 			port.postMessage(msg);
 }
 
-//checks the current site to see if it has been filtered. If it hasn't been visited, add it to visited.
-//Detects when the user changes tabs
-chrome.tabs.onActivated.addListener((activeInfo) => {
-	chrome.tabs.query({
-		currentWindow: true,
-		active: true
-	}, (tabs) => {
-		try {
-			currentSite = tabs[0].url;
-			if (sitesVisited.indexOf(currentSite) == -1) {
-				sitesVisited.push(currentSite);
-				chrome.tabs.reload(activeInfo.tabId);
-			} else
-				updateContentTint();
-		} catch (error) {
-			console.log("tabs are null");
-		}
-	});
-});
-
 
 
 /*-------------------------Updade Content-------------------------*/
@@ -273,16 +253,47 @@ function updatePopup() {
 function isCurrentTabBlacklisted() {
 	let blacklisted = false;
 	for (let i = 0; i < blacklistedSites.length && !blacklisted; i++)
-		if (currentSite == blacklistedSites[i])
+		if (currentSite.url == blacklistedSites[i])
 			blacklisted = true;
 	onBlacklistedSite = blacklisted;
 }
 
 
 
-/*-------------------------Experimental-------------------------*/
+/*-------------------------Chrome Functions-------------------------*/
 
 
+
+//Checks the current site to see if it has been filtered. If it hasn't been visited, add it to visited.
+//Detects when the user changes tabs
+chrome.tabs.onActivated.addListener((activeInfo) => {
+	chrome.tabs.query({
+		currentWindow: true,
+		active: true
+	}, (tabs) => {
+		try {
+			currentSite = {
+				url: tabs[0].url,
+				tabId: activeInfo.tabId
+			};
+			if (hasVisitedSite(currentSite))
+				updateContentTint();
+			else {
+				sitesVisited.push(currentSite);
+				chrome.tabs.reload(currentSite.tabId);
+			}
+			
+			function hasVisitedSite(site) {
+				for (let i = 0; i < sitesVisited.length; i++)
+					if (sitesVisited[i].tabId == site.tabId)
+						return true;
+				return false;
+			}
+		} catch (error) {
+			console.log("tabs are null");
+		}
+	});
+});
 
 chrome.omnibox.onInputEntered.addListener((txt) => {
 	alert(txt);
