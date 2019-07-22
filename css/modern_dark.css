@@ -11,7 +11,7 @@ html{
 }
 	
 .topbar{
-	width:314px;
+	width:388px;
 	height:20px;
 	background-color:#40525e;
 	position:absolute;
@@ -60,7 +60,7 @@ input[type=text]{
 
 .checkbox-label .custom-check {
 	position: absolute;
-	left:130px;
+	left:210px;
 	background-color: Silver;
 	border: .5px solid Silver;
 	display: block;
@@ -89,17 +89,17 @@ input[type=text]{
 	height: 110px;
 	position: absolute;
 	top: 200px;
-	left:129px;
+	left:209px;
 	border-radius:4%;
 }
 #session_label{
 	position: fixed;
 	top:22px;
-	left:12px;
+	left:55px;
 	font-size: 13px;
 }
 #sessions_bar{
-	width:100px;
+	width:180px;
 }
 #setup_bar{
 	width:180px;
@@ -107,41 +107,41 @@ input[type=text]{
 .title{
 	position:absolute;
 	top:22px;
-	left:130px;
+	left:210px;
 	font-size:13px;
 	padding:0px;
 }	
 #name_input{
 	position:absolute;
 	top: 55px;
-	left:130px;
+	left:210px;
 }
 #time_input{
 	position:absolute;
 	top:105px;
-	left:130px;
+	left:210px;
 }
 #site_input{
 	position:absolute;
 	top:345px;
-	left:130px;
+	left:210px;
 }
 .add_button{
 	position: absolute;
-	left:260px;
+	left:340px;
 	width: 40px;
 	height: 22px;
 }
 #start_session_button{
 	position: fixed;
-	top:320px;
-	left:24px;
+	top:346px;
+	left:20px;
 	width: 85px;
 }
 #pause_session_button{
 	position: fixed;
-	top:345px;
-	left:24px;
+	top:346px;
+	left:110px;
 	width: 85px;
 }
 sesh-top{
@@ -154,7 +154,7 @@ sesh-top{
 	position:fixed; 
 	top:50px; 
 	left:19px; 
-	padding-left:91px;
+	padding-left:176px;
 	border-color:#40525e;
 }
 
