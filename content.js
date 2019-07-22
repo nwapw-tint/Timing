@@ -25,18 +25,20 @@ async function enableTint(id, color,sessionRunning) {
 		//rgba(0, 255, 0, 0.3)
 		color = color.replace(/[^\d,.]/g, '').split(',') //arrayified for editing
 		while(currentColor < color[3]	-0.005)
-		{
+			{
 			//increments the tint until it is close to the desired value, then smoothly moves towards it
 			currentColor+=(Math.min(0.02,(color[3]-currentColor)/2));
 			await sleep(20);
 			rgbaStr ="rgba("+color[0]+","+color[1]+","+color[2]+","+currentColor+")"
 			tintDiv.style.background = rgbaStr;
-		}}else{tintDiv.style.background = color;}
+			}
+		}
+		else{tintDiv.style.background = color;}
+
 	} else
 		setTintColor(color);
-	
-	//Creates an empty text wrapper, allowing innerHTML to be added
-	function setupText() {
+		//Creates an empty text wrapper, allowing innerHTML to be added
+		function setupText() {
 		var textDiv = document.createElement("div");
 		textDiv.id = "textDiv";
 		textDiv.style.position = "absolute";
@@ -46,7 +48,6 @@ async function enableTint(id, color,sessionRunning) {
 		textDiv.style.transform = "translate(-50%, -50%)";
 		textDiv.style.backgroundColor = "rgba(255, 255, 255, 1)";
 		textDiv.style.color = "rgba(0, 0, 0, 1)"; //TODO: set automatically based on tint shade
-		textDiv.style.fontSize = "80px"; //TODO: self adjusting size. rn, just set a cap
 		textDiv.style.zIndex = 2147483647;
 		textDiv.style.opacity = 0;
 		tintDiv.appendChild(textDiv);
@@ -148,9 +149,11 @@ robotoFont.setAttribute('href', "https://fonts.googleapis.com/css?family=Roboto&
 //Adds the text to the div
 function addText(text, time)
 {
+	charCount = text.length;
     textDiv = document.getElementById("textDiv")
     if (textDiv && textDiv.style.opacity == 0) {    
-        textDiv.style.opacity = 1;
+		textDiv.style.opacity = 1;
+		textDiv.style.fontSize = (80+(Math.floor(120/charCount)))+"px";
         textDiv.innerHTML = text + " " + timeToDigital(time);
         fadeOut(textDiv);
         setTimeout(() => {
