@@ -24,8 +24,8 @@ async function enableTint(id, color) {
 		while(currentColor < color[3]-0.005)
 		{
 			//increments the tint until it is close to the desired value, then smoothly moves towards it
-			currentColor+=(Math.min(0.04,(color[3]-currentColor)/2));
-			await sleep(100);
+			currentColor+=(Math.min(0.02,(color[3]-currentColor)/2));
+			await sleep(20);
 			rgbaStr ="rgba("+color[0]+","+color[1]+","+color[2]+","+currentColor+")"
 			tintDiv.style.background = rgbaStr;
 		}
