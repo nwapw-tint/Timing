@@ -183,7 +183,8 @@ function enableContentTint() {
 		action: "tint",
 		mode: "enable",
 		id: "tint-color",
-		color: getTint()
+		color: getTint(),
+		sessionRunning: sessionRunning
 	});
 }
 

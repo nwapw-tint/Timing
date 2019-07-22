@@ -6,15 +6,32 @@ function setTintColor(color) {
 	if (div && color)
 		div.style.background = color;
 }
-
+function sleep(ms) {
+	return new Promise(resolve => setTimeout(resolve, ms));
+  }
+  
 //Enables the tint
-function enableTint(id, color) {
+async function enableTint(id, color,sessionRunning) {
+	console.log("filter added");
 	if (document.querySelector('[id^="tint-"]') == null) {
 		var tintDiv = document.createElement("div");
 		tintDiv.id = (tintId = id); //Allows removal by id
-		tintDiv.style.background = color;
 		styleTint(tintDiv);
 		setupText();
+		currentColor = 0;
+		//FADE in if first, no fade if not first
+		if(!sessionRunning)
+		{
+		//rgba(0, 255, 0, 0.3)
+		color = color.replace(/[^\d,.]/g, '').split(',') //arrayified for editing
+		while(currentColor < color[3]	-0.005)
+		{
+			//increments the tint until it is close to the desired value, then smoothly moves towards it
+			currentColor+=(Math.min(0.02,(color[3]-currentColor)/2));
+			await sleep(20);
+			rgbaStr ="rgba("+color[0]+","+color[1]+","+color[2]+","+currentColor+")"
+			tintDiv.style.background = rgbaStr;
+		}}else{tintDiv.style.background = color;}
 	} else
 		setTintColor(color);
 	
@@ -28,10 +45,9 @@ function enableTint(id, color) {
 		textDiv.style.marginRight = "-50%";
 		textDiv.style.transform = "translate(-50%, -50%)";
 		textDiv.style.backgroundColor = "rgba(255, 255, 255, 1)";
-		textDiv.style.fontFamily = "'Roboto', Sans Serif";
 		textDiv.style.color = "rgba(0, 0, 0, 1)"; //TODO: set automatically based on tint shade
 		textDiv.style.fontSize = "80px"; //TODO: self adjusting size. rn, just set a cap
-		textDiv.style.zIndex = 100;
+		textDiv.style.zIndex = 2147483647;
 		textDiv.style.opacity = 0;
 		tintDiv.appendChild(textDiv);
 	}
@@ -40,8 +56,8 @@ function enableTint(id, color) {
 	function styleTint(div) {
 		div.style.width = "100%";
 		div.style.height = "100%";
-		div.style.pointerEvents = "none";
-		div.style.zIndex = 10000; //TODO: something about this
+		div.style.pointerEvents = "none";	
+		div.style.zIndex = 2147483647; //TODO: something about this
 		div.style.top = 0;
 		div.style.left = 0;
 		div.style.position = "fixed";
@@ -86,7 +102,7 @@ port.onMessage.addListener((msg) => {
 	case "tint":
 		switch (msg.mode) {
 		case "enable":
-			enableTint(msg.id, msg.color);
+			enableTint(msg.id, msg.color,msg.sessionRunning);
 			break;
 		case "disable":
 			disableTint();
@@ -125,11 +141,10 @@ document.addEventListener('DOMContentLoaded', () => {
 const duration = 1400;
 const step = 200;
 
-var robotoFont = document.createElement('link');
+/*var robotoFont = document.createElement('link');
 robotoFont.setAttribute('rel', 'stylesheet');
 robotoFont.setAttribute('type', 'text/css');
-robotoFont.setAttribute('href', "https://fonts.googleapis.com/css?family=Roboto&display=swap");
-
+robotoFont.setAttribute('href', "https://fonts.googleapis.com/css?family=Roboto&display=swap");*/
 //Adds the text to the div
 function addText(text, time)
 {
