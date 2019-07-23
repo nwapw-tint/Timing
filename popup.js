@@ -22,7 +22,6 @@ function updateSessionText() {
 			//The reason why 'name_input' is used is it was first in the file that had both the font-family and font-size in the css
 			updateSessionText.fontSize = getPropertyFromElement(document.getElementById('name_input'), 'font-size');
 			updateSessionText.fontFamily = getPropertyFromElement(document.getElementById('name_input'), 'font-family');
-			console.log(updateSessionText.fontSize, updateSessionText.fontFamily);
 		}
 
 		let sessionText = "";
