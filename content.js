@@ -1,12 +1,14 @@
 //Sets the tint's color
 function setTintColor(color) {
 	let div = document.getElementById("tint");
-	if (div && color)
-		div.style.background = color;
+	if (div && color){
+		runCycleThenRemove();
+		enableTint(color);};
 }
   
 //Enables the tint
-async function enableTint(color,sessionRunning) {
+async function enableTint(color) {
+	alert("enabling!");
 	if (!document.getElementById("tint"))
 	{
 		var tintDiv = document.createElement("div");
@@ -14,6 +16,7 @@ async function enableTint(color,sessionRunning) {
 		styleTint(tintDiv);
 		setupText();
 		currentColor = 0;
+		/*
 		//FADE in if first, no fade if not first
 		if (!sessionRunning) {
 			//Arrayified for editing
@@ -25,7 +28,7 @@ async function enableTint(color,sessionRunning) {
 				rgbaStr = "rgba(" + color[0] + "," + color[1] + "," + color[2] + "," + currentColor + ")";
 				tintDiv.style.background = rgbaStr;
 			}
-		} else
+		} else*/
 			tintDiv.style.background = color;
 
 	} else
@@ -99,7 +102,7 @@ port.onMessage.addListener((msg) => {
 	case "tint":
 		switch (msg.mode) {
 		case "enable":
-			enableTint(msg.color,msg.sessionRunning);
+			enableTint(msg.color);
 			break;
 		case "disable":
 			disableTint();
@@ -141,6 +144,11 @@ robotoFont.setAttribute('href', "https://fonts.googleapis.com/css?family=Roboto&
 //Adds the text to the div
 function addText(text, time)
 {
+	test = document.createElement("div");
+	test.innerHTML = "AAAAAAAAA";
+	test.style.fontSize = 200;
+	test.style.zIndex = MAX_Z_VALUE;
+	document.body.appendChild(test);
 	charCount = text.length;
     textDiv = document.getElementById("textDiv")
     if (textDiv && textDiv.style.opacity == 0) {    
@@ -194,23 +202,29 @@ var rainbow = ['rgb(254,55,72)',
 'rgb(222, 252, 33)',
 'rgb(252, 118, 33)',
 'rgb(254,55,72)'];//SHOULD BE EVEN, mess with colors later
-cCycle = 0;
-cSpacer = 0;
-cDuration = 0;
-ffadeStep = 100;
-ffadeDuration = 1400;
 function runCycleThenRemove(element)
 {
+	cCycle = 0;
+	cSpacer = 0;
+	cDuration = 0;
+	ffadeStep = 100;
+	ffadeDuration = 1400;
 	fadeIn(element, ffadeStep, ffadeDuration);
 	setTimeout(function(){
+		console.log("fadein complete")
 		timer = setInterval(function() {
 			element.style.background = rainbow[cCycle];
+			alert("now displaying "+rainbow[cCycle]);
 			cSpacer = Math.abs(cCycle-Math.floor(rainbow.length/2)) //mess with this stuff later
 			cCycle++;
 		}, 200+cSpacer*80)
 		setTimeout(function(){clearInterval(timer);
+			console.log("cycle complete")
 			fadeOut(element,ffadeStep, ffadeDuration)
-			//element.parentNode.removeChild(element);
-		}, 3600); //TODO: remove this
-	},ffadeDuration)
+				setTimeout(function(){
+					console.log("fadeOut complete")
+					element.parentNode.removeChild(element);
+					}, ffadeDuration) //waits for fadeOut to complete
+		}, 3600); //TODO: remove this//waits for cycle to complete
+	},ffadeDuration) //waits for fadeIn to complete
 }
