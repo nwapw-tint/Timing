@@ -42,9 +42,8 @@ function startSession() {
 }
 
 //Stops a session
-function stopSession() {
+function stopSession() {	
 	disableContentTint();
-	runColorCycle();
 	sessionRunning = false;
 }
 
