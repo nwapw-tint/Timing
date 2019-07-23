@@ -1,75 +1,102 @@
 @font-face {
-	src: url("../fonts/Windows-Regular.ttf");
-	font-family: WinReg;
+	src: url("../fonts/Montserrat-Medium.ttf");
+	font-family: Mont;
 }
-html,td {border-style: outset;}
 html{
 	height:390px;
-	background-color:#D4D0C8;
-	}
+	background-color:White;
+	border-style: solid;
+	border-color:Black;
+	border-width:3px;
+}
+	
 .topbar{
-	width:395.5px;
+	width:388px;
 	height:20px;
+	background-color:Black;
 	position:absolute;
-	left:2px;
-	top:2px;
+	left:0px;
+	top:0px;
 	color:white;
 	text-align:left;
-	background-image: url("../images/bluebar.png");
-	background-size: cover;
 }
-
 button{
-	border-style: outset;
-	background-color: #D4D0C8;
-	font-family: 'WinReg';
-	outline-color:black;
+	border-style: solid;
+	border-color:Gainsboro;
+	background-color: Gainsboro;
+	font-family: 'Mont';
+	outline-color:Silver;
+	color:Black;
+	border-radius:4%;
+	transition-duration: 0.4s;
+	height:22px;
+	
 }
-p{font-family: WinReg;}
+button:hover{
+	background-color:#cfcfcf;
+	border:#cfcfcf;
+	color:White;
+	display:block;
+	height:22px;
+}
+p{
+	font-family: Mont;
+	color:Black;
+	}
 input[type=text]{
-	font-family: WinReg;
-	border: 2.5px inset;
+	font-size:12px;
+	font-family: Mont;
 	width:118px;
+	height:18px;
 	position:absolute;
-	left:180px;
+	left:100px;
+	background-color:#f6f6f6;
+	border-radius:4%;
+	color:Black;
+	border: 1px solid DimGrey;
 	outline:none;
-	padding:0px;
-	margin:0px;
 }
 .checkbox-label input{opacity: 0;}
+
 .checkbox-label .custom-check {
 	position: absolute;
 	left:210px;
-	background-color: #D4D0C8;
-	border-style: inset;
+	background-color: Silver;
+	border: .5px solid Silver;
 	display: block;
 	width: 11px;
 	height: 11px;
+	border-radius:15%;
+}
+
+.checkbox-label input:hover ~ .custom-check{
+	background-color:White;
 }
 .checkbox-label input:checked ~ .custom-check {
-	background-image: url("../images/x.png");
-	border-style: inset;
+	border: .5px solid Silver;
+	background-color:Silver;
 	-webkit-transform: rotate(0deg) scale(1);
 	-ms-transform: rotate(0deg) scale(1);
 	transform:rotate(0deg) scale(1);
 	opacity:1;
+	background-image: url("../images/check.png");
+	background-size:cover;
+	border-radius:15%;
 }
 .square{
-	border-style: inset;
+	border: 2px solid Gainsboro;
 	width:165px;
 	height: 110px;
 	position: absolute;
 	top: 200px;
 	left:209px;
+	border-radius:4%;
 }
 #session_label{
 	position: fixed;
 	top:22px;
 	left:55px;
-	padding-left:10px;
-	padding-right:10px;
 	font-size: 13px;
-	text-align:center;
 }
 #sessions_bar{
 	width:180px;
@@ -77,7 +104,6 @@ input[type=text]{
 #setup_bar{
 	width:180px;
 }
-
 .title{
 	position:absolute;
 	top:22px;
@@ -106,12 +132,6 @@ input[type=text]{
 	width: 40px;
 	height: 22px;
 }
-#buttontxt{
-	position: relative;
-	top: -15px;
-	left: -1px;
-	font-size: 14px;
-}
 #start_session_button{
 	position: fixed;
 	top:346px;
@@ -122,18 +142,19 @@ input[type=text]{
 	position: fixed;
 	top:346px;
 	left:110px;
-	width: 81px;
+	width: 85px;
 }
 sesh-top{
 	position:absolute;
 	top:-2px;
 }
-
 #divide{
-	border: 1.5px inset; 
+	border: 1.5px solid; 
+	border-radius:10%;
 	position:fixed; 
 	top:50px; 
 	left:19px; 
-	padding-left:170px;
+	padding-left:176px;
+	border-color:Gainsboro;
 }
-	
+
