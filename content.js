@@ -1,25 +1,19 @@
-var tintId;
-
 //Sets the tint's color
 function setTintColor(color) {
-	let div = document.getElementById(tintId);
+	let div = document.getElementById("tint");
 	if (div && color)
 		div.style.background = color;
 }
-
-function sleep(ms) {
-	return new Promise(resolve => setTimeout(resolve, ms));
-}
   
 //Enables the tint
-async function enableTint(id, color,sessionRunning) {
-	if (document.querySelector('[id^="tint-"]') == null) {
+async function enableTint(color,sessionRunning) {
+	if (!document.getElementById("tint"))
+	{
 		var tintDiv = document.createElement("div");
-		tintDiv.id = (tintId = id); //Allows removal by id
+		tintDiv.id = "tint";
 		styleTint(tintDiv);
 		setupText();
 		currentColor = 0;
-
 		//FADE in if first, no fade if not first
 		if (!sessionRunning) {
 			//Arrayified for editing
@@ -33,6 +27,7 @@ async function enableTint(id, color,sessionRunning) {
 			}
 		} else
 			tintDiv.style.background = color;
+
 	} else
 		setTintColor(color);
 
@@ -68,9 +63,12 @@ async function enableTint(id, color,sessionRunning) {
 
 //Disables the tint
 function disableTint() {
-	let div = document.getElementById(tintId);
-	if (div)
-		div.parentNode.removeChild(div);
+	let div = document.getElementById("tint");
+	if (div != null){
+		alert("running cycle then removing")
+		runCycleThenRemove(div);
+	}
+
 }
 
 
@@ -102,7 +100,7 @@ port.onMessage.addListener((msg) => {
 	case "tint":
 		switch (msg.mode) {
 		case "enable":
-			enableTint(msg.id, msg.color,msg.sessionRunning);
+			enableTint(msg.color,msg.sessionRunning);
 			break;
 		case "disable":
 			disableTint();
@@ -138,8 +136,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-const duration = 1400;
-const step = 200;
+const fadeDuration = 1400;
+const fadeStep = 200;
 
 /*var robotoFont = document.createElement('link');
 robotoFont.setAttribute('rel', 'stylesheet');
@@ -168,11 +166,35 @@ function addText(text, time)
             if (!fadeTarget.style.opacity)
                 fadeTarget.style.opacity = 1;
             if (fadeTarget.style.opacity > 0.001)
-                fadeTarget.style.opacity -= step / duration;
+                fadeTarget.style.opacity -= fadeStep / fadeDuration;
             else {
                 clearInterval(fadeEffect);
                 fadeTarget.style.opacity = 0;
             }
-        }, step);
+        }, fadeStep);
     }
 }
+
+var cycleInterval = 200;
+var rainbow = ['rgba(254,55,72,1)',
+'rgba(205, 26, 198,1)',
+'rgba(33, 134, 252,1)',
+'rgba(33, 252, 239,1)',
+'rgba(33, 252, 127,1)',
+'rgba(33, 252, 127,1)',
+'rgba(222, 252, 33,1)',
+'rgba(252, 118, 33,1)',
+'rgba(254,55,72,1)'];//SHOULD BE EVEN
+cCycle = 0;
+spacer = 0;
+function runCycleThenRemove(element)
+{
+		timer = setInterval(function() {
+			element.style.background = rainbow[cCycle];
+			spacer = Math.abs(cCycle-Math.floor(rainbow.length/2))
+			cCycle++;
+		}, cycleInterval+spacer*100)
+		setTimeout(function(){clearInterval(timer);
+			element.parentNode.removeChild(element);
+		}, rainbow.length*cycleInterval*2);
+		}
