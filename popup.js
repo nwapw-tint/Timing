@@ -15,14 +15,14 @@ function updateSessionText() {
 		ust();
 	else
 		document.addEventListener('DOMContentLoaded', ust, false);
+		
 	//Update session text
 	function ust() {
-		//TODO: Have to get font stuff from css files
-		if (ust.fontSize === undefined) {
+		if (updateSessionText.fontSize === undefined) {
 			//The reason why 'name_input' is used is it was first in the file that had both the font-family and font-size in the css
-			ust.fontSize = document.getElementById('name_input').style.fontSize;
-			ust.fontFamily = document.getElementById('name_input').style.fontFamily;
-			console.log(ust.fontSize, ust.fontFamily);
+			updateSessionText.fontSize = getPropertyFromElement(document.getElementById('name_input'), 'font-size');
+			updateSessionText.fontFamily = getPropertyFromElement(document.getElementById('name_input'), 'font-family');
+			console.log(updateSessionText.fontSize, updateSessionText.fontFamily);
 		}
 
 		let sessionText = "";
@@ -32,14 +32,12 @@ function updateSessionText() {
 			let shortName = sessions[i].name;
 			let end = "- " + timeToDigital(sessions[i].time);
 			let nameAndTime = shortName + end;
-
-			//TODO: Add font stuff from css files
-			if (stringWidth(nameAndTime, "Mont", 13) > maxLength) {
-				while (stringWidth(shortName + '...' + end, "Mont", 13) > maxLength && shortName.length > 0)
+			if (stringWidth(nameAndTime, updateSessionText.fontFamily, updateSessionText.fontSize) > maxLength) {
+				while (stringWidth(shortName + '...' + end, updateSessionText.fontFamily, updateSessionText.fontSize) > maxLength && shortName.length > 0)
 					shortName = shortName.substring(0, shortName.length - 1);
 				nameAndTime = shortName + '...' + end;
 			}
-			sessionText += '<p style="color:' + rgbaToRgb(sessions[i].color) + '; margin:0; padding:0; line-height:20px"><button id="close_button_' + i + '">X</button>  ' + nameAndTime + "</p>";
+			sessionText += '<p style="color:' + rgbaToRgb(sessions[i].color) + '; margin:0px; padding:0px; line-height:20px"><button style="height:20px; width:20px" id="close_button_' + i + '">X</button>  ' + nameAndTime + "</p>";
 		}
 		document.getElementById('sessions_text').innerHTML = sessionText;
 

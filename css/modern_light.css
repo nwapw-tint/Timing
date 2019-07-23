@@ -4,15 +4,16 @@
 }
 html {
 	height:390px;
-	background-color:#212b31;
-	border-style: solid;
-	border-color:#40525e;
+	background-color:White;
+	border-style:solid;
+	border-color:Black;
 	border-width:3px;
 }
+	
 .topbar {
 	width:389px;
 	height:20px;
-	background-color:#40525e;
+	background-color:Black;
 	position:absolute;
 	left:0px;
 	top:0px;
@@ -21,25 +22,26 @@ html {
 }
 button {
 	border-style:solid;
-	border-color:#40525e;
-	background-color: #40525e;
+	border-color:Gainsboro;
+	background-color:Gainsboro;
 	font-family:Mont;
 	outline-color:Silver;
-	color:#8ca7b8;
+	color:Black;
 	border-radius:4%;
-	transition-duration: 0.8s;
+	transition-duration: 0.4s;
 	height:22px;
+	
 }
 button:hover {
-	background-color:#587181;
-	border:#587181;
-	color:#8ca7b8;
+	background-color:#cfcfcf;
+	border:#cfcfcf;
+	color:White;
 	display:block;
 	height:22px;
 }
 p {
 	font-family:Mont;
-	color:Gainsboro;
+	color:Black;
 }
 input[type=text] {
 	font-size:12px;
@@ -48,14 +50,14 @@ input[type=text] {
 	height:18px;
 	position:absolute;
 	left:100px;
-	background-color:#40525e;
+	background-color:#f6f6f6;
 	border-radius:4%;
-	color:Gainsboro;
-	border:1px solid #8ca7b8;
+	color:Black;
+	border:1px solid DimGrey;
 	outline:none;
 }
 .checkbox-label input {
-	opacity: 0;
+	opacity:0;
 }
 .checkbox-label .custom-check {
 	position:absolute;
@@ -67,11 +69,11 @@ input[type=text] {
 	height:11px;
 	border-radius:15%;
 }
-.checkbox-label input:hover ~ .custom-check{
+.checkbox-label input:hover ~ .custom-check {
 	background-color:White;
 }
 .checkbox-label input:checked ~ .custom-check {
-	border:.5px solid Silver;
+	border: .5px solid Silver;
 	background-color:Silver;
 	-webkit-transform:rotate(0deg) scale(1);
 	-ms-transform:rotate(0deg) scale(1);
@@ -82,7 +84,7 @@ input[type=text] {
 	border-radius:15%;
 }
 .square {
-	border:2px solid #40525e;
+	border:2px solid Gainsboro;
 	width:165px;
 	height:110px;
 	position:absolute;
@@ -96,10 +98,10 @@ input[type=text] {
 	left:55px;
 	font-size:13px;
 }
-#sessions_bar {
+#sessions_bar{
 	width:180px;
 }
-#setup_bar {
+#setup_bar{
 	width:180px;
 }
 .title {
@@ -109,9 +111,9 @@ input[type=text] {
 	font-size:13px;
 	padding:0px;
 }	
-#name_input {
+#name_input{
 	position:absolute;
-	top: 55px;
+	top:55px;
 	left:210px;
 }
 #time_input {
@@ -119,7 +121,7 @@ input[type=text] {
 	top:105px;
 	left:210px;
 }
-#site_input {
+#site_input{
 	position:absolute;
 	top:345px;
 	left:210px;
@@ -147,11 +149,11 @@ sesh-top {
 	top:-2px;
 }
 #divide {
-	border:1.5px solid; 
+	border:1.5px solid;
 	border-radius:10%;
-	position:fixed; 
-	top:50px; 
-	left:19px; 
+	position:fixed;
+	top:50px;
+	left:19px;
 	padding-left:176px;
-	border-color:#40525e;
+	border-color:Gainsboro;
 }
