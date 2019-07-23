@@ -23,7 +23,7 @@ function stringWidth(text, fontName, fontSize) {
 		stringWidth.canvas = document.createElement('canvas');
 		stringWidth.context = stringWidth.canvas.getContext('2d');
 	}
-	stringWidth.context.font = fontSize + "px " + fontName;
+	stringWidth.context.font = fontSize + " " + fontName;
 	return Math.ceil(stringWidth.context.measureText(text).width);
 }
 
@@ -35,6 +35,11 @@ function rgbaToRgb(rgba) {
 //Takes a string in hex and converts it to rgba
 function hexToRgba(hex) {
 	return "rgba(" + parseInt(hex.substring(1, 3), 16) + "," + parseInt(hex.substring(3, 5), 16) + "," + parseInt(hex.substring(5, 7), 16) + "," + alpha + ")";
+}
+
+//Gets the property of the element
+function getPropertyFromElement(element, property) {
+	return window.getComputedStyle(element, null).getPropertyValue(property);
 }
 
 const alpha = 0.3;
