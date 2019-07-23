@@ -29,7 +29,12 @@ function stringWidth(text, fontName, fontSize) {
 
 //Takes a string with rgba() and takes off the alpha
 function rgbaToRgb(rgba) {
-	return 'rgb' + rgba.substring(rgba.indexOf('('), rgba.lastIndexOf(',')) + ')';
+	return "rgb" + rgba.substring(rgba.indexOf('('), rgba.lastIndexOf(',')) + ')';
+}
+
+//Takes a string in hex and converts it to rgba
+function hexToRgba(hex) {
+	return "rgba(" + parseInt(hex.substring(1, 3), 16) + "," + parseInt(hex.substring(3, 5), 16) + "," + parseInt(hex.substring(5, 7), 16) + "," + alpha + ")";
 }
 
 const alpha = 0.3;
@@ -40,3 +45,5 @@ const CLEAR_COLOR = {
 	b: 255,
 	a: 0
 };
+
+const MAX_Z_VALUE = 2147483647;

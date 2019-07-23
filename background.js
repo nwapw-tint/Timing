@@ -115,16 +115,12 @@ chrome.extension.onConnect.addListener((port) => {
 				sessions = msg.sessions;
 				if (sessions.length == 0)
 					stopSession();
+				else
+					updateContentTint();
 				break;
 			case "bColor":
 				bColor = msg.bColor;
 				updateContentTint();
-				break;
-			case "color":
-				if (sessions.length > 0) {
-					sessions[0].color = msg.color;
-					updateContentTint();
-				}
 				break;
 			}
 			break;
@@ -196,7 +192,7 @@ function disableContentTint() {
 		mode: "disable"
 	});
 }
-function runColorCycle(){
+function runColorCycle() {
 	sendMessage({
 		to: "content",
 		from: "background",

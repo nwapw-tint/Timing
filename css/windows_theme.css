@@ -22,7 +22,7 @@ html {
 }
 
 button {
-	border-style: outset;
+	border-style:outset;
 	background-color:#D4D0C8;
 	font-family:WinReg;
 	outline-color:black;
@@ -54,9 +54,9 @@ input[type=text] {
 }
 .checkbox-label input:checked ~ .custom-check {
 	background-image: url("../images/x.png");
-	border-style: inset;
-	-webkit-transform: rotate(0deg) scale(1);
-	-ms-transform: rotate(0deg) scale(1);
+	border-style:inset;
+	-webkit-transform:rotate(0deg) scale(1);
+	-ms-transform:rotate(0deg) scale(1);
 	transform:rotate(0deg) scale(1);
 	opacity:1;
 }

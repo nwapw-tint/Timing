@@ -6,6 +6,7 @@ function setTintColor(color) {
 	if (div && color)
 		div.style.background = color;
 }
+
 function sleep(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -46,7 +47,7 @@ async function enableTint(id, color,sessionRunning) {
 		textDiv.style.transform = "translate(-50%, -50%)";
 		textDiv.style.backgroundColor = "rgba(255, 255, 255, 1)";
 		textDiv.style.color = "rgba(0, 0, 0, 1)"; //TODO: set automatically based on tint shade
-		textDiv.style.zIndex = 2147483647;
+		textDiv.style.zIndex = MAX_Z_VALUE;
 		textDiv.style.opacity = 0;
 		tintDiv.appendChild(textDiv);
 	}
@@ -56,7 +57,7 @@ async function enableTint(id, color,sessionRunning) {
 		div.style.width = "100%";
 		div.style.height = "100%";
 		div.style.pointerEvents = "none";	
-		div.style.zIndex = 2147483647; //Max z-index possible.
+		div.style.zIndex = MAX_Z_VALUE;
 		div.style.top = 0;
 		div.style.left = 0;
 		div.style.position = "fixed";

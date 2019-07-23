@@ -3,24 +3,28 @@ var sessions = [];
 var sessionRunning = false;
 var nColor = "rgba(0, 255, 0, " + alpha + ")";
 var bColor = "rgba(255, 0, 0, " + alpha + ")";
+var blacklistedSites = [];
+var addToBlacklisted = false;
 
 const maxTime = 1440;
 const maxLength = 147;
-
-var blacklistedSites = [];
-var addToBlacklisted = false;
 
 //Updates the session text only after the dom content loads
 function updateSessionText() {
 	if (document.getElementById('sessions_text'))
 		ust();
 	else
-		document.addEventListener('DOMContentLoaded', () => {
-			ust();
-		}, false);
-	
+		document.addEventListener('DOMContentLoaded', ust, false);
 	//Update session text
 	function ust() {
+		//TODO: Have to get font stuff from css files
+		if (ust.fontSize === undefined) {
+			//The reason why 'name_input' is used is it was first in the file that had both the font-family and font-size in the css
+			ust.fontSize = document.getElementById('name_input').style.fontSize;
+			ust.fontFamily = document.getElementById('name_input').style.fontFamily;
+			console.log(ust.fontSize, ust.fontFamily);
+		}
+
 		let sessionText = "";
 
 		//Adds all the cancel buttons, the name, and the time left for each session
@@ -28,8 +32,10 @@ function updateSessionText() {
 			let shortName = sessions[i].name;
 			let end = "- " + timeToDigital(sessions[i].time);
 			let nameAndTime = shortName + end;
-			if (stringWidth(nameAndTime, "WinReg", 24) > maxLength) {
-				while (stringWidth(shortName + '...' + end, "WinReg", 24) > maxLength && shortName.length > 0)
+
+			//TODO: Add font stuff from css files
+			if (stringWidth(nameAndTime, "Mont", 13) > maxLength) {
+				while (stringWidth(shortName + '...' + end, "Mont", 13) > maxLength && shortName.length > 0)
 					shortName = shortName.substring(0, shortName.length - 1);
 				nameAndTime = shortName + '...' + end;
 			}
@@ -50,13 +56,6 @@ function updateSessionText() {
 					action: "update",
 					place: "sessions",
 					sessions: sessions
-				});
-				sendMessage({
-					to: "background",
-					from: "popup",
-					action: "update",
-					place: "color",
-					color: nColor
 				});
 			});
 	}
@@ -149,14 +148,6 @@ function sendMessage(msg) {
 
 
 
-/*-----------------------Color Selection-----------------------*/
-
-
-
-
-
-
-
 /*-----------------------On Load-----------------------*/
 
 
@@ -173,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	}, false);
 
 	document.getElementById('color_chooser').addEventListener('change', () => {
-		nColor = document.getElementById('color_chooser').value;
+		nColor = hexToRgba(document.getElementById('color_chooser').value);
 	}, false);
 
 	//Invoked when the mouse is clicked
