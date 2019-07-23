@@ -65,7 +65,6 @@ async function enableTint(color,sessionRunning) {
 function disableTint() {
 	let div = document.getElementById("tint");
 	if (div != null){
-		alert("running cycle then removing")
 		runCycleThenRemove(div);
 	}
 
@@ -154,47 +153,59 @@ function addText(text, time)
 		textDiv.style.fontSize = (80+(Math.floor(120/charCount)))+"px";
 		textDiv.style.wordWrap = "break-word";
         textDiv.innerHTML = text + " " + timeToDigital(time);
-        fadeOut(textDiv);
+        fadeOut(textDiv,fadeStep,fadeDuration);
         setTimeout(() => {
             textDiv.innerHTML = text + " " + timeToDigital(time - 1);
         }, 1000); //faux dynamic feeling
     }
-
+}
     //Fades the target element.
-    function fadeOut(fadeTarget) {
+    function fadeOut(fadeTarget, fadeStep, fadeDuration) {
         var fadeEffect = setInterval(() => {
             if (!fadeTarget.style.opacity)
                 fadeTarget.style.opacity = 1;
             if (fadeTarget.style.opacity > 0.001)
                 fadeTarget.style.opacity -= fadeStep / fadeDuration;
             else {
+				alert('fade element is working')
                 clearInterval(fadeEffect);
                 fadeTarget.style.opacity = 0;
             }
         }, fadeStep);
-    }
-}
-
+	}
+	function fadeIn(fadeTarget, fadeStep, fadeDuration){
+		var fadeEffect = setInterval(() => {
+			if (!fadeTarget.style.opacity)
+				fadeTarget.style.opacity = 0;
+			if (fadeTarget.style.opacity <0.999)
+				fadeTarget.style.opacity += fadeStep / fadeDuration;
+			else {
+				clearInterval(fadeEffect);
+				fadeTarget.style.opacity = 1;
+			}
+		})
+	}
 var cycleInterval = 200;
-var rainbow = ['rgba(254,55,72,1)',
-'rgba(205, 26, 198,1)',
-'rgba(33, 134, 252,1)',
-'rgba(33, 252, 239,1)',
-'rgba(33, 252, 127,1)',
-'rgba(33, 252, 127,1)',
-'rgba(222, 252, 33,1)',
-'rgba(252, 118, 33,1)',
-'rgba(254,55,72,1)'];//SHOULD BE EVEN
+var rainbow = ['rgb(254,55,72)',
+'rgb(205, 26, 198)',
+'rgb(33, 134, 252)',
+'rgb(33, 252, 239)',
+'rgb(33, 252, 127)',
+'rgb(33, 252, 127)',
+'rgb(222, 252, 33)',
+'rgb(252, 118, 33)',
+'rgb(254,55,72)'];//SHOULD BE EVEN, mess with colors later
 cCycle = 0;
 spacer = 0;
 function runCycleThenRemove(element)
 {
 		timer = setInterval(function() {
 			element.style.background = rainbow[cCycle];
-			spacer = Math.abs(cCycle-Math.floor(rainbow.length/2))
+			spacer = Math.abs(cCycle-Math.floor(rainbow.length/2)) //mess with this stuff later
 			cCycle++;
-		}, cycleInterval+spacer*100)
+		}, 200+spacer*80)
 		setTimeout(function(){clearInterval(timer);
+			fadeOut(element,fadeStep, fadeDuration)
 			element.parentNode.removeChild(element);
 		}, rainbow.length*cycleInterval*2);
-		}
+}
