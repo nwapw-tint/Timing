@@ -123,8 +123,10 @@ port.onMessage.addListener((msg) => {
 		switch (msg.place) {
 		case "sessions":
 			sessions = msg.sessions;
-			if (sessions.length == 0)
+			if (sessions.length == 0) {
 				sessionRunning = false;
+				document.getElementById('start_stop_text').innerHTML = "Start";
+			}
 			updateSessionText();
 			break;
 		case "blacklistedSites":
@@ -206,6 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				action: "timer",
 				mode: "stop"
 			});
+			document.getElementById('start_stop_text').innerHTML = "Start";
 		}
 		else {
 			sessionRunning = true;
@@ -215,6 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				action: "timer",
 				mode: "start"
 			});
+			document.getElementById('start_stop_text').innerHTML = "Stop";
 		}
 	});
 
