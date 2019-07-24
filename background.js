@@ -8,41 +8,40 @@ var bColor = "rgba(255, 0, 0, " + alpha + ")";
 var currentSite = "";
 var sitesVisited = [];
 
+var timeout;
+
 //The hidden timer
-function showSecondTimeout() {
-	setTimeout(() => {
-		if (sessionRunning) {
-			sessions[0].time = Math.max(sessions[0].time - 1, 0);
-			if (sessions[0].time == 0) {
-				sessions.shift();
-				updatePopupSessions();
-				if (sessions.length == 0) {
-					//alert("All sessions finished!");
-					stopSession();
-				} else {
-					//alert("Session finished!");
-					updateContentTint();
-					showSecondTimeout();
-				}
+function timeoutUpdate() {
+	if (sessionRunning) {
+		sessions[0].time = Math.max(sessions[0].time - 1, 0);
+		if (sessions[0].time == 0) {
+			sessions.shift();
+			updatePopupSessions();
+			if (sessions.length == 0) {
+				//alert("All sessions finished!");
+				stopSession();
 			} else {
-				updatePopupSessions();
-				showSecondTimeout();
+				//alert("Session finished!");
+				updateContentTint();
 			}
+		} else {
+			updatePopupSessions();
 		}
-	}, 1000);
+	}
 }
 
 //Starts a session
 function startSession() {
 	enableContentTint();
 	if (!sessionRunning) {
+		timeout = setInterval(timeoutUpdate, 1000);
 		sessionRunning = true;
-		showSecondTimeout();
 	}
 }
 
 //Stops a session
-function stopSession() {	
+function stopSession() {
+	clearInterval(timeout);
 	disableContentTint();
 	sessionRunning = false;
 }
