@@ -3,7 +3,7 @@
 	font-family: Mont;
 }
 html{
-	height:245px;
+	height:247px;
 	background-color:White;
 	border-style: solid;
 	border-color:Silver;
@@ -32,7 +32,7 @@ button{
 	
 }
 .hover:hover{
-	background-color:#cfcfcf;
+	background-color:Silver;
 	border:Silver;
 	color:White;
 	display:block;
