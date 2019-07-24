@@ -1,9 +1,11 @@
+
 //Sets the tint's color
 function setTintColor(color) {
 	let div = document.getElementById("tint");
 	if (div && color) {
-		console.log("setting tint color")
-		div.style.backgroundColor = color;
+		console.log("fading out and then fading in")
+		fadeOut(div,50,500);
+		setTimeout(function(){fadeIn(div,color,50,500)},500);
 	}
 }
   
@@ -67,16 +69,13 @@ function disableTint() {
 	let div = document.getElementById("tint");
 	if (div != null){
 		//console.log("removing tint")
-		div.parentNode.removeChild(div);
+		fadeOut(div, 50,500);
+		setTimeout(function(){div.parentNode.removeChild(div)},500);
 	}
 
 }
 
-
-
 /*-----------------------Communication-----------------------*/
-
-
 
 //Creates the port
 var port = chrome.extension.connect({
@@ -135,9 +134,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 }, false);
 
-
-
-
 /*-----------------------Add Text-----------------------*/
 
 //Adds the text to the div
@@ -156,70 +152,38 @@ function addText(text, time)
         }, 1000); //faux dynamic feeling
     }
 }
-fadeStep = 100;
-fadeDuration = 1400;
     //Fades the target element.
-    function fadeOut(fadeTarget, fadeStep, fadeDuration) { //TODO: rewrite this
+	function fadeOut(fadeTarget, fadeStep, fadeDuration) {
+		console.log("fade out begun")
         var fadeEffect = setInterval(() => {
             if (!fadeTarget.style.opacity)
                 fadeTarget.style.opacity = 1;
             if (fadeTarget.style.opacity > 0.001)
                 fadeTarget.style.opacity -= fadeStep / fadeDuration;
             else {
-                clearInterval(fadeEffect);
-                fadeTarget.style.opacity = 0;
+				clearInterval(fadeEffect);
+				fadeTarget.style.opacity = 0;
+				console.log("fade out ended")
             }
         }, fadeStep);
 	}
-	fadeOn = false;
 	//RGBA alpha value incrementer towards a color
 	function fadeIn(fadeTarget,color,fadeStep, fadeDuration){
-		fadeOn = true;
-		colorArray = color.replace(/[^\d,.]/g, '').split(',');
-		targetA = Number(colorArray[3]);
-		currentA = 0;
+		console.log("fade in begun")
+		const cA = color.replace(/[^\d,.]/g, '').split(',');
+		const targetA = Number(cA[3]);
+		const currentA = 0;
 		var fadeEffect = setInterval(() => 
 		{
-			if(currentA < targetA-0.01){
-				rgbaStr = "rgba(" + colorArray[0]+ "," + colorArray[1]+ "," + colorArray[2] + "," + String(currentA) + ")";
-				console.log(rgbaStr + "with increment " + (fadeStep*targetA) / fadeDuration)
-				fadeTarget.style.backgroundColor = rgbaStr; 
+			if(currentA < targetA-0.01)
+			{ 
+				fadeTarget.style.backgroundColor = "rgba(" + cA[0]+ "," + cA[1]+ "," + cA[2] + "," + currentA + ")";
 				currentA += fadeStep*targetA / fadeDuration;
 			}    
-			else{	//we reached the target alpha value
-				fadeTarget.style.backgroundColor = "rgba(" + colorArray[0]+ "," + colorArray[1] + "," + colorArray[2] + "," + targetA+ ")";
-				fadeOn = false;
+			else
+			{	//we reached the target alpha value
+				fadeTarget.style.backgroundColor = "rgba(" + cA[0]+ "," + cA[1] + "," + cA[2] + "," + targetA+ ")";
 				clearInterval(fadeEffect)}
+				console.log("fade in ended")
 			}, fadeStep);
 	}
-/*
-var rainbow = ['rgb(254,55,72)',
-'rgb(205, 26, 198)',
-'rgb(33, 134, 252)',
-'rgb(33, 252, 239)',
-'rgb(33, 252, 127)',
-'rgb(33, 252, 127)',
-'rgb(222, 252, 33)',
-'rgb(252, 118, 33)',
-'rgb(254,55,72)'];//SHOULD BE EVEN, mess with colors later
-cCycle = 0;
-cSpacer = 0;
-cDuration = 0;
-ffadeStep = 100;
-ffadeDuration = 1400;
-function runCycleThenRemove(element)
-{
-	fadeIn(element, ffadeStep, ffadeDuration);
-	setTimeout(function(){
-		timer = setInterval(function() {
-			element.style.background = rainbow[cCycle];
-			cSpacer = Math.abs(cCycle-Math.floor(rainbow.length/2)) //mess with this stuff later
-			cCycle++;
-		}, 200+cSpacer*80)
-		setTimeout(function(){clearInterval(timer);
-			fadeOut(element,ffadeStep, ffadeDuration)
-			//element.parentNode.removeChild(element);
-		}, 3600); //TODO: remove this
-	},ffadeDuration)
-}
-*/
