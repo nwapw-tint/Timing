@@ -15,6 +15,7 @@ async function enableTint(color,sessionRunning) {
 		appendFonts();
 		styleTint(tintDiv);
 		setupText();
+		//console.log("tint set up")
 		currentColor = 0;
 		//FADE in if first, no fade if not first
 		//Arrayified for editing
@@ -27,6 +28,7 @@ async function enableTint(color,sessionRunning) {
 			tintDiv.style.background = rgbaStr;
 		}
 	} else
+		//console.log("existing tint found, changing color")
 		setTintColor(color);
 
 	//Creates an empty text wrapper, allowing innerHTML to be added
@@ -34,7 +36,7 @@ async function enableTint(color,sessionRunning) {
 		var textDiv = document.createElement("div");
 		textDiv.id = "textDiv";
 		textDiv.style.fontFamily = "Roboto,sans-serif";
-		console.log(textDiv.style.fontFamily);
+		//console.log(textDiv.style.fontFamily);
 		textDiv.style.position = "absolute";
 		textDiv.style.top = "50%";
 		textDiv.style.left = "50%";
@@ -74,7 +76,7 @@ async function enableTint(color,sessionRunning) {
 function disableTint() {
 	let div = document.getElementById("tint");
 	if (div != null){
-		console.log("removing tint")
+		//console.log("removing tint")
 		div.parentNode.removeChild(div);
 	}
 
@@ -104,7 +106,7 @@ port.onMessage.addListener((msg) => {
 		return;
 	switch (msg.action) {
 	case "open":
-		console.log("Connected to the background script");
+		//console.log("Connected to the background script");
 		break;
 	case "tint":
 		switch (msg.mode) {
