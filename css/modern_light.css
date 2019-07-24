@@ -3,7 +3,7 @@
 	font-family: Mont;
 }
 html{
-	height:241px;
+	height:250px;
 	background-color:White;
 	border-style: solid;
 	border-color:Silver;
@@ -183,15 +183,9 @@ sesh-top{
 	border: 1.5px solid; 
 	border-radius:10%;
 	position:fixed; 
-<<<<<<< HEAD
-	top:50px; 
-	left:19px; 
-	padding-left:174px;
-=======
 	top:50px;
 	left:16px;
 	padding-left:176px;
->>>>>>> 05dee02e902a0049c2dc1d029025ae44c7046073
 	border-color:Gainsboro;
 }
 
