@@ -42,7 +42,7 @@ function getPropertyFromElement(element, property) {
 	return window.getComputedStyle(element, null).getPropertyValue(property);
 }
 
-const alpha = 0.3;
+const alpha = 0.4;
 
 const CLEAR_COLOR = {
 	r: 255,
