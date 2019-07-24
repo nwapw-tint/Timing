@@ -2,6 +2,7 @@
 function setTintColor(color) {
 	let div = document.getElementById("tint");
 	if (div && color)
+		console.log("setting tint color")
 		div.style.background = color;
 }
   
@@ -11,6 +12,7 @@ async function enableTint(color,sessionRunning) {
 	{
 		var tintDiv = document.createElement("div");
 		tintDiv.id = "tint";
+		appendFonts();
 		styleTint(tintDiv);
 		setupText();
 		currentColor = 0;
@@ -35,20 +37,31 @@ async function enableTint(color,sessionRunning) {
 	function setupText() {
 		var textDiv = document.createElement("div");
 		textDiv.id = "textDiv";
+		textDiv.style.fontFamily = "Roboto,sans-serif";
+		console.log(textDiv.style.fontFamily);
 		textDiv.style.position = "absolute";
 		textDiv.style.top = "50%";
 		textDiv.style.left = "50%";
+		textDiv.style.marginBottom = "-50%";
 		textDiv.style.marginRight = "-50%";
 		textDiv.style.transform = "translate(-50%, -50%)";
-		textDiv.style.backgroundColor = "rgba(255, 255, 255, 1)";
-		textDiv.style.color = "rgba(0, 0, 0, 1)"; //TODO: set automatically based on tint shade
+		textDiv.style.color = "rgba(255, 255, 255, 1)"; //TODO: set automatically based on tint shade
 		textDiv.style.zIndex = MAX_Z_VALUE;
 		textDiv.style.opacity = 0;
 		tintDiv.appendChild(textDiv);
 	}
-
+	//appends fonts
+	function appendFonts()
+	{
+	var link = document.createElement('link');
+	link.setAttribute('rel', 'stylesheet');
+	link.setAttribute('type', 'text/css');
+	link.setAttribute('href', "https://fonts.googleapis.com/css?family=Roboto&display=swap");
+	document.documentElement.appendChild(link);
+	}
 	//Styles the tint div
 	function styleTint(div) {
+		div.style.mixBlendMode = "multiply";
 		div.style.width = "100%";
 		div.style.height = "100%";
 		div.style.pointerEvents = "none";	
@@ -65,7 +78,8 @@ async function enableTint(color,sessionRunning) {
 function disableTint() {
 	let div = document.getElementById("tint");
 	if (div != null){
-		runCycleThenRemove(div);
+		console.log("removing tint")
+		div.parentNode.removeChild(div);
 	}
 
 }
@@ -131,12 +145,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-/*-----------------------Add Text-----------------------*/
 
-/*var robotoFont = document.createElement('link');
-robotoFont.setAttribute('rel', 'stylesheet');
-robotoFont.setAttribute('type', 'text/css');
-robotoFont.setAttribute('href', "https://fonts.googleapis.com/css?family=Roboto&display=swap");*/
+/*-----------------------Add Text-----------------------*/
 
 //Adds the text to the div
 function addText(text, time)
@@ -145,7 +155,7 @@ function addText(text, time)
     textDiv = document.getElementById("textDiv")
     if (textDiv && textDiv.style.opacity == 0) {    
 		textDiv.style.opacity = 1;
-		textDiv.style.fontSize = (80+(Math.floor(120/charCount)))+"px";
+		textDiv.style.fontSize = (120+(Math.floor(120/charCount)))+"px";
 		textDiv.style.wordWrap = "break-word";
         textDiv.innerHTML = text + " " + timeToDigital(time);
         fadeOut(textDiv,fadeStep,fadeDuration);
@@ -185,6 +195,7 @@ fadeDuration = 1400;
 				clearInterval(fadeEffect)}
 			}, fadeStep);
 	}
+/*
 var rainbow = ['rgb(254,55,72)',
 'rgb(205, 26, 198)',
 'rgb(33, 134, 252)',
@@ -214,3 +225,4 @@ function runCycleThenRemove(element)
 		}, 3600); //TODO: remove this
 	},ffadeDuration)
 }
+*/
