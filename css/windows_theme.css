@@ -118,17 +118,13 @@ input[type=color]{
 	left: -1px;
 	font-size: 14px;
 }
-#start_session_button{
-	position: fixed;
-	top:210px;
-	left:22px;
-	width: 85px;
-}
-#pause_session_button{
-	position: fixed;
-	top:210px;
-	left:110px;
-	width: 79px;
+#start_stop_button{
+	position: absolute;
+	top:205px;
+	left:210px;
+	width:170px;
+	height:30px;
+	font-size:16px;
 }
 sesh-top{
 	position:absolute;
@@ -153,7 +149,7 @@ sesh-top{
 /* Track */
 ::-webkit-scrollbar-track {
 	background-image: url("../images/cross.png");
-	background-size:cover;
+	background: repeat-y;
 }
 
 /* Handle */
