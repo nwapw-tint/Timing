@@ -156,7 +156,7 @@ function sendMessage(msg) {
 
 
 
-//Updates the content tint
+//Updates the content tint to the specified color
 function updateContentTint() {
 	sendMessage({
 		to: "content",
@@ -286,10 +286,6 @@ chrome.tabs.onActivated.addListener((activeInfo) => {
 			console.log("tabs are null");
 		}
 	});
-});
-
-chrome.omnibox.onInputEntered.addListener((txt) => {
-	alert(txt);
 });
 
 //Invoked with Ctrl+Space

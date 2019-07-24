@@ -3,7 +3,7 @@
 	font-family: Mont;
 }
 html{
-	height:241px;
+	height:250px;
 	background-color:#212b31;
 	border-style:solid;
 	border-color:#40525e;
@@ -19,7 +19,6 @@ html{
 	top:0px;
 	color:white;
 	text-align:left;
-	transition-duration: 0.4s;
 }
 button{
 	border-style: solid;
@@ -46,14 +45,14 @@ button{
 p{
 	font-family: Mont;
 	color:Gainsboro;
-}
+	}
 input[type=text]{
 	font-size:12px;
 	font-family: Mont;
-	width:116px;
+	width:118px;
 	height:18px;
 	position:absolute;
-	left:101px;
+	left:100px;
 	background-color:#40525e;
 	border-radius:4%;
 	color:Gainsboro;
@@ -61,7 +60,7 @@ input[type=text]{
 	outline:none;
 }
 input[type=color]{
-	border-color: 1px solid #40525e;
+	border: 1px solid #8ca7b8;
 	width:164px;
 	height: 30px;
 	position: absolute;
@@ -69,9 +68,6 @@ input[type=color]{
 	left:210px;
 	border-radius:4%;
 	background-color: #40525e;
-	transition-duration: 0.4s;
-	border: 1px solid #8ca7b8;
-	outline:none;
 }
 #session_label{
 	position: fixed;
@@ -83,7 +79,7 @@ input[type=color]{
 	width:180px;
 }
 #setup_bar{
-	width:180px;
+	width:186px;
 }
 .title{
 	position:absolute;
@@ -108,7 +104,6 @@ input[type=color]{
 	width: 40px;
 	height: 22px;
 	transition-duration: 0.4s;
-	padding: 0px;
 	margin: 0 auto;
 }
 .add_button:hover{
@@ -127,13 +122,13 @@ input[type=color]{
 	width:170px;
 	height:30px;
 	font-size:16px;
-	transition-duration:0.4s;
 }
 #start_stop_text{
 	color:#8ca7b8;
 	padding: 0px;
-	transition-duration:0.4s;
+	
 }
+
 sesh-top{
 	position:absolute;
 	top:-2px;
@@ -143,8 +138,8 @@ sesh-top{
 	border-radius:10%;
 	position:fixed; 
 	top:50px; 
-	left:16px; 
-	padding-left:176px;
+	left:19px; 
+	padding-left:166px;
 	border-color:#40525e;
 }
 
@@ -155,27 +150,24 @@ sesh-top{
   width: 13px;
 }
 
-/* Track 
+/* Track */
 ::-webkit-scrollbar-track {
-
-}*/
+	background-color:#293740;
+}
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  	border-style:outset;
-	border-width:1.5px;
-	background: #D4D0C8; 
+  	border: 1.5px solid #40525e;
+	background: #40525e; 
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #bfbbb4; 
+  background: #8ca7b8; 
+  border: 1.5px solid #8ca7b8;
 }
 
 ::-webkit-scrollbar-button{
-	width:13px;
-	height:13px;
-	background-image: url('../images/arrow.png');
-	background-size:cover;
-	border-style:outset;
+	width:0px;
+	height:0px;
 }
