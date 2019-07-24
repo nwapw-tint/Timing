@@ -39,6 +39,8 @@ button{
 	color:#8ca7b8;
 	display:block;
 	height:22px;
+	padding: 0px;
+	margin: 0 auto;
 }
 
 p{
@@ -103,6 +105,7 @@ input[type=color]{
 	width: 40px;
 	height: 22px;
 	transition-duration: 0.4s;
+	margin: 0 auto;
 }
 .add_button:hover{
 	background-color:#587181;
@@ -110,6 +113,8 @@ input[type=color]{
 	color:#8ca7b8;
 	display:block;
 	height:22px;
+	padding: 0px;
+	margin: 0 auto;
 }
 #start_stop_button{
 	position: absolute;
@@ -119,6 +124,12 @@ input[type=color]{
 	height:30px;
 	font-size:16px;
 }
+#start_stop_text{
+	color:#8ca7b8;
+	padding: 0px;
+	
+}
+
 sesh-top{
 	position:absolute;
 	top:-2px;
@@ -131,4 +142,36 @@ sesh-top{
 	left:19px; 
 	padding-left:176px;
 	border-color:#40525e;
+}
+
+/*SCROLLBAR*/
+
+/*width*/
+::-webkit-scrollbar {
+  width: 13px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  	border-style:outset;
+	border-width:1.5px;
+	background: #D4D0C8; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #bfbbb4; 
+}
+
+::-webkit-scrollbar-button{
+	width:13px;
+	height:13px;
+	background-image: url('../images/arrow.png');
+	background-size:cover;
+	border-style:outset;
 }
