@@ -189,16 +189,7 @@ function disableContentTint() {
 		mode: "disable"
 	});
 }
-/*
-function runColorCycle() {
-	sendMessage({
-		to: "content",
-		from: "background",
-		action: "tint",
-		mode: "cycle"
-	})
-}
-*/
+
 
 
 /*-------------------------Update Popup-------------------------*/
