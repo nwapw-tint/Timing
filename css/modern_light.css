@@ -203,19 +203,19 @@ sesh-top{
 
 /* Track */
 ::-webkit-scrollbar-track {
-	background-color:Gray;
+	background-color:Gainsboro;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  	border: 1.5px solid #40525e;
-	background: #40525e; 
+  	border: 1.5px solid Silver;
+	background: Silver; 
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #8ca7b8; 
-  border: 1.5px solid #8ca7b8;
+  background: DarkGrey; 
+  border: 1.5px solid DarkGrey;
 }
 
 ::-webkit-scrollbar-button{
