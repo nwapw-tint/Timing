@@ -184,8 +184,8 @@ sesh-top{
 	border-radius:10%;
 	position:fixed; 
 	top:50px;
-	left:16px;
-	padding-left:176px;
+	left:19px;
+	padding-left:166px;
 	border-color:Gainsboro;
 }
 
@@ -198,7 +198,6 @@ sesh-top{
 
 /*width*/
 ::-webkit-scrollbar {
-<<<<<<< HEAD
   width: 13px;
 }
 
@@ -223,33 +222,3 @@ sesh-top{
 	width:0px;
 	height:0px;
 }
-=======
-	width: 13px;
-  }
-  
-  /* Track 
-  ::-webkit-scrollbar-track {
-  
-  }*/
-  
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-		border-style:outset;
-	  border-width:1.5px;
-	  background: #D4D0C8; 
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-	background: #bfbbb4; 
-  }
-  
-  ::-webkit-scrollbar-button{
-	  width:13px;
-	  height:13px;
-	  background-image: url('../images/arrow.png');
-	  background-size:cover;
-	  border-style:outset;
-  }
-  
->>>>>>> 05dee02e902a0049c2dc1d029025ae44c7046073
