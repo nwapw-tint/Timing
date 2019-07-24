@@ -297,10 +297,6 @@ chrome.tabs.onActivated.addListener((activeInfo) => {
 	});
 });
 
-chrome.omnibox.onInputEntered.addListener((txt) => {
-	alert(txt);
-});
-
 //Invoked with Ctrl+Space
 chrome.commands.onCommand.addListener((command) => {
 	if (command == "display_text" && !sessionRunning)
