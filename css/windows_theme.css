@@ -152,13 +152,13 @@ sesh-top{
 
 /* Track */
 ::-webkit-scrollbar-track {
-	background-image: url('../images/cross.png');
+
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
   	border-style:outset;
-	border-width:2px;
+	border-width:1.5px;
 	background: #D4D0C8; 
 }
 
@@ -170,23 +170,7 @@ sesh-top{
 ::-webkit-scrollbar-button{
 	width:13px;
 	height:13px;
+	background-image: url('../images/arrow.png');
 	background-size:cover;
 	border-style:outset;
 }
-
-::-webkit-scrollbar-button:start{
-	transform: rotate(.25turn);
-	background-image: url('../images/arrow_up.png');
-}
-
-::-webkit-scrollbar-button:end{
-	transform:rotate(.75turn);
-	background-image: url('../images/arrow_down.png');
-	background-repeat:repeat-x repeat-y;
-}
-
-::-webkit-scrollbar-button:hover{
-	background-color:#bfbbb4;
-}
-
-

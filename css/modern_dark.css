@@ -168,30 +168,3 @@ sesh-top{
 	padding-left:176px;
 	border-color:#40525e;
 }
-
-/*SCROLLBAR*/
-
-/*width*/
-::-webkit-scrollbar {
-  width: 13px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-	background-color: #40525e;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-	background:#8ca7b8; 
-	border-radius:4%;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: Silver; 
-}
-
-::-webkit-scrollbar-button{
-	width:0px;
-}
