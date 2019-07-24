@@ -302,7 +302,7 @@ chrome.omnibox.onInputEntered.addListener((txt) => {
 
 //Invoked with Ctrl+Space
 chrome.commands.onCommand.addListener((command) => {
-	if (command == "display_text")
+	if (command == "display_text" && !sessionRunning)
 		sendMessage({
 			to: "content",
 			from: "background",
