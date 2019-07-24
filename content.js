@@ -1,15 +1,15 @@
 //Sets the tint's color
 function setTintColor(color) {
 	let div = document.getElementById("tint");
-	if (div && color)
+	if (div && color) {
 		console.log("setting tint color")
 		div.style.background = color;
+	}
 }
   
 //Enables the tint
 async function enableTint(color,sessionRunning) {
-	if (!document.getElementById("tint"))
-	{
+	if (!document.getElementById("tint")) {
 		var tintDiv = document.createElement("div");
 		tintDiv.id = "tint";
 		appendFonts();
@@ -17,19 +17,15 @@ async function enableTint(color,sessionRunning) {
 		setupText();
 		currentColor = 0;
 		//FADE in if first, no fade if not first
-		if (!sessionRunning) {
-			//Arrayified for editing
-			color = color.replace(/[^\d,.]/g, '').split(',')
-			//Increments the tint until it is close to the desired value, then smoothly moves towards it
-			while (currentColor < color[3] - 0.005) {
-				currentColor += (Math.min(0.02, (color[3] - currentColor) / 2));
-				await sleep(20);
-				rgbaStr = "rgba(" + color[0] + "," + color[1] + "," + color[2] + "," + currentColor + ")";
-				tintDiv.style.background = rgbaStr;
-			}
-		} else
-			tintDiv.style.background = color;
-
+		//Arrayified for editing
+		color = color.replace(/[^\d,.]/g, '').split(',');
+		//Increments the tint until it is close to the desired value, then smoothly moves towards it
+		while (currentColor < color[3] - 0.005) {
+			currentColor += (Math.min(0.02, (color[3] - currentColor) / 2));
+			await sleep(20);
+			rgbaStr = "rgba(" + color[0] + "," + color[1] + "," + color[2] + "," + currentColor + ")";
+			tintDiv.style.background = rgbaStr;
+		}
 	} else
 		setTintColor(color);
 

@@ -24,9 +24,8 @@ function timeoutUpdate() {
 				//alert("Session finished!");
 				updateContentTint();
 			}
-		} else {
+		} else
 			updatePopupSessions();
-		}
 	}
 }
 

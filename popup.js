@@ -44,8 +44,10 @@ function updateSessionText() {
 		for (let i = 0; i < sessions.length; i++)
 			addClickListener('close_button_' + i, () => {
 				sessions.splice(i, 1);
-				if (sessions.length == 0)
+				if (sessions.length == 0) {
 					sessionRunning = false;
+					document.getElementById('start_stop_text').innerHTML = "Start";
+				}
 				updateSessionText();
 				sendMessage({
 					to: "background",
@@ -134,6 +136,7 @@ port.onMessage.addListener((msg) => {
 			break;
 		case "sessionRunning":
 			sessionRunning = msg.sessionRunning;
+			document.getElementById('start_stop_text').innerHTML = sessionRunning ? "Stop" : "Start";
 			break;
 		}
 		break;
