@@ -60,7 +60,7 @@ input[type=text]{
 	outline:none;
 }
 input[type=color]{
-	border: 1px solid #40525e;
+	border: 1px solid #8ca7b8;
 	width:164px;
 	height: 30px;
 	position: absolute;
@@ -79,7 +79,7 @@ input[type=color]{
 	width:180px;
 }
 #setup_bar{
-	width:180px;
+	width:186px;
 }
 .title{
 	position:absolute;
@@ -139,7 +139,7 @@ sesh-top{
 	position:fixed; 
 	top:50px; 
 	left:19px; 
-	padding-left:176px;
+	padding-left:166px;
 	border-color:#40525e;
 }
 
@@ -150,27 +150,24 @@ sesh-top{
   width: 13px;
 }
 
-/* Track 
+/* Track */
 ::-webkit-scrollbar-track {
-
-}*/
+	background-color:#293740;
+}
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  	border-style:outset;
-	border-width:1.5px;
-	background: #D4D0C8; 
+  	border: 1.5px solid #40525e;
+	background: #40525e; 
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #bfbbb4; 
+  background: #8ca7b8; 
+  border: 1.5px solid #8ca7b8;
 }
 
 ::-webkit-scrollbar-button{
-	width:13px;
-	height:13px;
-	background-image: url('../images/arrow.png');
-	background-size:cover;
-	border-style:outset;
+	width:0px;
+	height:0px;
 }
