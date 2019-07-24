@@ -99,11 +99,12 @@ input[type=color]{
 	left:210px;
 }
 .add_button{
-	position: absolute;
+		position: absolute;
 	left:340px;
 	width: 40px;
 	height: 22px;
-	transition-duration: 0.4s;
+	transition-duration:0.4s;
+	padding: 0px;
 	margin: 0 auto;
 }
 .add_button:hover{
