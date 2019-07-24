@@ -152,7 +152,7 @@ function sendMessage(msg) {
 
 
 
-/*-------------------------Updade Content-------------------------*/
+/*-------------------------Update Content-------------------------*/
 
 
 
@@ -189,6 +189,7 @@ function disableContentTint() {
 		mode: "disable"
 	});
 }
+/*
 function runColorCycle() {
 	sendMessage({
 		to: "content",
@@ -197,7 +198,7 @@ function runColorCycle() {
 		mode: "cycle"
 	})
 }
-
+*/
 
 
 /*-------------------------Update Popup-------------------------*/
