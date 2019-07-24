@@ -112,10 +112,12 @@ input[type=color]{
 	height:22px;
 }
 #start_stop_button{
-	position: fixed;
-	top:210px;
+	position: absolute;
+	top:205px;
 	left:210px;
 	width:170px;
+	height:30px;
+	font-size:16px;
 }
 sesh-top{
 	position:absolute;
