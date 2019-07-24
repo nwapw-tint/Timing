@@ -3,7 +3,7 @@
 	font-family: Mont;
 }
 html{
-	height:250px;
+	height:240px;
 	background-color:White;
 	border-style: solid;
 	border-color:Silver;
@@ -99,15 +99,6 @@ input[type=color]{
 	background-size:cover;
 	border-radius:15%;
 }
-.square{
-	border: 2px solid Gainsboro;
-	width:165px;
-	height: 110px;
-	position: absolute;
-	top: 200px;
-	left:209px;
-	border-radius:4%;
-}
 #session_label{
 	position: fixed;
 	top:22px;
@@ -163,7 +154,7 @@ input[type=color]{
 }
 #start_stop_button{
 	position: absolute;
-	top:205px;
+	top:198px;
 	left:210px;
 	width:170px;
 	height:30px;
