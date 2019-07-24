@@ -15,7 +15,6 @@ async function enableTint(color,sessionRunning) {
 		appendFonts();
 		styleTint(tintDiv);
 		setupText();
-		//console.log("tint set up")
 		currentColor = 0;
 		//FADE in if first, no fade if not first
 		//Arrayified for editing
@@ -28,7 +27,6 @@ async function enableTint(color,sessionRunning) {
 			tintDiv.style.background = rgbaStr;
 		}
 	} else
-		//console.log("existing tint found, changing color")
 		setTintColor(color);
 
 	//Creates an empty text wrapper, allowing innerHTML to be added
