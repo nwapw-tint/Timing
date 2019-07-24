@@ -61,7 +61,11 @@ input[type=text]{
 	outline:none;
 }
 input[type=color]{
+<<<<<<< HEAD
 	border: 1px solid #8ca7b8;
+=======
+	border-color: 1px solid #40525e;
+>>>>>>> 05dee02e902a0049c2dc1d029025ae44c7046073
 	width:164px;
 	height: 30px;
 	position: absolute;
@@ -143,8 +147,13 @@ sesh-top{
 	border-radius:10%;
 	position:fixed; 
 	top:50px; 
+<<<<<<< HEAD
 	left:19px; 
 	padding-left:166px;
+=======
+	left:16px; 
+	padding-left:176px;
+>>>>>>> 05dee02e902a0049c2dc1d029025ae44c7046073
 	border-color:#40525e;
 }
 
