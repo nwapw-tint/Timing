@@ -15,7 +15,7 @@ function updateSessionText() {
 		ust();
 	else
 		document.addEventListener('DOMContentLoaded', ust, false);
-		
+	
 	//Update session text
 	function ust() {
 		if (updateSessionText.fontSize === undefined) {
@@ -194,36 +194,19 @@ document.addEventListener('DOMContentLoaded', () => {
 			addSession(time);
 	});
 	
-	//Adds a blacklisted site
-	addClickListener('add_site_button', () => {
-		let site = document.getElementById('site_input').value;
-		if (site.length == 0)
-			showError("Site is empty!");
-		else {
-			let siteAlreadyBlacklisted = false;
-			for (let i = 0; i < blacklistedSites.length && !siteAlreadyBlacklisted; i++)
-				if (blacklistedSites[i] == site)
-					siteAlreadyBlacklisted = true;
-			if (!siteAlreadyBlacklisted) {
-				blacklistedSites.push(site);
-				sendMessage({
-					to: "background",
-					from: "popup",
-					action: "push",
-					place: "blacklistedSites",
-					blacklistedSite: site
-				});
-				document.getElementById('site_input').value = "";
-			}
-		}
-	});
-	
-	//Starts the session
-	addClickListener('start_session_button', () => {
+	//Starts or stops the session
+	addClickListener('start_stop_button', () => {
 		if (sessions.length == 0)
 			showError("No sessions!");
-		else if (sessionRunning)
-			showError("Session already started!");
+		else if (sessionRunning) {
+			sessionRunning = false;
+			sendMessage({
+				to: "background",
+				from: "popup",
+				action: "timer",
+				mode: "stop"
+			});
+		}
 		else {
 			sessionRunning = true;
 			sendMessage({
@@ -234,29 +217,13 @@ document.addEventListener('DOMContentLoaded', () => {
 			});
 		}
 	});
-	
-	//Pauses the session
-	addClickListener('pause_session_button', () => {
-		if (!sessionRunning)
-			showError("Session not started!");
-		else {
-			sessionRunning = false;
-			sendMessage({
-				to: "background",
-				from: "popup",
-				action: "timer",
-				mode: "stop"
-			});
-		}
-	});
-	
-	//Sets the add color mode to the normal color
-	addClickListener('normal_radio', () => {
-		addToBlacklisted = false;
-	});
-	
-	//Sets the add color mode to change the blacklisted color
-	addClickListener('blacklisted_radio', () => {
-		addToBlacklisted = true;
+
+	addClickListener('css_button', () => {
+		if (document.getElementById('css_file').href.indexOf("windows_theme") != -1)
+			return;
+		else if (document.getElementById('css_file').href.indexOf("modern_dark") != -1)
+			document.getElementById('css_file').href = "css/modern_light.css";
+		else if (document.getElementById('css_file').href.indexOf("modern_light") != -1)
+			document.getElementById('css_file').href = "css/modern_dark.css";
 	});
 }, false);
