@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<link type="text/css" rel="stylesheet" href="css/modern_dark.css"/>
+		<link type="text/css" rel="stylesheet" href="css/modern_dark.css" id="css_file"/>
 		<script src="common_functions.js"></script>
 		<script src="popup.js"></script>
 	</head>
@@ -19,13 +19,7 @@
 							<hr id="divide">
 						</tr>
 						<tr>
-							<p id="sessions_text" style="position:fixed; top:54px; left:20px; height:137px; width: 168px; overflow-y:scroll; overflow-x:hidden;"></p>
-						</tr>
-						<tr>
-							<button class="hover" id="start_session_button">Start</button>
-						</tr>
-						<tr>
-							<button class="hover" id="pause_session_button">Pause</button>
+							<p id="sessions_text" style="position:fixed; top:54px; left:20px; height:165px; width: 168px; overflow-y:scroll; overflow-x:hidden;"></p>
 						</tr>
 					</table>
 				</td>
@@ -35,6 +29,7 @@
 						<tr>
 							<p align="left" class="title">Session Name</p>
 							<input type="text" id="name_input">
+							<button id="css_button">CSS</button>
 						</tr>
 						<tr>
 							<p align="left" class="title" style="top:70px">Time in Minutes</p>
@@ -46,9 +41,7 @@
 							<input type="color" id="color_chooser", value="#00ff00">
 						</tr>
 						<tr>
-							<p align="left" class="title" style="top:177px">Blacklisted Sites</p>
-							<input type="text" id="site_input">
-							<button class="add_button" id="add_site_button" style="top:210px;">Add</button>
+							<button class="hover" id="start_stop_button">Start</button>
 						</tr>
 						</div>
 					</table>

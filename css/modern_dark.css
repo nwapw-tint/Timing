@@ -3,7 +3,7 @@
 	font-family: Mont;
 }
 html{
-	height:252px;
+	height:245px;
 	background-color:#212b31;
 	border-style: solid;
 	border-color:#40525e;
@@ -11,7 +11,7 @@ html{
 }
 	
 .topbar{
-	width:388px;
+	width:389px;
 	height:20px;
 	background-color:#40525e;
 	position:absolute;
@@ -71,29 +71,15 @@ input[type=text]{
 	height: 11px;
 	border-radius:15%;
 }
-
-.checkbox-label input:hover ~ .custom-check{
-	background-color:White;
-}
-.checkbox-label input:checked ~ .custom-check {
-	border: .5px solid Silver;
-	background-color:Silver;
-	-webkit-transform: rotate(0deg) scale(1);
-	-ms-transform: rotate(0deg) scale(1);
-	transform:rotate(0deg) scale(1);
-	opacity:1;
-	background-image: url("../images/check.png");
-	background-size:cover;
-	border-radius:15%;
-}
 input[type=color]{
-	border: 2px solid #40525e;
+	border: 1px solid #40525e;
 	width:164px;
 	height: 30px;
 	position: absolute;
 	top: 150px;
 	left:210px;
 	border-radius:4%;
+	background-color: #40525e;
 }
 #session_label{
 	position: fixed;
@@ -124,11 +110,6 @@ input[type=color]{
 	top:105px;
 	left:210px;
 }
-#site_input{
-	position:absolute;
-	top:210px;
-	left:210px;
-}
 .add_button{
 	position: absolute;
 	left:340px;
@@ -143,17 +124,11 @@ input[type=color]{
 	display:block;
 	height:22px;
 }
-#start_session_button{
+#start_stop_button{
 	position: fixed;
 	top:210px;
-	left:20px;
-	width: 85px;
-}
-#pause_session_button{
-	position: fixed;
-	top:210px;
-	left:110px;
-	width: 85px;
+	left:210px;
+	width:170px;
 }
 sesh-top{
 	position:absolute;
