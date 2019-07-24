@@ -3,16 +3,15 @@
 	font-family: Mont;
 }
 html{
-	height:250px;
+	height:245px;
 	background-color:White;
 	border-style: solid;
-	border-color:Black;
+	border-color:Silver;
 	border-width:3px;
 }
-	
 .topbar{
-	width:388px;
-	height:20px;
+	width:400px;
+	height:21px;
 	background-color:Silver;
 	position:absolute;
 	left:0px;
@@ -22,9 +21,9 @@ html{
 }
 button{
 	border-style: solid;
-	border-color:Gainsboro;
-	background-color: Gainsboro;
-	font-family: 'Mont';
+	border-color:Silver;
+	background-color: Silver;
+	font-family:Mont;
 	outline-color:Silver;
 	color:Black;
 	border-radius:4%;
@@ -34,7 +33,7 @@ button{
 }
 .hover:hover{
 	background-color:#cfcfcf;
-	border:#cfcfcf;
+	border:Silver;
 	color:White;
 	display:block;
 	height:22px;
