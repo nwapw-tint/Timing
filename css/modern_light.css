@@ -8,6 +8,7 @@ html{
 	border-style: solid;
 	border-color:Silver;
 	border-width:2px;
+	transition-duration: 0.4s;
 }
 .topbar{
 	width:420px;
@@ -33,7 +34,7 @@ button{
 }
 .hover:hover{
 	background-color:Silver;
-	border:Silver;
+	border-color:Silver;
 	color:White;
 	display:block;
 	height:22px;
