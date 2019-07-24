@@ -5,11 +5,10 @@
 html{
 	height:245px;
 	background-color:#212b31;
-	border-style: solid;
+	border-style:solid;
 	border-color:#40525e;
 	border-width:3px;
 }
-	
 .topbar{
 	width:389px;
 	height:20px;
@@ -58,18 +57,6 @@ input[type=text]{
 	color:Gainsboro;
 	border: 1px solid #8ca7b8;
 	outline:none;
-}
-.checkbox-label input{opacity: 0;}
-
-.checkbox-label .custom-check {
-	position: absolute;
-	left:210px;
-	background-color: Silver;
-	border: .5px solid Silver;
-	display: block;
-	width: 11px;
-	height: 11px;
-	border-radius:15%;
 }
 input[type=color]{
 	border: 1px solid #40525e;
