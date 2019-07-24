@@ -6,13 +6,13 @@ html{
 	height:250px;
 	background-color:White;
 	border-style: solid;
-	border-color:Black;
-	border-width:3px;
+	border-color:Silver;
+	border-width:2px;
 }
 	
 .topbar{
-	width:388px;
-	height:20px;
+	width:420px;
+	height:20.75px;
 	background-color:Silver;
 	position:absolute;
 	left:0px;
@@ -143,6 +143,15 @@ input[type=color]{
 	left:340px;
 	width: 40px;
 	height: 22px;
+	transition-duration:0.4s;
+}
+
+.add_button:hover{
+	background-color:#cfcfcf;
+	border:#cfcfcf;
+	color:White;
+	display:block;
+	height:22px;
 }
 #start_stop_button{
 	position: absolute;
@@ -166,3 +175,7 @@ sesh-top{
 	border-color:Gainsboro;
 }
 
+#css_button{
+	background-color:Silver;
+	border-color:Silver;
+}
