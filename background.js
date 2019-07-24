@@ -156,7 +156,7 @@ function sendMessage(msg) {
 
 
 
-//Updates the content tint
+//Updates the content tint to the specified color
 function updateContentTint() {
 	sendMessage({
 		to: "content",
