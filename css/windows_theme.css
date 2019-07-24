@@ -152,7 +152,8 @@ sesh-top{
 
 /* Track */
 ::-webkit-scrollbar-track {
-
+	background-image: url("../images/cross.png");
+	background-size:cover;
 }
 
 /* Handle */
