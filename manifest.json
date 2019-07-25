@@ -1,8 +1,8 @@
 {
 	"manifest_version": 2,
 	"name": "NWAPW Tint",
-	"description": "NWAPW Tint is a tint-based, fully immersive time management tool. Create a routine of tasks, and set different tint colors for each one. No need to constantly recheck a timer or look up from your work.",
-	"version": "0.8.2",
+	"description": "This extension will allow you to tint chrome to a color based on what task you're supposed to be doing. You can add, remove, and edit tasks, and even add parental controls.",
+	"version": "0.7.1",
 	"content_scripts": [
 		{
 			"matches": [

@@ -138,8 +138,6 @@ port.onMessage.addListener((msg) => {
 			sessionRunning = msg.sessionRunning;
 			document.getElementById('start_stop_text').innerHTML = sessionRunning ? "Stop" : "Start";
 			break;
-		case "theme":
-			document.getElementById('css_file').href = msg.theme;
 		}
 		break;
 	}
@@ -234,12 +232,5 @@ document.addEventListener('DOMContentLoaded', () => {
 			document.getElementById('css_file').href = "css/modern_light.css";
 		else if (document.getElementById('css_file').href.indexOf("modern_light") != -1)
 			document.getElementById('css_file').href = "css/modern_dark.css";
-		sendMessage({
-			to: "background",
-			from: "popup",
-			action: "update",
-			place: "theme",
-			theme: document.getElementById('css_file').href
-		});
 	});
 }, false);

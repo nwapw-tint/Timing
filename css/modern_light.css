@@ -186,8 +186,8 @@ sesh-top{
 }
 
 #css_button{
-	background-image: url("../images/moon.png");
-	border-radius:25%;
+	background-color:Silver;
+	border-color:Silver;
 }
 
 /*SCROLLBAR*/
