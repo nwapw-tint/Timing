@@ -4,7 +4,7 @@
 }
 html,td {border-style: outset;}
 html{
-	height:252px;
+	height:245px;
 	background-color:#D4D0C8;
 	}
 .topbar{
@@ -32,8 +32,8 @@ button:hover{
 p{font-family: WinReg;}
 input[type=text]{
 	font-family: WinReg;
-	border: 2.5px inset;
-	width:118px;
+	border: 2.3px inset;
+	width:113px;
 	position:absolute;
 	left:180px;
 	outline:none;
@@ -60,9 +60,14 @@ input[type=text]{
 	opacity:1;
 }
 input[type=color]{
-	border-style: inset;
-	border-width:1.5px;
-	width:164px;
+	background-color: #D4D0C8;
+	outline:none;
+	border-top-color:#959494;
+	border-left-color:#959494;
+	border-right-color:#F0ECE9;
+	border-bottom-color:#F0ECE9;
+	border-width:2px;
+	width:157px;
 	height: 30px;
 	position: absolute;
 	top: 150px;
@@ -95,6 +100,7 @@ input[type=color]{
 	position:absolute;
 	top: 55px;
 	left:210px;
+	
 }
 #time_input{
 	position:absolute;
@@ -108,7 +114,7 @@ input[type=color]{
 }
 .add_button{
 	position: absolute;
-	left:340px;
+	left:335px;
 	width: 40px;
 	height: 22px;
 }
@@ -120,17 +126,17 @@ input[type=color]{
 }
 #start_stop_button{
 	position: absolute;
-	top:205px;
+	top:198px;
 	left:210px;
-	width:170px;
+	width:165px;
 	height:30px;
 	font-size:16px;
 }
 #start_stop_text{
 	padding: 0px;
 	position:fixed; 
-	top: 187px; 
-	left:275px;
+	top: 185px; 
+	left:279px;
 	padding:0px;
 	
 }
@@ -146,12 +152,16 @@ sesh-top{
 	left:19px; 
 	padding-left:170px;
 }
+#css_button{
+	opacity:0;
+}
+
 	
 /*SCROLLBAR*/
 
 /*width*/
 ::-webkit-scrollbar {
-  width: 13px;
+  width: 15px;
 }
 
 /* Track */
@@ -163,19 +173,26 @@ sesh-top{
 /* Handle */
 ::-webkit-scrollbar-thumb {
   	border-style:outset;
-	border-width:1.5px;
+	border-width:2px;
 	background: #D4D0C8; 
 }
 
 /* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #bfbbb4; 
+::-webkit-scrollbar-thumb:hover { 
+  border-style:inset;
 }
 
-::-webkit-scrollbar-button{
-	width:13px;
-	height:13px;
-	background-image: url('../images/arrow.png');
+::-webkit-scrollbar-button:start{
+	width:15px;
+	height:15px;
 	background-size:cover;
+	background-image: url('../images/arrow_up.png');
+	border-style:outset;
+}
+::-webkit-scrollbar-button:end{
+	width:15px;
+	height:15px;
+	background-size:cover;
+	background-image: url('../images/arrow_down.png');
 	border-style:outset;
 }
