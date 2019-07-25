@@ -10,6 +10,8 @@ var sitesVisited = [];
 
 var timeout;
 
+var theme;
+
 //The hidden timer
 function timeoutUpdate() {
 	if (sessionRunning) {
@@ -119,13 +121,15 @@ chrome.extension.onConnect.addListener((port) => {
 				bColor = msg.bColor;
 				updateContentTint();
 				break;
+			case "theme": 
+				theme = msg.theme;
+				break;
 			}
 			break;
 		case "checkRunning":
 			isCurrentTabBlacklisted();
 			if (sessionRunning) {
 				stopSession();
-				sessionRunning = true;
 				startSession();
 			}
 			break;
@@ -229,11 +233,23 @@ function updatePopupBlacklistedSites() {
 	});
 }
 
+function updatePopupTheme() {
+	if (theme)
+		sendMessage({
+			to: "popup",
+			from: "background",
+			action: "update",
+			place: "theme",
+			theme: theme
+		});
+}
+
 //Updates the popup
 function updatePopup() {
 	updatePopupSessions();
 	updatePopupSessionRunning();
 	updatePopupBlacklistedSites();
+	updatePopupTheme();
 }
 
 
@@ -290,7 +306,7 @@ chrome.tabs.onActivated.addListener((activeInfo) => {
 
 //Invoked with Ctrl+Space
 chrome.commands.onCommand.addListener((command) => {
-	if (command == "display_text" && !sessionRunning)
+	if (command == "display_text" && sessionRunning)
 		sendMessage({
 			to: "content",
 			from: "background",
