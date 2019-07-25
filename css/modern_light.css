@@ -11,8 +11,8 @@ html{
 	transition-duration: 0.4s;
 }
 .topbar{
-	width:420px;
-	height:20.75px;
+	width:400px;
+	height:21px;
 	background-color:Silver;
 	position:absolute;
 	left:0px;
@@ -162,8 +162,14 @@ input[type=color]{
 	transition-duration:0.4s;
 }
 #start_stop_text{
-	padding: 0px;
+	position:fixed; 
+	top: 187px; 
+	left:210px;
+	padding:0px;
 	transition-duration:0.4s;
+	height:22px;
+	width:170px;
+	border-radius:4%;
 }
 sesh-top{
 	position:absolute;

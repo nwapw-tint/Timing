@@ -126,6 +126,14 @@ input[type=color]{
 	height:30px;
 	font-size:16px;
 }
+#start_stop_text{
+	padding: 0px;
+	position:fixed; 
+	top: 187px; 
+	left:275px;
+	padding:0px;
+	
+}
 sesh-top{
 	position:absolute;
 	top:-2px;
