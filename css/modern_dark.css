@@ -159,6 +159,10 @@ sesh-top{
 	border-color:#40525e;
 }
 
+#css_button{
+	background-image: url("../images/sun.png");
+	border-radius:25%;
+}
 /*SCROLLBAR*/
 
 /*width*/
