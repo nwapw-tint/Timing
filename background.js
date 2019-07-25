@@ -118,7 +118,7 @@ chrome.extension.onConnect.addListener((port) => {
 			break;
 		case "checkRunning":
 			if (sessionRunning) {
-				updateContentTint();
+				enableContentTint();
 			}
 			break;
 		}

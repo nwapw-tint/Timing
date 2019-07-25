@@ -2,7 +2,7 @@ var fadeDuration = 700;
 var fadeStep = 50;
 
 //Sets the tint's color, fading out the current color and then 
-function setTintColor(color) {
+function setTint(color) {
 	let div = document.getElementById("tint");
 	if (div && color) {
 		div.style.backgroundColor = color;
@@ -19,7 +19,7 @@ function enableTint(color) {
 		setupText();
 		fadeIn(tintDiv, color, fadeStep, fadeDuration);
 	} else {
-		setTintColor(color);
+		setTint(color);
 	}
 
 	//Creates an empty text wrapper, allowing innerHTML to be added
@@ -64,7 +64,7 @@ function enableTint(color) {
 
 //Disables the tint
 function pauseTint() {
-	setTintColor(CLEAR_COLOR);
+	setTint(CLEAR_COLOR);
 }
 
 //Removes the tint
@@ -117,7 +117,7 @@ port.onMessage.addListener((msg) => {
 			removeTint();
 			break;
 		case "change":
-			setTintColor(msg.color);
+			setTint(msg.color);
 			break;
 		}
 		break;
@@ -148,8 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 //Adds the text to the div
-function addText(text, time)
-{
+function addText(text, time) {
 	charCount = text.length;
     textDiv = document.getElementById("textDiv")
     if (textDiv) {    
