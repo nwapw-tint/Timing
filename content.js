@@ -5,10 +5,7 @@ var fadeStep = 50;
 function setTintColor(color) {
 	let div = document.getElementById("tint");
 	if (div && color) {
-		fadeOut(div, fadeStep, fadeDuration);
-		setTimeout(() => {
-			fadeIn(div, color, fadeStep, fadeDuration);
-		}, fadeDuration);
+		div.style.backgroundColor = color;
 	}
 }
   
@@ -64,10 +61,13 @@ function enableTint(color) {
 	}
 }
 //Disables the tint
-function disableTint() {
+function pauseTint() {
+	setTintColor(CLEAR_COLOR);
+}
+function removeTint() {	
 	let div = document.getElementById("tint");
-	if (div) {
-		console.log("SUCCESSFULLY disableTint");
+		if (div) {
+		//console.log("SUCCESSFULLY disableTint");
 		fadeOut(div, fadeStep, fadeDuration);
 		setTimeout(() => {
 			div.parentNode.removeChild(div)
@@ -99,24 +99,27 @@ port.onMessage.addListener((msg) => {
 		return;
 	switch (msg.action) {
 	case "open":
-		//console.log("Connected to the background script");
+		////console.log("Connected to the background script");
 		break;
 	case "tint":
 		switch (msg.mode) {
 		case "enable":
-			console.log("running enableTint");
+			//console.log("running enableTint");
 			enableTint(msg.color);
 			break;
 		case "disable":
-			disableTint();
+			pauseTint();
+			break;
+		case "remove":
+			removeTint();
 			break;
 		case "change":
-			console.log("change tint color?");
+			//console.log("change tint color?");
 			if (!msg.changeTab) {
-				console.log("running setTintColor");
+				//console.log("running setTintColor");
 				setTintColor(msg.color);
 			} else {
-				console.log("no");
+				//console.log("no");
 			}
 			break;
 		}
@@ -171,7 +174,7 @@ function fadeOut(fadeTarget, fadeStep, fadeDuration) {
 	if (fading)
 		return;
 	fading = true;
-	console.log("fading out " + fadeTarget);
+	//console.log("fading out " + fadeTarget);
 	var cA = fadeTarget.style.backgroundColor.replace(/[^\d,.]/g, '').split(',');
 	var currentA = Number(cA[3]);
 	var totalA = currentA;
@@ -180,7 +183,7 @@ function fadeOut(fadeTarget, fadeStep, fadeDuration) {
 		if (currentA > 0.01) {
 			fadeTarget.style.backgroundColor = "rgba(" + cA[0] + "," + cA[1] + "," + cA[2] + "," + currentA + ")";
 			currentA -= totalA / stepsToTake;
-			console.log("fade is " + fadeTarget + "with increment " + (totalA / stepsToTake));
+			//console.log("fade is " + fadeTarget + "with increment " + (totalA / stepsToTake));
 		} else {
 			fadeTarget.style.backgroundColor = "rgba(" + cA[0] + "," + cA[1] + "," + cA[2] + "," + 0 + ")";
 			clearInterval(fadeEffect);

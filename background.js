@@ -20,10 +20,10 @@ function timeoutUpdate() {
 			sessions.shift();
 			updatePopupSessions();
 			if (sessions.length == 0) {
-				//alert("All sessions finished!");
+				//alert("All sessions finished! sS");
 				stopSession();
 			} else {
-				//alert("Session finished!");
+				//alert("Session finished! sS");
 				updateContentTint();
 			}
 		} else
@@ -43,7 +43,7 @@ function startSession() {
 //Stops a session
 function stopSession() {
 	clearInterval(timeout);
-	disableContentTint();
+	removeContentTint();
 	sessionRunning = false;
 }
 
@@ -72,7 +72,7 @@ chrome.extension.onConnect.addListener((port) => {
 			return;
 		switch (msg.action) {
 		case "open":
-			console.log("The port \"" + port.name + "\" has been connected");
+			//console.log("The port \"" + port.name + "\" has been connected");
 			if (port.name == "popup")
 				updatePopup();
 			port.postMessage({
@@ -87,6 +87,7 @@ chrome.extension.onConnect.addListener((port) => {
 				startSession();
 				break;
 			case "stop":
+				//console.log("timer stop sS")
 				stopSession();
 				break;
 			}
@@ -104,16 +105,18 @@ chrome.extension.onConnect.addListener((port) => {
 		case "shift":
 			if (msg.place == "sessions") {
 				sessions.shift();
-				if (sessions.length == 0)
-					stopSession();
+				if (sessions.length == 0){
+					//console.log("all sessions ended sS")
+					stopSession();}
 			}
 			break;
 		case "update":
 			switch (msg.place) {
 			case "sessions":
 				sessions = msg.sessions;
-				if (sessions.length == 0)
-					stopSession();
+				if (sessions.length == 0){
+					//console.log("all sessions ended sS")
+					stopSession();}
 				else
 					updateContentTint();
 				break;
@@ -140,7 +143,7 @@ chrome.extension.onConnect.addListener((port) => {
 		if (port.index == -1)
 			return;
 		port.index = -1;
-		console.log("The port \"" + port.name + "\" has been disconnected");
+		//console.log("The port \"" + port.name + "\" has been disconnected");
 		ports.splice(port.index, 1);
 	});
 	ports.push(port);
@@ -167,7 +170,7 @@ function updateContentTint(changeTab) {
 		action: "tint",
 		mode: "change",
 		color: getTint(),
-		changeTab: changeTab
+		changeTab: false
 	});
 }
 
@@ -189,6 +192,14 @@ function disableContentTint() {
 		from: "background",
 		action: "tint",
 		mode: "disable"
+	});
+}
+function removeContentTint(){
+	sendMessage({
+		to: "content",
+		from: "background",
+		action: "tint",
+		mode: "remove"
 	});
 }
 
@@ -297,7 +308,7 @@ chrome.tabs.onActivated.addListener((activeInfo) => {
 				return false;
 			}
 		} catch (error) {
-			console.log("tabs are null");
+			//console.log("tabs are null");
 		}
 	});
 });
