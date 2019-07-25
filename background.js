@@ -121,6 +121,9 @@ chrome.extension.onConnect.addListener((port) => {
 				enableContentTint();
 			}
 			break;
+		case "error":
+			alert(msg.error);
+			break;
 		}
 	});
 	port.index = ports.length;

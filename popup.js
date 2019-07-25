@@ -91,7 +91,12 @@ function addClickListener(id, callback) {
 
 //Shows an error
 function showError(error) {
-	alert("ERROR: " + error);
+	sendMessage({
+		to: "background",
+		from: "popup",
+		action: "error",
+		error: "ERROR: " + error
+	});
 }
 
 
