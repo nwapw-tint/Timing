@@ -2,23 +2,49 @@ function save_options() {
     var sites = document.getElementById('sites').value;
     chrome.storage.sync.set({
       sites:sites
-    }, function() {
-      // Update status to let user know options were saved.
-      var status = document.getElementById('status');
-      status.textContent = 'Options saved.';
-      setTimeout(function() {
-        status.textContent = '';
-      }, 750);
-    });
+    }, function() {});
   }
 
   function restore_options() {
-    // Use default value color = 'red' and likesColor = true.
     chrome.storage.sync.get({
-      sites: "none"
+      sites: "Enter sites to blacklist, separated by a newline."
     }, function(items) {
-      alert(items.sites);
+      document.getElementById('sites').value = items.sites;
     });
   }
+
 document.addEventListener('DOMContentLoaded', restore_options);
-document.getElementById('save').addEventListener('click',save_options);//triggers save_options() when save button clicked
+document.onunload = function(){sendSites(sites)};
+
+var port = chrome.extension.connect({
+	name: "options"
+});
+
+//Tells the background script the content script has opened
+sendMessage({
+	to: "background",
+	from: "options",
+	action: "open"
+});
+
+//Creates the capability to receive messages from the background script
+port.onMessage.addListener((msg) => {
+	if (msg.to != "options") {
+		return;
+    }
+    //all message to all ports
+});
+
+//Creates the capability to send messages to the background script
+function sendMessage(msg) {
+	port.postMessage(msg);
+}
+function sendSites(sites)
+{
+    sendMessage({
+        to: "background",
+        from: "options",
+        action: "blacklist",
+        sites: sites
+    })
+}

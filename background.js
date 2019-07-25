@@ -124,6 +124,9 @@ chrome.extension.onConnect.addListener((port) => {
 		case "error":
 			alert(msg.error);
 			break;
+		case "blacklist":
+			console.log(msg.sites);
+			break;
 		}
 	});
 	port.index = ports.length;
