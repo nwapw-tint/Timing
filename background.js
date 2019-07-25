@@ -129,8 +129,7 @@ chrome.extension.onConnect.addListener((port) => {
 		case "checkRunning":
 			isCurrentTabBlacklisted();
 			if (sessionRunning) {
-				stopSession();
-				startSession();
+				updateContentTint(true);
 			}
 			break;
 		}
@@ -161,13 +160,14 @@ function sendMessage(msg) {
 
 
 //Updates the content tint to the specified color
-function updateContentTint() {
+function updateContentTint(changeTab) {
 	sendMessage({
 		to: "content",
 		from: "background",
 		action: "tint",
 		mode: "change",
-		color: getTint()
+		color: getTint(),
+		changeTab: changeTab
 	});
 }
 
@@ -178,9 +178,7 @@ function enableContentTint() {
 		from: "background",
 		action: "tint",
 		mode: "enable",
-		id: "tint-color",
-		color: getTint(),
-		sessionRunning: sessionRunning
+		color: getTint()
 	});
 }
 
@@ -286,7 +284,7 @@ chrome.tabs.onActivated.addListener((activeInfo) => {
 				tabId: activeInfo.tabId
 			};
 			if (hasVisitedSite(currentSite))
-				updateContentTint();
+				updateContentTint(true);
 			else {
 				sitesVisited.push(currentSite);
 				chrome.tabs.reload(currentSite.tabId);

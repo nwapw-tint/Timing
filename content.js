@@ -66,15 +66,20 @@ function enableTint(color) {
 //Disables the tint
 function disableTint() {
 	let div = document.getElementById("tint");
-	if (div != null){
-		console.log("called through disableTint");
-		fadeOut(div, fadeStep,fadeDuration);
-		setTimeout(function(){div.parentNode.removeChild(div)},fadeDuration);
+	if (div) {
+		console.log("SUCCESSFULLY disableTint");
+		fadeOut(div, fadeStep, fadeDuration);
+		setTimeout(() => {
+			div.parentNode.removeChild(div)
+		}, fadeDuration);
 	}
-
 }
 
+
+
 /*-----------------------Communication-----------------------*/
+
+
 
 //Creates the port
 var port = chrome.extension.connect({
@@ -99,15 +104,20 @@ port.onMessage.addListener((msg) => {
 	case "tint":
 		switch (msg.mode) {
 		case "enable":
-			console.log("running enableTint")
+			console.log("running enableTint");
 			enableTint(msg.color);
 			break;
 		case "disable":
 			disableTint();
 			break;
 		case "change":
-			console.log("running setTintColor")
-			setTintColor(msg.color);
+			console.log("change tint color?");
+			if (!msg.changeTab) {
+				console.log("running setTintColor");
+				setTintColor(msg.color);
+			} else {
+				console.log("no");
+			}
 			break;
 		}
 		break;
@@ -131,7 +141,11 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 }, false);
 
+
+
 /*-----------------------Add Text-----------------------*/
+
+
 
 //Adds the text to the div
 function addText(text, time)
