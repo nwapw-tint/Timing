@@ -1,10 +1,6 @@
 var sessions = [];
 var sessionRunning = false;
 
-var blacklistedSites = [];
-var onBlacklistedSite = false;
-var bColor = "rgba(255, 0, 0, " + alpha + ")";
-
 var currentSite = "";
 var sitesVisited = [];
 
@@ -20,10 +16,8 @@ function timeoutUpdate() {
 			sessions.shift();
 			updatePopupSessions();
 			if (sessions.length == 0) {
-				//alert("All sessions finished! sS");
 				stopSession();
 			} else {
-				//alert("Session finished! sS");
 				updateContentTint();
 			}
 		} else
@@ -49,9 +43,8 @@ function stopSession() {
 
 //Gets the tint
 function getTint() {
-	isCurrentTabBlacklisted();
 	if (sessions.length > 0)
-		return onBlacklistedSite ? bColor : sessions[0].color;
+		return sessions[0].color;
 	else
 		return CLEAR_COLOR;
 }
@@ -72,7 +65,7 @@ chrome.extension.onConnect.addListener((port) => {
 			return;
 		switch (msg.action) {
 		case "open":
-			//console.log("The port \"" + port.name + "\" has been connected");
+			console.log("The port \"" + port.name + "\" has been connected");
 			if (port.name == "popup")
 				updatePopup();
 			port.postMessage({
@@ -87,7 +80,6 @@ chrome.extension.onConnect.addListener((port) => {
 				startSession();
 				break;
 			case "stop":
-				//console.log("timer stop sS")
 				stopSession();
 				break;
 			}
@@ -97,16 +89,12 @@ chrome.extension.onConnect.addListener((port) => {
 			case "sessions":
 				sessions.push(msg.session);
 				break;
-			case "blacklistedSites":
-				blacklistedSites.push(msg.blacklistedSite);
-				updateContentTint();
 			}
 			break;
 		case "shift":
 			if (msg.place == "sessions") {
 				sessions.shift();
 				if (sessions.length == 0){
-					//console.log("all sessions ended sS")
 					stopSession();}
 			}
 			break;
@@ -114,15 +102,10 @@ chrome.extension.onConnect.addListener((port) => {
 			switch (msg.place) {
 			case "sessions":
 				sessions = msg.sessions;
-				if (sessions.length == 0){
-					//console.log("all sessions ended sS")
-					stopSession();}
+				if (sessions.length == 0)
+					stopSession();
 				else
 					updateContentTint();
-				break;
-			case "bColor":
-				bColor = msg.bColor;
-				updateContentTint();
 				break;
 			case "theme": 
 				theme = msg.theme;
@@ -130,9 +113,8 @@ chrome.extension.onConnect.addListener((port) => {
 			}
 			break;
 		case "checkRunning":
-			isCurrentTabBlacklisted();
 			if (sessionRunning) {
-				updateContentTint(true);
+				updateContentTint();
 			}
 			break;
 		}
@@ -143,7 +125,7 @@ chrome.extension.onConnect.addListener((port) => {
 		if (port.index == -1)
 			return;
 		port.index = -1;
-		//console.log("The port \"" + port.name + "\" has been disconnected");
+		console.log("The port \"" + port.name + "\" has been disconnected");
 		ports.splice(port.index, 1);
 	});
 	ports.push(port);
@@ -163,14 +145,13 @@ function sendMessage(msg) {
 
 
 //Updates the content tint to the specified color
-function updateContentTint(changeTab) {
+function updateContentTint() {
 	sendMessage({
 		to: "content",
 		from: "background",
 		action: "tint",
 		mode: "change",
-		color: getTint(),
-		changeTab: false
+		color: getTint()
 	});
 }
 
@@ -185,15 +166,17 @@ function enableContentTint() {
 	});
 }
 
-//Disables the content tint
-function disableContentTint() {
+//Pauses the content tint
+function pauseContentTint() {
 	sendMessage({
 		to: "content",
 		from: "background",
 		action: "tint",
-		mode: "disable"
+		mode: "pause"
 	});
 }
+
+//Removes the content tint
 function removeContentTint(){
 	sendMessage({
 		to: "content",
@@ -231,17 +214,6 @@ function updatePopupSessionRunning() {
 	});
 }
 
-//Updates the popup blacklisted sites
-function updatePopupBlacklistedSites() {
-	sendMessage({
-		to: "popup",
-		from: "backup",
-		action: "update",
-		place: "blacklistedSites",
-		blacklistedSites: blacklistedSites
-	});
-}
-
 function updatePopupTheme() {
 	if (theme)
 		sendMessage({
@@ -257,23 +229,7 @@ function updatePopupTheme() {
 function updatePopup() {
 	updatePopupSessions();
 	updatePopupSessionRunning();
-	updatePopupBlacklistedSites();
 	updatePopupTheme();
-}
-
-
-
-/*-------------------------Blacklist-------------------------*/
-
-
-
-//Updates if the current tab is blacklisted
-function isCurrentTabBlacklisted() {
-	let blacklisted = false;
-	for (let i = 0; i < blacklistedSites.length && !blacklisted; i++)
-		if (currentSite.url == blacklistedSites[i])
-			blacklisted = true;
-	onBlacklistedSite = blacklisted;
 }
 
 
@@ -295,7 +251,7 @@ chrome.tabs.onActivated.addListener((activeInfo) => {
 				tabId: activeInfo.tabId
 			};
 			if (hasVisitedSite(currentSite))
-				updateContentTint(true);
+				updateContentTint();
 			else {
 				sitesVisited.push(currentSite);
 				chrome.tabs.reload(currentSite.tabId);
@@ -308,7 +264,7 @@ chrome.tabs.onActivated.addListener((activeInfo) => {
 				return false;
 			}
 		} catch (error) {
-			//console.log("tabs are null");
+			console.log("tabs are null");
 		}
 	});
 });

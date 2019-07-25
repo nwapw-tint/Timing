@@ -60,14 +60,16 @@ function enableTint(color) {
 		document.body.appendChild(tintDiv);
 	}
 }
+
 //Disables the tint
 function pauseTint() {
 	setTintColor(CLEAR_COLOR);
 }
+
+//Removes the tint
 function removeTint() {	
 	let div = document.getElementById("tint");
-		if (div) {
-		//console.log("SUCCESSFULLY disableTint");
+	if (div) {
 		fadeOut(div, fadeStep, fadeDuration);
 		setTimeout(() => {
 			div.parentNode.removeChild(div)
@@ -99,28 +101,21 @@ port.onMessage.addListener((msg) => {
 		return;
 	switch (msg.action) {
 	case "open":
-		////console.log("Connected to the background script");
+		console.log("Connected to the background script");
 		break;
 	case "tint":
 		switch (msg.mode) {
 		case "enable":
-			//console.log("running enableTint");
 			enableTint(msg.color);
 			break;
-		case "disable":
+		case "pause":
 			pauseTint();
 			break;
 		case "remove":
 			removeTint();
 			break;
 		case "change":
-			//console.log("change tint color?");
-			if (!msg.changeTab) {
-				//console.log("running setTintColor");
-				setTintColor(msg.color);
-			} else {
-				//console.log("no");
-			}
+			setTintColor(msg.color);
 			break;
 		}
 		break;
@@ -174,7 +169,6 @@ function fadeOut(fadeTarget, fadeStep, fadeDuration) {
 	if (fading)
 		return;
 	fading = true;
-	//console.log("fading out " + fadeTarget);
 	var cA = fadeTarget.style.backgroundColor.replace(/[^\d,.]/g, '').split(',');
 	var currentA = Number(cA[3]);
 	var totalA = currentA;
@@ -183,7 +177,6 @@ function fadeOut(fadeTarget, fadeStep, fadeDuration) {
 		if (currentA > 0.01) {
 			fadeTarget.style.backgroundColor = "rgba(" + cA[0] + "," + cA[1] + "," + cA[2] + "," + currentA + ")";
 			currentA -= totalA / stepsToTake;
-			//console.log("fade is " + fadeTarget + "with increment " + (totalA / stepsToTake));
 		} else {
 			fadeTarget.style.backgroundColor = "rgba(" + cA[0] + "," + cA[1] + "," + cA[2] + "," + 0 + ")";
 			clearInterval(fadeEffect);

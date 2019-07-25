@@ -1,10 +1,7 @@
 //Local copies
 var sessions = [];
 var sessionRunning = false;
-var nColor = "rgba(0, 255, 0, " + alpha + ")";
-var bColor = "rgba(255, 0, 0, " + alpha + ")";
-var blacklistedSites = [];
-var addToBlacklisted = false;
+var color = "rgba(0, 255, 0, " + alpha + ")";
 
 const maxTime = 1440;
 const maxLength = 147;
@@ -69,7 +66,7 @@ function addSession(time) {
 		let session = {
 			time: time * 60,
 			name: name,
-			color: nColor
+			color: color
 		};
 		sessions.push(session);
 		sendMessage({
@@ -131,9 +128,6 @@ port.onMessage.addListener((msg) => {
 			}
 			updateSessionText();
 			break;
-		case "blacklistedSites":
-			blacklistedSites = msg.blacklistedSites;
-			break;
 		case "sessionRunning":
 			sessionRunning = msg.sessionRunning;
 			document.getElementById('start_stop_text').innerHTML = sessionRunning ? "Stop" : "Start";
@@ -156,37 +150,12 @@ function sendMessage(msg) {
 
 
 
-//The mouse coordinates
-var mouseX = 0, mouseY = 0;
-
 //Called when the popup loads
 document.addEventListener('DOMContentLoaded', () => {
-	//Invoked when the mouse is moved
-	window.addEventListener('mousemove', (e) => {
-		mouseX = e.screenX - window.screenX - 10;
-		mouseY = e.screenY - window.screenY - 8;
-	}, false);
 
 	document.getElementById('color_chooser').addEventListener('change', () => {
-		nColor = hexToRgba(document.getElementById('color_chooser').value);
+		color = hexToRgba(document.getElementById('color_chooser').value);
 	}, false);
-
-	//Invoked when the mouse is clicked
-	window.addEventListener('click', (e) => {
-		let color = nColor;
-		if (color)
-			if (addToBlacklisted) {
-				bColor = color;
-				sendMessage({
-					to: "background",
-					from: "popup",
-					action: "update",
-					place: "bColor",
-					bColor: color
-				});
-			} else
-				nColor = color;
-	});
 	
 	//Adds a session to the queue
 	addClickListener('add_session_button', () => {
