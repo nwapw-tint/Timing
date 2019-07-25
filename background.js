@@ -1,5 +1,5 @@
 var sessions = [];
-var sessionRunning = false;
+var sessionRunning = false, onChromeSite = false;
 
 var currentSite = "";
 var sitesVisited = [];
@@ -79,13 +79,15 @@ chrome.extension.onConnect.addListener((port) => {
 			});
 			break;
 		case "timer":
-			switch (msg.mode) {
-			case "start":
-				startSession();
-				break;
-			case "stop":
-				stopSession();
-				break;
+			if (currentSite.url.indexOf("chrome://") != 0) {
+				switch (msg.mode) {
+				case "start":
+					startSession();
+					break;
+				case "stop":
+					stopSession();
+					break;
+				}
 			}
 			break;
 		case "push":
@@ -236,11 +238,23 @@ function updatePopupTheme() {
 		});
 }
 
+//Updates the popup start stop button
+function updatePopupStartStopButton() {
+	sendMessage({
+		to: "popup",
+		from: "background",
+		action: "update",
+		place: "start_stop",
+		disabled: onChromeSite
+	});
+}
+
 //Updates the popup
 function updatePopup() {
 	updatePopupSessions();
 	updatePopupSessionRunning();
 	updatePopupTheme();
+	updatePopupStartStopButton();
 }
 
 
@@ -261,6 +275,20 @@ chrome.tabs.onActivated.addListener((activeInfo) => {
 				url: tabs[0].url,
 				tabId: activeInfo.tabId
 			};
+			if (currentSite.url.indexOf("chrome://") == 0) {
+				if (sessionRunning) {
+					onChromeSite = true;
+					updatePopupStartStopButton();
+					sessionRunning = false;
+				}
+			} else if (onChromeSite) {
+				onChromeSite = false;
+				updatePopupStartStopButton();
+				if (sessions.length > 0) {
+					sessionRunning = true;
+				}
+			}
+			
 			if (hasVisitedSite(currentSite)) {
 				updateContentTint();
 			} else {

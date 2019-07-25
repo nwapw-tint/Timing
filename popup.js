@@ -142,6 +142,10 @@ port.onMessage.addListener((msg) => {
 			break;
 		case "theme":
 			document.getElementById('css_file').href = msg.theme;
+			break;
+		case "start_stop":
+			document.getElementById('start_stop_button').disabled = msg.disabled;
+			break;
 		}
 		break;
 	}
