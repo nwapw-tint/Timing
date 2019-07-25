@@ -222,7 +222,8 @@ function updatePopupSessionRunning() {
 		from: "background",
 		action: "update",
 		place: "sessionRunning",
-		sessionRunning: sessionRunning
+		sessionRunning: sessionRunning,
+		runningBeforeOnChromeSite: runningBeforeOnChromeSite
 	});
 }
 
@@ -263,6 +264,8 @@ function updatePopup() {
 
 
 
+var runningBeforeOnChromeSite = false;
+
 //Checks the current site to see if it has been filtered. If it hasn't been visited, add it to visited.
 //Detects when the user changes tabs
 chrome.tabs.onActivated.addListener((activeInfo) => {
@@ -276,16 +279,20 @@ chrome.tabs.onActivated.addListener((activeInfo) => {
 				tabId: activeInfo.tabId
 			};
 			if (currentSite.url.indexOf("chrome://") == 0) {
+				onChromeSite = true;
+				updatePopupStartStopButton();
 				if (sessionRunning) {
-					onChromeSite = true;
-					updatePopupStartStopButton();
+					runningBeforeOnChromeSite = true;
 					sessionRunning = false;
+					updatePopupSessionRunning();
 				}
 			} else if (onChromeSite) {
 				onChromeSite = false;
 				updatePopupStartStopButton();
-				if (sessions.length > 0) {
+				if (sessions.length > 0 && runningBeforeOnChromeSite) {
+					runningBeforeOnChromeSite = false;
 					sessionRunning = true;
+					updatePopupSessionRunning();
 				}
 			}
 			
