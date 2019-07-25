@@ -3,7 +3,7 @@
 	font-family: Mont;
 }
 html {
-	height: 241px;
+	height: 237px;
 	background-color: White;
 	border-style: solid;
 	border-color: Silver;
@@ -34,8 +34,8 @@ button {
 	
 }
 .hover:hover {
-	background-color: Silver;
-	border-color: Silver;
+	background-color: #cfcfcf;
+	border-color: #cfcfcf;
 	color: White;
 	display: block;
 	height: 22px;
@@ -59,7 +59,7 @@ input[type=text] {
 }
 input[type=color] {
 	border-color: 1px solid Gainsboro;
-	width: 164px;
+	width: 114px;
 	height: 30px;
 	position: absolute;
 	top: 150px;
@@ -107,7 +107,7 @@ input[type=color] {
 	width: 180px;
 }
 #setup_bar {
-	width: 186px;
+	width: 135px;
 }
 .title {
 	position: absolute;
@@ -133,27 +133,28 @@ input[type=color] {
 }
 .add_button {
 	position: absolute;
-	left: 340px;
-	width: 40px;
-	height: 22px;
+	left: 210px;
+	width: 120px;
+	height:30px;
 	transition-duration: 0.4s;
 	padding: 0px;
 	margin: 0 auto;
+	font-size:16px;
 }
 .add_button:hover {
 	background-color: #cfcfcf;
 	border-color: #cfcfcf;
 	color: White;
 	display: block;
-	height: 22px;
+	height: 30px;
 	padding: 0px;
 	margin: 0 auto;
 }
 #start_stop_button {
 	position: absolute;
 	top: 198px;
-	left: 210px;
-	width: 170px;
+	left: 15px;
+	width: 174px;
 	height: 30px;
 	font-size: 16px;
 	transition-duration: 0.4s;
@@ -161,7 +162,7 @@ input[type=color] {
 #start_stop_text {
 	position: fixed; 
 	top: 187px; 
-	left: 210px;
+	left: 15px;
 	padding: 0px;
 	transition-duration: 0.4s;
 	height: 22px;
@@ -184,6 +185,7 @@ sesh-top {
 #css_button {
 	background-image: url("../images/moon.png");
 	border-radius: 25%;
+	transition-duration:0.4s;
 }
 
 /*SCROLLBAR*/

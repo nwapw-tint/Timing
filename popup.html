@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<link type="text/css" rel="stylesheet" href="css/modern_light.css" id="css_file"/>
+		<link type="text/css" rel="stylesheet" href="css/modern_dark.css" id="css_file"/>
 		<script src="common_functions.js"></script>
 		<script src="popup.js"></script>
 	</head>
 	<body>
 		<div class="topbar">
 			<p style="position:absolute; top:-9px; left:4px;">Color Tint</p>
-			<button style="position:absolute; left:375px; height:20px; width:20px" class="hover" id="css_button"></button>
+			<button style="border:none; position:absolute; left:320px; top:0px; height:18px; width:18px; background-size:cover;" class="hover" id="css_button"></button>
 		</div><br>
-		<table height="213" style="	border-bottom-width:5px;">
+		<table height="210" style="	border-bottom-width:5px;">
 			<tr>
 				<td> <!-- word-->
 					<table id="sessions_bar">
@@ -19,7 +19,10 @@
 							<hr id="divide">
 						</tr>
 						<tr>
-							<p id="sessions_text" style="position:fixed; top:54px; left:20px; height:163px; width: 168px; overflow-y:scroll; overflow-x:hidden;"></p>
+							<p id="sessions_text" style="position:fixed; top:54px; left:20px; height:118px; width: 168px; overflow-y:scroll; overflow-x:hidden;"></p>
+						</tr>
+						<tr>
+							<button class="hover" id="start_stop_button" ><p class="hover" id="start_stop_text">Start</p></button>
 						</tr>
 					</table>
 				</td>
@@ -33,14 +36,11 @@
 							<tr>
 								<p align="left" class="title" style="top:72px">Time in Minutes</p>
 								<input type="text" id="time_input">
-								<button class="add_button" id="add_session_button" style="top:105px;">Add</button>
+								<button class="add_button" id="add_session_button" style="top:198px;">Add</button>
 							</tr>
 							<tr>
 								<p align="left" class="title" style="top:118px">Tint Color</p>
 								<input type="color" id="color_chooser" value="#00ff00">
-							</tr>
-							<tr>
-								<button class="hover" id="start_stop_button" ><p class="hover" id="start_stop_text">Start</p></button>
 							</tr>
 						</div>
 					</table>

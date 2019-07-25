@@ -1,5 +1,5 @@
 var sessions = [];
-var sessionRunning = false;
+var sessionRunning = false, onChromeSite = false;
 
 var currentSite = "";
 var sitesVisited = [];
@@ -79,13 +79,15 @@ chrome.extension.onConnect.addListener((port) => {
 			});
 			break;
 		case "timer":
-			switch (msg.mode) {
-			case "start":
-				startSession();
-				break;
-			case "stop":
-				stopSession();
-				break;
+			if (currentSite.url.indexOf("chrome://") != 0) {
+				switch (msg.mode) {
+				case "start":
+					startSession();
+					break;
+				case "stop":
+					stopSession();
+					break;
+				}
 			}
 			break;
 		case "push":
@@ -223,7 +225,8 @@ function updatePopupSessionRunning() {
 		from: "background",
 		action: "update",
 		place: "sessionRunning",
-		sessionRunning: sessionRunning
+		sessionRunning: sessionRunning,
+		runningBeforeOnChromeSite: runningBeforeOnChromeSite
 	});
 }
 
@@ -239,11 +242,23 @@ function updatePopupTheme() {
 		});
 }
 
+//Updates the popup start stop button
+function updatePopupStartStopButton() {
+	sendMessage({
+		to: "popup",
+		from: "background",
+		action: "update",
+		place: "start_stop",
+		disabled: onChromeSite
+	});
+}
+
 //Updates the popup
 function updatePopup() {
 	updatePopupSessions();
 	updatePopupSessionRunning();
 	updatePopupTheme();
+	updatePopupStartStopButton();
 }
 
 
@@ -251,6 +266,8 @@ function updatePopup() {
 /*-------------------------Chrome Functions-------------------------*/
 
 
+
+var runningBeforeOnChromeSite = false;
 
 //Checks the current site to see if it has been filtered. If it hasn't been visited, add it to visited.
 //Detects when the user changes tabs
@@ -264,6 +281,24 @@ chrome.tabs.onActivated.addListener((activeInfo) => {
 				url: tabs[0].url,
 				tabId: activeInfo.tabId
 			};
+			if (currentSite.url.indexOf("chrome://") == 0) {
+				onChromeSite = true;
+				updatePopupStartStopButton();
+				if (sessionRunning) {
+					runningBeforeOnChromeSite = true;
+					sessionRunning = false;
+					updatePopupSessionRunning();
+				}
+			} else if (onChromeSite) {
+				onChromeSite = false;
+				updatePopupStartStopButton();
+				if (sessions.length > 0 && runningBeforeOnChromeSite) {
+					runningBeforeOnChromeSite = false;
+					sessionRunning = true;
+					updatePopupSessionRunning();
+				}
+			}
+			
 			if (hasVisitedSite(currentSite)) {
 				updateContentTint();
 			} else {

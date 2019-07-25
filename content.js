@@ -73,7 +73,7 @@ function removeTint() {
 	if (div) {
 		fadeOut(div, fadeStep, fadeDuration);
 		setTimeout(() => {
-			div.parentNode.removeChild(div)
+			div.parentNode.removeChild(div);
 		}, fadeDuration);
 	}
 }
@@ -166,45 +166,54 @@ function addText(text, time) {
     }
 }
 
-var fading = false;
+
+
+/*-------------------------Fading-------------------------*/
+
+
+
+var fadingOut = false, fadingIn = false;
+var fadeOutEffect, fadeInEffect;
+
 //Fades the target element color property to an alpha of 0.
 function fadeOut(fadeTarget, fadeStep, fadeDuration) {
-	if (fading) {
+	if (fadingOut) {
 		return;
 	}
-	fading = true;
+	fadingOut = true;
 	var cA = fadeTarget.style.backgroundColor.replace(/[^\d,.]/g, '').split(',');
 	var currentA = Number(cA[3]);
 	var totalA = currentA;
 	var stepsToTake = fadeDuration / fadeStep;
-	var fadeEffect = setInterval(() => {
+	fadeOutEffect = setInterval(() => {
 		if (currentA > 0.01) {
 			fadeTarget.style.backgroundColor = "rgba(" + cA[0] + "," + cA[1] + "," + cA[2] + "," + currentA + ")";
 			currentA -= totalA / stepsToTake;
 		} else {
 			fadeTarget.style.backgroundColor = "rgba(" + cA[0] + "," + cA[1] + "," + cA[2] + "," + 0 + ")";
-			clearInterval(fadeEffect);
+			clearInterval(fadeOutEffect);
+			fadingOut = false;
 		}
 	}, fadeStep);
-	fading = false;
 }
+
 //Fades the target element into a target color
 function fadeIn(fadeTarget, color, fadeStep, fadeDuration) {
-	if (fading) {
+	if (fadingIn) {
 		return;
 	}
-	fading = true;
+	fadingIn = true;
 	var cA = color.replace(/[^\d,.]/g, '').split(',');
 	var targetA = Number(cA[3]);
 	var currentA = 0;
-	var fadeEffect = setInterval(() => {
+	fadeInEffect = setInterval(() => {
 		if (currentA < targetA - 0.01) {
 			fadeTarget.style.backgroundColor = "rgba(" + cA[0] + "," + cA[1] + "," + cA[2] + "," + currentA + ")";
 			currentA += (fadeStep * targetA) / fadeDuration;
 		} else {	//we reached the target alpha value
 			fadeTarget.style.backgroundColor = "rgba(" + cA[0] + "," + cA[1] + "," + cA[2] + "," + targetA + ")";
-			clearInterval(fadeEffect);
+			clearInterval(fadeInEffect);
+			fadingIn = false;
 		}
 	}, fadeStep);
-	fading = false;
 }
