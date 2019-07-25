@@ -149,8 +149,11 @@ function addText(text, time)
         }, 1000); //faux dynamic feeling
     }
 }
+fading = false;
     //Fades the target element color property to an alpha of 0.
 	function fadeOut(fadeTarget, fadeStep, fadeDuration) {
+		if(fading){return;}
+		fading = true;
 		console.log("fading out "+fadeTarget);
 		cA = fadeTarget.style.backgroundColor.replace(/[^\d,.]/g, '').split(',');
 		currentA = Number(cA[3]);
@@ -168,10 +171,13 @@ function addText(text, time)
 			{
 				fadeTarget.style.backgroundColor = "rgba(" + cA[0]+ "," + cA[1] + "," + cA[2] + "," + 0 + ")";
 				clearInterval(fadeEffect)}
-			}, fadeStep);
+		}, fadeStep);
+		fading = false;
 	}
 	//Fades the target element into a target color
 	function fadeIn(fadeTarget,color,fadeStep, fadeDuration){
+		if(fading){return;}
+		fading = true;
 		cA = color.replace(/[^\d,.]/g, '').split(',');
 		targetA = Number(cA[3]);
 		currentA = 0;
@@ -187,4 +193,5 @@ function addText(text, time)
 				fadeTarget.style.backgroundColor = "rgba(" + cA[0]+ "," + cA[1] + "," + cA[2] + "," + targetA+ ")";
 				clearInterval(fadeEffect)}
 			}, fadeStep);
+		fading = false;
 	}
