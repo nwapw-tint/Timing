@@ -290,7 +290,7 @@ chrome.tabs.onActivated.addListener((activeInfo) => {
 
 //Invoked with Ctrl+Space
 chrome.commands.onCommand.addListener((command) => {
-	if (command == "display_text" && !sessionRunning)
+	if (command == "display_text" && sessionRunning)
 		sendMessage({
 			to: "content",
 			from: "background",

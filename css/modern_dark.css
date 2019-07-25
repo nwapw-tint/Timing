@@ -19,6 +19,7 @@ html{
 	top:0px;
 	color:white;
 	text-align:left;
+	transition-duration: 0.4s;
 }
 button{
 	border-style: solid;
@@ -37,9 +38,16 @@ button{
 .hover:hover{
 	background-color:#587181;
 	border-color:#587181;
-	color:#8ca7b8;
 	display:block;
 	height:22px;
+}
+
+.hover p{
+	transition-duration:0.4s;
+}
+
+.hover p:hover{
+	color:#8ca7b8;
 }
 
 p{
@@ -99,7 +107,7 @@ input[type=color]{
 	left:210px;
 }
 .add_button{
-		position: absolute;
+	position: absolute;
 	left:340px;
 	width: 40px;
 	height: 22px;
@@ -123,11 +131,18 @@ input[type=color]{
 	width:170px;
 	height:30px;
 	font-size:16px;
+	transition-duration:0.4s;
 }
 #start_stop_text{
+	position:fixed; 
+	top: 187px; 
+	left:210px;
+	padding:0px;
+	transition-duration:0.4s;
+	height:22px;
+	width:170px;
+	border-radius:4%;
 	color:#8ca7b8;
-	padding: 0px;
-	
 }
 
 sesh-top{
@@ -144,6 +159,10 @@ sesh-top{
 	border-color:#40525e;
 }
 
+#css_button{
+	background-image: url("../images/sun.png");
+	border-radius:25%;
+}
 /*SCROLLBAR*/
 
 /*width*/

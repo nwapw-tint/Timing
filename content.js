@@ -1,43 +1,42 @@
-
-//Sets the tint's color
+fadeDuration = 700;
+fadeStep = 50;
+//Sets the tint's color, fading out the current color and then 
 function setTintColor(color) {
 	let div = document.getElementById("tint");
 	if (div && color) {
-		console.log("fading out and then fading in")
-		fadeOut(div,50,500);
-		setTimeout(function(){fadeIn(div,color,50,500)},500);
+		fadeOut(div,fadeStep,fadeDuration);
+		setTimeout(function(){fadeIn(div,color,fadeStep,fadeDuration)},fadeDuration);
 	}
 }
   
 //Enables the tint
 function enableTint(color) {
-	if (!document.getElementById("tint")) {
+	if (!document.getElementById("tint")) 
+	{
 		var tintDiv = document.createElement("div");
 		tintDiv.id = "tint";
 		appendFonts();
 		styleTint(tintDiv);
 		setupText();
-		console.log("fading in the color "+color)
-		fadeIn(tintDiv,color, 50, 500);
-	} else{
-		console.log("existing tint, changing the color")
-		setTintColor(color);}
+		fadeIn(tintDiv,color, fadeStep, fadeDuration);
+	} else
+	{
+		setTintColor(color);
+	}
 
 	//Creates an empty text wrapper, allowing innerHTML to be added
 	function setupText() {
 		var textDiv = document.createElement("div");
 		textDiv.id = "textDiv";
 		textDiv.style.fontFamily = "Roboto,sans-serif";
-		//console.log(textDiv.style.fontFamily);
 		textDiv.style.position = "absolute";
 		textDiv.style.top = "50%";
 		textDiv.style.left = "50%";
 		textDiv.style.marginBottom = "-50%";
 		textDiv.style.marginRight = "-50%";
 		textDiv.style.transform = "translate(-50%, -50%)";
-		textDiv.style.color = "rgba(255, 255, 255, 1)"; //TODO: set automatically based on tint shade
+		textDiv.style.color = "rgba(255, 255, 255, 0)"; 
 		textDiv.style.zIndex = MAX_Z_VALUE;
-		textDiv.style.opacity = 0;
 		tintDiv.appendChild(textDiv);
 	}
 	//appends fonts
@@ -63,14 +62,13 @@ function enableTint(color) {
 		document.body.appendChild(tintDiv);
 	}
 }
-
 //Disables the tint
 function disableTint() {
 	let div = document.getElementById("tint");
 	if (div != null){
-		//console.log("removing tint")
-		fadeOut(div, 50,500);
-		setTimeout(function(){div.parentNode.removeChild(div)},500);
+		console.log("called through disableTint");
+		fadeOut(div, fadeStep,fadeDuration);
+		setTimeout(function(){div.parentNode.removeChild(div)},fadeDuration);
 	}
 
 }
@@ -107,10 +105,8 @@ port.onMessage.addListener((msg) => {
 			disableTint();
 			break;
 		case "change":
-			if(!fadeOn){
-				console.log("running setTintColor")
-				setTintColor(msg.color);
-			}
+			console.log("running setTintColor")
+			setTintColor(msg.color);
 			break;
 		}
 		break;
@@ -141,49 +137,54 @@ function addText(text, time)
 {
 	charCount = text.length;
     textDiv = document.getElementById("textDiv")
-    if (textDiv && textDiv.style.opacity == 0) {    
+    if (textDiv) {    
 		textDiv.style.opacity = 1;
 		textDiv.style.fontSize = (120+(Math.floor(120/charCount)))+"px";
 		textDiv.style.wordWrap = "break-word";
-        textDiv.innerHTML = text + " " + timeToDigital(time);
-        fadeOut(textDiv,fadeStep,fadeDuration);
+		textDiv.innerHTML = text + " " + timeToDigital(time);
+		textDiv.style.color = "rgba(255,255,255,1)";
+		setTimeout(function(){textDiv.style.color = "rgba(255,255,255,0)"},1400);
         setTimeout(() => {
             textDiv.innerHTML = text + " " + timeToDigital(time - 1);
         }, 1000); //faux dynamic feeling
     }
 }
-    //Fades the target element.
+    //Fades the target element color property to an alpha of 0.
 	function fadeOut(fadeTarget, fadeStep, fadeDuration) {
-		console.log("fade out begun")
-        var fadeEffect = setInterval(() => {
-            if (!fadeTarget.style.opacity)
-                fadeTarget.style.opacity = 1;
-            if (fadeTarget.style.opacity > 0.001)
-                fadeTarget.style.opacity -= fadeStep / fadeDuration;
-            else {
-				clearInterval(fadeEffect);
-				fadeTarget.style.opacity = 0;
-				console.log("fade out ended")
-            }
-        }, fadeStep);
+		console.log("fading out "+fadeTarget);
+		cA = fadeTarget.style.backgroundColor.replace(/[^\d,.]/g, '').split(',');
+		currentA = Number(cA[3]);
+		totalA = currentA;
+		stepsToTake = fadeDuration/fadeStep;
+		var fadeEffect = setInterval(() => 
+		{
+			if(currentA > 0.01)
+			{ 
+				fadeTarget.style.backgroundColor = "rgba(" + cA[0]+ "," + cA[1]+ "," + cA[2] + "," + currentA + ")";
+				currentA -= totalA/stepsToTake;
+				console.log("fade is "+fadeTarget+"with increment "+ totalA/stepsToTake)
+			}    
+			else
+			{
+				fadeTarget.style.backgroundColor = "rgba(" + cA[0]+ "," + cA[1] + "," + cA[2] + "," + 0 + ")";
+				clearInterval(fadeEffect)}
+			}, fadeStep);
 	}
-	//RGBA alpha value incrementer towards a color
+	//Fades the target element into a target color
 	function fadeIn(fadeTarget,color,fadeStep, fadeDuration){
-		console.log("fade in begun")
-		const cA = color.replace(/[^\d,.]/g, '').split(',');
-		const targetA = Number(cA[3]);
-		const currentA = 0;
+		cA = color.replace(/[^\d,.]/g, '').split(',');
+		targetA = Number(cA[3]);
+		currentA = 0;
 		var fadeEffect = setInterval(() => 
 		{
 			if(currentA < targetA-0.01)
 			{ 
 				fadeTarget.style.backgroundColor = "rgba(" + cA[0]+ "," + cA[1]+ "," + cA[2] + "," + currentA + ")";
-				currentA += fadeStep*targetA / fadeDuration;
+				currentA += (fadeStep*targetA) / fadeDuration;
 			}    
 			else
 			{	//we reached the target alpha value
 				fadeTarget.style.backgroundColor = "rgba(" + cA[0]+ "," + cA[1] + "," + cA[2] + "," + targetA+ ")";
 				clearInterval(fadeEffect)}
-				console.log("fade in ended")
 			}, fadeStep);
 	}
