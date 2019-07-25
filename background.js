@@ -130,7 +130,6 @@ chrome.extension.onConnect.addListener((port) => {
 			isCurrentTabBlacklisted();
 			if (sessionRunning) {
 				stopSession();
-				sessionRunning = true;
 				startSession();
 			}
 			break;
