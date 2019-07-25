@@ -37,15 +37,16 @@ function enableTint(color) {
 		textDiv.style.zIndex = MAX_Z_VALUE;
 		tintDiv.appendChild(textDiv);
 	}
-	//appends fonts
-	function appendFonts()
-	{
+
+	//Appends fonts
+	function appendFonts() {
 		let link = document.createElement('link');
 		link.setAttribute('rel', 'stylesheet');
 		link.setAttribute('type', 'text/css');
 		link.setAttribute('href', "https://fonts.googleapis.com/css?family=Roboto&display=swap");
 		document.documentElement.appendChild(link);
 	}
+
 	//Styles the tint div
 	function styleTint(div) {
 		div.style.mixBlendMode = "multiply";
@@ -97,8 +98,9 @@ sendMessage({
 
 //Creates the capability to receive messages from the background script
 port.onMessage.addListener((msg) => {
-	if (msg.to != "content")
+	if (msg.to != "content") {
 		return;
+	}
 	switch (msg.action) {
 	case "open":
 		console.log("Connected to the background script");
@@ -156,7 +158,9 @@ function addText(text, time)
 		textDiv.style.wordWrap = "break-word";
 		textDiv.innerHTML = text + " " + timeToDigital(time);
 		textDiv.style.color = "rgba(255,255,255,1)";
-		setTimeout(function(){textDiv.style.color = "rgba(255,255,255,0)"},1400);
+		setTimeout(() => {
+			textDiv.style.color = "rgba(255,255,255,0)";
+		}, 1400);
         setTimeout(() => {
             textDiv.innerHTML = text + " " + timeToDigital(time - 1);
         }, 1000); //faux dynamic feeling
@@ -166,8 +170,9 @@ function addText(text, time)
 var fading = false;
 //Fades the target element color property to an alpha of 0.
 function fadeOut(fadeTarget, fadeStep, fadeDuration) {
-	if (fading)
+	if (fading) {
 		return;
+	}
 	fading = true;
 	var cA = fadeTarget.style.backgroundColor.replace(/[^\d,.]/g, '').split(',');
 	var currentA = Number(cA[3]);
@@ -186,8 +191,9 @@ function fadeOut(fadeTarget, fadeStep, fadeDuration) {
 }
 //Fades the target element into a target color
 function fadeIn(fadeTarget, color, fadeStep, fadeDuration) {
-	if (fading)
+	if (fading) {
 		return;
+	}
 	fading = true;
 	var cA = color.replace(/[^\d,.]/g, '').split(',');
 	var targetA = Number(cA[3]);

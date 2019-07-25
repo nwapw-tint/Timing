@@ -1,8 +1,8 @@
 {
 	"manifest_version": 2,
 	"name": "NWAPW Tint",
-	"description": "NWAPW Tint is a tint-based, fully immersive time management tool. Create a routine of tasks, and set different tint colors for each one. No need to constantly recheck a timer or look up from your work.",
-	"version": "0.8.2",
+	"description": "NWAPW Tint is a tint-based, fully immersive time management tool. You can create a set of tasks and assign different tint colors to each one. There's no need to constantly recheck a timer throuth the extension; instead, you can enter the key combo: \"Ctrl+Space\" to show you the current session information.",
+	"version": "0.8.3",
 	"content_scripts": [
 		{
 			"matches": [

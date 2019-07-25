@@ -2,167 +2,161 @@
 	src: url("../fonts/Montserrat-Medium.ttf");
 	font-family: Mont;
 }
-html{
-	height:241px;
-	background-color:#212b31;
-	border-style:solid;
-	border-color:#40525e;
-	border-width:2px;
-	transition-duration: 0.4s;
-}
-.topbar{
-	width:400px;
-	height:21px;
-	background-color:#40525e;
-	position:absolute;
-	left:0px;
-	top:0px;
-	color:white;
-	text-align:left;
-	transition-duration: 0.4s;
-}
-button{
+html {
+	height: 241px;
+	background-color: #212b31;
 	border-style: solid;
-	border-color:#40525e;
-	background-color: #40525e;
-	font-family:Mont;
-	outline-color:#40525e;
-	color:#8ca7b8;
-	border-radius:4%;
+	border-color: #40525e;
+	border-width: 2px;
 	transition-duration: 0.4s;
-	height:22px;
-	text-align:center;
-	
 }
-
-.hover:hover{
-	background-color:#587181;
-	border-color:#587181;
-	display:block;
-	height:22px;
+.topbar {
+	width: 400px;
+	height: 21px;
+	background-color: #40525e;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	color: White;
+	text-align: left;
+	transition-duration: 0.4s;
 }
-
-.hover p{
+button {
+	border-style: solid;
+	border-color: #40525e;
+	background-color: #40525e;
+	font-family: Mont;
+	outline-color: #40525e;
+	color: #8ca7b8;
+	border-radius: 4%;
+	transition-duration: 0.4s;
+	height: 22px;
+	text-align: center;
+}
+.hover:hover {
+	background-color: #587181;
+	border-color: #587181;
+	display: block;
+	height: 22px;
+}
+.hover p {
 	transition-duration:0.4s;
 }
-
-.hover p:hover{
+.hover p:hover {
 	color:#8ca7b8;
 }
-
-p{
+p {
 	font-family: Mont;
-	color:Gainsboro;
-	}
-input[type=text]{
-	font-size:12px;
-	font-family: Mont;
-	width:118px;
-	height:18px;
-	position:absolute;
-	left:100px;
-	background-color:#40525e;
-	border-radius:4%;
-	color:Gainsboro;
-	border: 1px solid #8ca7b8;
-	outline:none;
+	color: Gainsboro;
 }
-input[type=color]{
+input[type=text] {
+	font-size: 12px;
+	font-family: Mont;
+	width: 118px;
+	height: 18px;
+	position: absolute;
+	left: 100px;
+	background-color: #40525e;
+	border-radius: 4%;
+	color: Gainsboro;
 	border: 1px solid #8ca7b8;
-	width:164px;
+	outline: none;
+}
+input[type=color] {
+	border: 1px solid #8ca7b8;
+	width: 164px;
 	height: 30px;
 	position: absolute;
 	top: 150px;
-	left:210px;
-	border-radius:4%;
+	left: 210px;
+	border-radius: 4%;
 	background-color: #40525e;
 }
-#session_label{
+#session_label {
 	position: fixed;
-	top:22px;
-	left:55px;
+	top: 22px;
+	left: 55px;
 	font-size: 13px;
 }
-#sessions_bar{
+#sessions_bar {
 	width:180px;
 }
-#setup_bar{
-	width:186px;
+#setup_bar {
+	width: 186px;
 }
-.title{
-	position:absolute;
-	top:22px;
-	left:210px;
-	font-size:13px;
-	padding:0px;
-}	
-#name_input{
-	position:absolute;
-	top: 55px;
-	left:210px;
-}
-#time_input{
-	position:absolute;
-	top:105px;
-	left:210px;
-}
-.add_button{
+.title {
 	position: absolute;
-	left:340px;
+	top: 22px;
+	left: 210px;
+	font-size: 13px;
+	padding: 0px;
+}	
+#name_input {
+	position: absolute;
+	top: 55px;
+	left: 210px;
+}
+#time_input {
+	position: absolute;
+	top: 105px;
+	left: 210px;
+}
+.add_button {
+	position: absolute;
+	left: 340px;
 	width: 40px;
 	height: 22px;
-	transition-duration:0.4s;
+	transition-duration: 0.4s;
 	padding: 0px;
 	margin: 0 auto;
 }
-.add_button:hover{
-	background-color:#587181;
-	border-color:#587181;
-	color:#8ca7b8;
-	display:block;
-	height:22px;
+.add_button:hover {
+	background-color: #587181;
+	border-color: #587181;
+	color: #8ca7b8;
+	display: block;
+	height: 22px;
 	padding: 0px;
 	margin: 0 auto;
 }
-#start_stop_button{
+#start_stop_button {
 	position: absolute;
-	top:198px;
-	left:210px;
-	width:170px;
-	height:30px;
-	font-size:16px;
-	transition-duration:0.4s;
+	top: 198px;
+	left: 210px;
+	width: 170px;
+	height: 30px;
+	font-size: 16px;
+	transition-duration: 0.4s;
 }
-#start_stop_text{
-	position:fixed; 
+#start_stop_text {
+	position: fixed; 
 	top: 187px; 
-	left:210px;
-	padding:0px;
-	transition-duration:0.4s;
-	height:22px;
-	width:170px;
-	border-radius:4%;
-	color:#8ca7b8;
+	left: 210px;
+	padding: 0px;
+	transition-duration: 0.4s;
+	height: 22px;
+	width: 170px;
+	border-radius: 4%;
+	color: #8ca7b8;
 }
-
-sesh-top{
-	position:absolute;
-	top:-2px;
+sesh-top {
+	position: absolute;
+	top: -2px;
 }
-#divide{
+#divide {
 	border: 1.5px solid; 
-	border-radius:10%;
-	position:fixed; 
-	top:50px; 
-	left:19px; 
-	padding-left:166px;
-	border-color:#40525e;
+	border-radius: 10%;
+	position: fixed; 
+	top: 50px; 
+	left: 19px; 
+	padding-left: 166px;
+	border-color: #40525e;
+}
+#css_button {
+	background-image: url("../images/sun.png");
+	border-radius: 25%;
 }
 
-#css_button{
-	background-image: url("../images/sun.png");
-	border-radius:25%;
-}
 /*SCROLLBAR*/
 
 /*width*/
@@ -170,24 +164,24 @@ sesh-top{
   width: 13px;
 }
 
-/* Track */
+/*Track*/
 ::-webkit-scrollbar-track {
-	background-color:#293740;
+	background-color: #293740;
 }
 
-/* Handle */
+/*Handle*/
 ::-webkit-scrollbar-thumb {
   	border: 1.5px solid #40525e;
 	background: #40525e; 
 }
 
-/* Handle on hover */
+/*Handle on hover*/
 ::-webkit-scrollbar-thumb:hover {
   background: #8ca7b8; 
   border: 1.5px solid #8ca7b8;
 }
 
-::-webkit-scrollbar-button{
-	width:0px;
-	height:0px;
+::-webkit-scrollbar-button {
+	width: 0px;
+	height: 0px;
 }

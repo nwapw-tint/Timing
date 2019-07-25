@@ -8,10 +8,11 @@ const maxLength = 147;
 
 //Updates the session text only after the dom content loads
 function updateSessionText() {
-	if (document.getElementById('sessions_text'))
+	if (document.getElementById('sessions_text')) {
 		ust();
-	else
+	} else {
 		document.addEventListener('DOMContentLoaded', ust, false);
+	}
 	
 	//Update session text
 	function ust() {
@@ -38,7 +39,7 @@ function updateSessionText() {
 		document.getElementById('sessions_text').innerHTML = sessionText;
 
 		//Sets up the cancel buttons
-		for (let i = 0; i < sessions.length; i++)
+		for (let i = 0; i < sessions.length; i++) {
 			addClickListener('close_button_' + i, () => {
 				sessions.splice(i, 1);
 				if (sessions.length == 0) {
@@ -54,15 +55,16 @@ function updateSessionText() {
 					sessions: sessions
 				});
 			});
+		}
 	}
 }
 
 //Adds a session to the queue
 function addSession(time) {
 	let name = document.getElementById('name_input').value;
-	if (name.length == 0)
+	if (name.length == 0) {
 		showError("Name is empty!");
-	else {
+	} else {
 		let session = {
 			time: time * 60,
 			name: name,
@@ -112,8 +114,9 @@ sendMessage({
 
 //Creates the capability to receive messages from the background script
 port.onMessage.addListener((msg) => {
-	if (msg.to != "popup")
+	if (msg.to != "popup") {
 		return;
+	}
 	switch (msg.action) {
 	case "open":
 		console.log("Connected to the background script");
@@ -160,21 +163,22 @@ document.addEventListener('DOMContentLoaded', () => {
 	//Adds a session to the queue
 	addClickListener('add_session_button', () => {
 		var time = document.getElementById('time_input').value;
-		if (time.length == 0)
+		if (time.length == 0) {
 			showError("Time is empty!");
-		else if (isNaN(time)) {
+		} else if (isNaN(time)) {
 			showError("Time is not a number!");
-		} else if (time > maxTime)
+		} else if (time > maxTime) {
 			showError("Time is too long!");
-		else
+		} else {
 			addSession(time);
+		}
 	});
 	
 	//Starts or stops the session
 	addClickListener('start_stop_button', () => {
-		if (sessions.length == 0)
+		if (sessions.length == 0) {
 			showError("No sessions!");
-		else if (sessionRunning) {
+		} else if (sessionRunning) {
 			sessionRunning = false;
 			sendMessage({
 				to: "background",
@@ -183,8 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				mode: "stop"
 			});
 			document.getElementById('start_stop_text').innerHTML = "Start";
-		}
-		else {
+		} else {
 			sessionRunning = true;
 			sendMessage({
 				to: "background",
@@ -197,12 +200,13 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 
 	addClickListener('css_button', () => {
-		if (document.getElementById('css_file').href.indexOf("windows_theme") != -1)
+		if (document.getElementById('css_file').href.indexOf("windows_theme") != -1) {
 			return;
-		else if (document.getElementById('css_file').href.indexOf("modern_dark") != -1)
+		} else if (document.getElementById('css_file').href.indexOf("modern_dark") != -1) {
 			document.getElementById('css_file').href = "css/modern_light.css";
-		else if (document.getElementById('css_file').href.indexOf("modern_light") != -1)
+		} else if (document.getElementById('css_file').href.indexOf("modern_light") != -1) {
 			document.getElementById('css_file').href = "css/modern_dark.css";
+		}
 		sendMessage({
 			to: "background",
 			from: "popup",

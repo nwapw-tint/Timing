@@ -4,16 +4,21 @@ function timeToDigital(seconds) {
 	let m = Math.floor((seconds / 60) % 60);
 	let s = Math.floor(seconds % 60);
 	let str = "";
-	if (h < 10 && h > 0)
+	if (h < 10 && h > 0) {
 		str += "0";
-	if (h > 0)
+	}
+	if (h > 0) {
 		str += h + ":";
-	if (m < 10 && (m > 0 || h >= 0))
+	}
+	if (m < 10 && (m > 0 || h >= 0)) {
 		str += "0";
-	if (m > 0 || h >= 0)
+	}
+	if (m > 0 || h >= 0) {
 		str += m + ":";
-	if (s < 10)
+	}
+	if (s < 10) {
 		str += "0";
+	}
 	return str + s;
 }
 
@@ -52,7 +57,3 @@ const CLEAR_COLOR = {
 };
 
 const MAX_Z_VALUE = 2147483647;
-
-function sleep(ms) {
-	return new Promise(resolve => setTimeout(resolve, ms));
-  }
