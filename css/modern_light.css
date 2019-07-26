@@ -181,6 +181,7 @@ sesh-top {
 	left: 19px;
 	padding-left: 166px;
 	border-color: Gainsboro;
+	padding-bottom:0px;
 }
 #css_button {
 	background-image: url("../images/moon.png");
