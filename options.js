@@ -1,8 +1,9 @@
+var sites;
 function save_options() {
-    var sites = document.getElementById('sites').value;
+    sites = document.getElementById('sites').value;
     chrome.storage.sync.set({
       sites:sites
-    }, function() {});
+    }, function() {sendSites(sites)});
   }
 
   function restore_options() {
@@ -14,7 +15,7 @@ function save_options() {
   }
 
 document.addEventListener('DOMContentLoaded', restore_options);
-document.onunload = function(){sendSites(sites)};
+window.addEventListener("beforeunload", function(event){console.log("closing");save_options()});
 
 var port = chrome.extension.connect({
 	name: "options"
