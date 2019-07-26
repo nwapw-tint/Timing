@@ -78,6 +78,13 @@ function updateSessionText() {
 				sessions.splice(otherIndex, 1, self);
 
 				updateSessionText();
+				sendMessage({
+					to: "background",
+					from: "popup",
+					action: "update",
+					place: "sessions",
+					sessions: sessions
+				});
 			});
 		}
 	}
