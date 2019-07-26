@@ -1,9 +1,15 @@
 var sites;
+input = document.getElementById('sites');
 function save_options() {
-    sites = document.getElementById('sites').value;
+    sites = input.value;
     chrome.storage.sync.set({
       sites:sites
-    }, function() {sendSites(sites)});
+    }, function() {var status = document.getElementById('status');
+    status.textContent = 'Just saved.';
+    setTimeout(function() {
+      status.textContent = 'Automatically Saved.';
+    }, 750);
+    sendSites(sites)});
   }
 
   function restore_options() {
@@ -15,7 +21,7 @@ function save_options() {
   }
 
 document.addEventListener('DOMContentLoaded', restore_options);
-window.addEventListener("beforeunload", function(event){console.log("closing");save_options()});
+input.addEventListener("blur", function(event){console.log("saving");save_options()});
 
 var port = chrome.extension.connect({
 	name: "options"

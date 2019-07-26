@@ -3,7 +3,7 @@ var sessionRunning = false, onChromeSite = false;
 
 var currentSite = "";
 var sitesVisited = [];
-
+var blacklistedSites = [];
 var timeout;
 
 var theme;
@@ -127,7 +127,7 @@ chrome.extension.onConnect.addListener((port) => {
 			alert(msg.error);
 			break;
 		case "blacklist":
-			console.log(msg.sites);
+			updateSites(msg.sites);
 			break;
 		}
 	});
@@ -157,7 +157,20 @@ function sendMessage(msg) {
 
 /*-------------------------Update Content-------------------------*/
 
-
+//updates the array of blacklisted sites
+function updateSites(sites)
+{
+	blacklistedSites = sites.split("\n");
+	console.log(blacklistedSites);
+}
+var onBlacklistedSite = false;
+function isCurrentTabBlacklisted() {
+	let blacklisted = false;
+	for (let i = 0; i < blacklistedSites.length && !blacklisted; i++)
+		if (currentSite.url == blacklistedSites[i])
+			blacklisted = true;
+	onBlacklistedSite = blacklisted;
+}
 
 //Updates the content tint to the specified color
 function updateContentTint() {
@@ -281,6 +294,7 @@ chrome.tabs.onActivated.addListener((activeInfo) => {
 				url: tabs[0].url,
 				tabId: activeInfo.tabId
 			};
+			
 			if (currentSite.url.indexOf("chrome://") == 0) {
 				onChromeSite = true;
 				updatePopupStartStopButton();
@@ -298,7 +312,9 @@ chrome.tabs.onActivated.addListener((activeInfo) => {
 					updatePopupSessionRunning();
 				}
 			}
-			
+			if (onBlacklistedSite) {
+				alert("blacklisted!");
+			}
 			if (hasVisitedSite(currentSite)) {
 				updateContentTint();
 			} else {
