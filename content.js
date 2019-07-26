@@ -1,7 +1,7 @@
 var fadeDuration = 700;
 var fadeStep = 50;
 
-//Sets the tint's color, fading out the current color and then 
+//Sets the tint's color
 function setTint(color) {
 	let div = document.getElementById("tint");
 	if (div && color) {
@@ -119,6 +119,8 @@ port.onMessage.addListener((msg) => {
 		case "change":
 			setTint(msg.color);
 			break;
+		case "blackout":
+			setBlackout(msg.color);
 		}
 		break;
 	case "add_text":
@@ -216,4 +218,9 @@ function fadeIn(fadeTarget, color, fadeStep, fadeDuration) {
 			fadingIn = false;
 		}
 	}, fadeStep);
+}
+
+function setBlackout(color)
+{
+	alert("a blackout of color "+color);
 }
