@@ -11,7 +11,7 @@ function updateSessionText() {
 	if (document.getElementById('sessions_text')) {
 		ust();
 	} else {
-		document.addEventListener('DOMContentLoaded', ust, false);
+		document.addEventListener('DOMContentLoaded', ust);
 	}
 	
 	//Update session text
@@ -34,18 +34,49 @@ function updateSessionText() {
 					shortName = shortName.substring(0, shortName.length - 1);
 				nameAndTime = shortName + '...' + end;
 			}
-			sessionText += '<p style="color:' + rgbaToRgb(sessions[i].color) + '; margin:0px; padding:0px; line-height:20px"><button style="height:20px; width:20px" id="close_button_' + i + '">X</button>  ' + nameAndTime + "</p>";
+			sessionText += '<p draggable="true" style="color:' + rgbaToRgb(sessions[i].color) + '; margin:1px; padding:0px; line-height:20px border-radius:25%;" id="close_paragraph_' + i + '"><button style="height:15px; width:1px; font-size:8px; text-align:left; position:relative; top:3px; border-radius:4%; padding 0; margin:0;" id="close_button_' + i + '"><p style=" height:0px; margin: 0 auto; padding: 0; position:relative; left:-5px; top:-4.5px;" class="button">X</p></button>  ' + nameAndTime + "</p>";
 		}
 		document.getElementById('sessions_text').innerHTML = sessionText;
 
 		//Sets up the cancel buttons
 		for (let i = 0; i < sessions.length; i++) {
-			addClickListener('close_button_' + i, () => {
+			let id = 'close_button_' + i;
+			addClickListener(id, () => {
 				sessions.splice(i, 1);
 				if (sessions.length == 0) {
 					sessionRunning = false;
 					document.getElementById('start_stop_text').innerHTML = "Start";
 				}
+				updateSessionText();
+				sendMessage({
+					to: "background",
+					from: "popup",
+					action: "update",
+					place: "sessions",
+					sessions: sessions
+				});
+			});
+			id = 'close_paragraph_' + i;
+			document.getElementById(id).addEventListener('dragstart', (e) => {
+				e.dataTransfer.setData("other id", e.target.id);
+			});
+			document.getElementById(id).addEventListener('dragover', (e) => {
+				e.preventDefault();
+			});
+			document.getElementById(id).addEventListener('drop', (e) => {
+				e.preventDefault();
+
+				let otherId = e.dataTransfer.getData("other id");
+
+				let selfIndex = id.charAt(id.length - 1);
+				let otherIndex = otherId.charAt(otherId.length - 1);
+
+				let self = sessions[selfIndex];
+				let other = sessions[otherIndex];
+
+				sessions.splice(selfIndex, 1, other);
+				sessions.splice(otherIndex, 1, self);
+
 				updateSessionText();
 				sendMessage({
 					to: "background",
@@ -86,7 +117,7 @@ function addSession(time) {
 
 //Adds a click listener to the element with the id
 function addClickListener(id, callback) {
-	document.getElementById(id).addEventListener('click', callback, false);
+	document.getElementById(id).addEventListener('click', callback);
 }
 
 //Shows an error
@@ -167,7 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	document.getElementById('color_chooser').addEventListener('change', () => {
 		color = hexToRgba(document.getElementById('color_chooser').value);
-	}, false);
+	});
 	
 	//Adds a session to the queue
 	addClickListener('add_session_button', () => {
@@ -224,4 +255,4 @@ document.addEventListener('DOMContentLoaded', () => {
 			theme: document.getElementById('css_file').href
 		});
 	});
-}, false);
+});
