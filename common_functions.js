@@ -49,6 +49,11 @@ function getPropertyFromElement(element, property) {
 
 const alpha = 0.4;
 
-const CLEAR_COLOR = "rgba(0,0,0,0)"
+const CLEAR_COLOR = {
+	r: 255,
+	g: 255,
+	b: 255,
+	a: 0
+};
 
 const MAX_Z_VALUE = 2147483647;
