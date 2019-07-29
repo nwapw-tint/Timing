@@ -36,7 +36,7 @@ function setupText() {
 	textDiv.style.transform = "translate(-50%, -50%)";
 	textDiv.style.color = "rgba(255, 255, 255, 0)"; 
 	textDiv.style.zIndex = MAX_Z_VALUE;
-	tintDiv = getElementById("tint");
+	tintDiv = document.getElementById("tint");
 	tintDiv.appendChild(textDiv);
 }
 

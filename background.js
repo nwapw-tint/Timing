@@ -285,10 +285,8 @@ chrome.tabs.onActivated.addListener((activeInfo) => {
 				url: tabs[0].url,
 				tabId: activeInfo.tabId
 			};
-
-			console.log("onActivated calls " + useBlacklist(currentSite.url));
-			useBlacklist(currentSite.url);
-
+			//console.log("onActivated calls check on"+ currentSite.url);
+			//useBlacklist(currentSite.url);
 			if (currentSite.url.indexOf("chrome://") == 0) {
 				onChromeSite = true;
 				if (sessionRunning) {
@@ -328,12 +326,12 @@ chrome.tabs.onActivated.addListener((activeInfo) => {
 });
 
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-	console.log("onUpdated calls on "+tab.url);
+	console.log("###onUpdated calls on "+tab.url);
 	useBlacklist(tab.url);
 });
 
 chrome.tabs.onCreated.addListener(function(tab) {  
-	console.log("onCreated calls on "+tab.url);
+	console.log("###onCreated calls on "+tab.url);
 	useBlacklist(tab.url);
 });
 
@@ -343,11 +341,15 @@ function useBlacklist(url) {
 	chrome.storage.sync.get('sites', (items) => {
 		if (items.sites === undefined) {
 			console.log("we tried to check the blacklist, but it hasn't been set yet")
-		} else {
-			blacklist = items.sites.split('\n');
-			for (let i = 0; i < blacklist.length; i++) {
-				console.log("checking " + blacklist[i] + " against " + url + " which is " + url.includes(blacklist[i]));
-				if (url.includes(blacklist[i])) {
+		} 
+		else 	
+		{
+			blacklist = items.sites.split('\n')
+			for(let i = 0; i<blacklist.length; i++)
+			{
+				console.log("checking "+blacklist[i]+" against "+url+" which is "+url.includes(blacklist[i]))
+				if(url.includes(blacklist[i]) && sessionRunning) //if a match is found and a session is running
+				{
 					console.log("sending blackout");
 					sendBlackout();
 				}
