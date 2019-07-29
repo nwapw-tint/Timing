@@ -3,7 +3,7 @@
 	font-family: Mont;
 }
 html {
-	height: 238px;
+	height: 237px;
 	background-color: #212b31;
 	border-style: solid;
 	border-color: #40525e;
@@ -21,7 +21,7 @@ html {
 	text-align: left;
 	transition-duration: 0.4s;
 }
-button, button p {
+button {
 	border-style: solid;
 	border-color: #40525e;
 	background-color: #40525e;
@@ -153,7 +153,6 @@ sesh-top {
 	left: 19px; 
 	padding-left: 166px;
 	border-color: #40525e;
-	padding-bottom:0px;
 }
 #css_button {
 	background-image: url("../images/sun.png");
