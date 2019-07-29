@@ -162,7 +162,7 @@ port.onMessage.addListener((msg) => {
 			break;
 		case "sessionRunning":
 			sessionRunning = msg.sessionRunning;
-			document.getElementById('start_stop_text').innerHTML = sessionRunning || msg.runningBeforeOnChromeSite ? "Stop" : "Start";
+			document.getElementById('start_stop_text').innerHTML = sessionRunning || (msg.runningBeforeOnChromeSite && sessions.length > 0) ? "Stop" : "Start";
 			break;
 		case "theme":
 			document.getElementById('css_file').href = msg.theme;

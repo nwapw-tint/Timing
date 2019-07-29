@@ -220,7 +220,6 @@ function fadeIn(fadeTarget, color, fadeStep, fadeDuration) {
 	}, fadeStep);
 }
 
-function setBlackout(color)
-{
-	alert("a blackout of color "+color);
+function setBlackout(color) {
+	console.log("a blackout of color " + color);
 }
