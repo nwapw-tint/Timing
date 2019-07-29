@@ -34,7 +34,7 @@ function updateSessionText() {
 					shortName = shortName.substring(0, shortName.length - 1);
 				nameAndTime = shortName + '...' + end;
 			}
-			sessionText += '<p draggable="true" style="color:' + rgbaToRgb(sessions[i].color) + '; margin:1px; padding:0px; line-height:20px border-radius:25%;" id="close_paragraph_' + i + '"><button style="height:15px; width:1px; font-size:8px; text-align:left; position:relative; top:3px; border-radius:4%; padding 0; margin:0;" id="close_button_' + i + '"><p style=" height:0px; margin: 0 auto; padding: 0; position:relative; left:-5px; top:-4.5px;" class="button">X</p></button>  ' + nameAndTime + "</p>";
+			sessionText += '<div class="time" draggable="true" style=" margin-bottom:5px; height:20px; width:150px; border-radius:7px; background-color:' + sessions[i].color + ';"><p style=" margin:0px; padding:0px; line-height:20px"><button style="outline:none; height:20px; width:20px; border-radius:7px 0px 0px 7px; font-size:15px;" id="close_button_' + i + '">x</button>  ' + nameAndTime + "</p></div>";
 		}
 		document.getElementById('sessions_text').innerHTML = sessionText;
 
@@ -152,7 +152,7 @@ port.onMessage.addListener((msg) => {
 		break;
 	case "update":
 		switch (msg.place) {
-		case "ETA":
+			case "ETA":
 			document.getElementById('session_label').innerHTML = "Sessions   ETA: "+msg.text;
 		case "sessions":
 			sessions = msg.sessions;
