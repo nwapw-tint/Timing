@@ -120,7 +120,7 @@ port.onMessage.addListener((msg) => {
 			setTint(msg.color);
 			break;
 		case "blackout":
-			setBlackout(msg.color);
+			setBlackout(msg.text,msg.time);
 		}
 		break;
 	case "add_text":
@@ -220,21 +220,6 @@ function fadeIn(fadeTarget, color, fadeStep, fadeDuration) {
 	}, fadeStep);
 }
 
-function setBlackout(color) {
-	console.log(color);
-/* 	let cA = color.replace(/[^\d,.]/g, '').split(',');
-	let opaqColor = "rgba(" + cA[0] + "," + cA[1] + "," + cA[2] + "," + "1)";
-	if (!isBlacklisted) {
-		console.log(opaqColor + " on " + location);
-		isBlacklisted = true;
-		let blackDiv = document.createElement("div");
-		blackDiv.id = "black";
-		styleDiv(blackDiv);
-		fadeIn(blackDiv, opaqColor, fadeStep, fadeDuration);
-	} else if (!fadingIn) {
-		let blackDiv = document.getElementById("black");
-		if (blackDiv.style.backgroundColor != opaqColor) {
-			blackDiv.style.backgroundColor = opaqColor;
-		}
-	}*/
+function setBlackout(text,time) {
+	alert("This site has been blacklisted!")
 }

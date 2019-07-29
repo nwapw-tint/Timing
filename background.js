@@ -27,10 +27,14 @@ function timeoutUpdate() {
 
 // Starts a session
 function startSession() {
-	enableContentTint();
 	if (!sessionRunning) {
 		timeout = setInterval(timeoutUpdate, 1000);
 		sessionRunning = true;
+	}
+	if(!useBlacklist(currentSite.url))
+	{
+	console.log("enabling content tint");
+	enableContentTint();
 	}
 }
 
@@ -203,7 +207,8 @@ function sendBlackout(){
 		from: "background",
 		action: "tint",
 		mode: "blackout",
-		color: getTint()
+		text: sessions[0].name,
+		time: sessions[0].time
 	});
 }
 
@@ -279,8 +284,8 @@ function updateTabInfo(url, tabId) {
 		url: url,
 		tabId: tabId
 	};
-	console.log("onActivated calls check on"+ currentSite.url);
-	useBlacklist(currentSite.url);
+	//console.log("onActivated calls check on"+ currentSite.url);
+	//useBlacklist(currentSite.url);
 	if (currentSite.url.indexOf("chrome://") == 0) {
 		onChromeSite = true;
 		updatePopupStartStopButton();
@@ -349,14 +354,16 @@ function useBlacklist(url) {
 		} else {
 			blacklist = items.sites.split('\n');
 			for (let i = 0; i < blacklist.length; i++) {
-				console.log("checking " + blacklist[i] + " against " + url + " which is " + url.includes(blacklist[i]));
+				//console.log("checking " + blacklist[i] + " against " + url + " which is " + url.includes(blacklist[i]));
 				// If a match is found and a session is running
 				if (url.includes(blacklist[i]) && sessionRunning) {
-					console.log("sending blackout");
+					console.log("sent a blackout request");
 					sendBlackout();
-				}
+					return true;
+				} else if(url.includes(blacklist[i])){console.log("a match was found but no session running")}
 			}
 		}
+		return false;
 	});
 }
 
