@@ -282,8 +282,8 @@ chrome.tabs.onActivated.addListener((activeInfo) => {
 				url: tabs[0].url,
 				tabId: activeInfo.tabId
 			};
-			console.log("onActivated calls check on"+ currentSite.url);
-			useBlacklist(currentSite.url);
+			//console.log("onActivated calls check on"+ currentSite.url);
+			//useBlacklist(currentSite.url);
 			if (currentSite.url.indexOf("chrome://") == 0) {
 				onChromeSite = true;
 				updatePopupStartStopButton();
@@ -323,12 +323,12 @@ chrome.tabs.onActivated.addListener((activeInfo) => {
 });
 
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-	console.log("onUpdated calls on "+tab.url);
+	console.log("###onUpdated calls on "+tab.url);
 	useBlacklist(tab.url);
 });
 
 chrome.tabs.onCreated.addListener(function(tab) {  
-	console.log("onCreated calls on "+tab.url);
+	console.log("###onCreated calls on "+tab.url);
 	useBlacklist(tab.url);
 });
 //use case: whenever the active tab updates its url.
@@ -346,7 +346,7 @@ function useBlacklist(url)
 			for(i = 0; i<blacklist.length; i++)
 			{
 				console.log("checking "+blacklist[i]+" against "+url+" which is "+url.includes(blacklist[i]))
-				if(url.includes(blacklist[i]))
+				if(url.includes(blacklist[i]) && sessionRunning) //if a match is found and a session is running
 				{
 					console.log("sending blackout");
 					sendBlackout();
