@@ -330,7 +330,7 @@ chrome.tabs.onActivated.addListener((activeInfo) => {
 });
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-	console.log("###onUpdated calls on "+tab.url);
+	console.log("###onUpdated calls on " + tab.url);
 	useBlacklist(tab.url);
 	updateTabInfo(tab.url, tabId);
 });
