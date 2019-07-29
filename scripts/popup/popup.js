@@ -1,4 +1,4 @@
-// Local copies
+//Local copies
 var sessions = [];
 var sessionRunning = false;
 var color = "rgba(0, 255, 0, " + alpha + ")";
@@ -6,7 +6,7 @@ var color = "rgba(0, 255, 0, " + alpha + ")";
 const maxTime = 1440;
 const maxLength = 130;
 
-// Updates the session text only after the dom content loads
+//Updates the session text only after the dom content loads
 function updateSessionText() {
 	if (document.getElementById('sessions_text')) {
 		ust();
@@ -14,17 +14,17 @@ function updateSessionText() {
 		document.addEventListener('DOMContentLoaded', ust);
 	}
 	
-	// Update session text
+	//Update session text
 	function ust() {
 		if (updateSessionText.fontSize === undefined) {
-			// The reason why 'name_input' is used is it was first in the file that had both the font-family and font-size in the css
+			//The reason why 'name_input' is used is it was first in the file that had both the font-family and font-size in the css
 			updateSessionText.fontSize = getPropertyFromElement(document.getElementById('name_input'), 'font-size');
 			updateSessionText.fontFamily = getPropertyFromElement(document.getElementById('name_input'), 'font-family');
 		}
 
 		let sessionText = "";
 
-		// Adds all the cancel buttons, the name, and the time left for each session
+		//Adds all the cancel buttons, the name, and the time left for each session
 		for (let i = 0; i < sessions.length; i++) {
 			let shortName = sessions[i].name;
 			let end = "- " + timeToDigital(sessions[i].time);
@@ -38,7 +38,7 @@ function updateSessionText() {
 		}
 		document.getElementById('sessions_text').innerHTML = sessionText;
 
-		// Sets up the cancel buttons
+		//Sets up the cancel buttons
 		for (let i = 0; i < sessions.length; i++) {
 			let id = 'close_button_' + i;
 			addClickListener(id, () => {
@@ -83,7 +83,7 @@ function updateSessionText() {
 	}
 }
 
-// Adds a session to the queue
+//Adds a session to the queue
 function addSession(time) {
 	let name = document.getElementById('name_input').value;
 	if (name.length == 0) {
@@ -108,12 +108,12 @@ function addSession(time) {
 	}
 }
 
-// Adds a click listener to the element with the id
+//Adds a click listener to the element with the id
 function addClickListener(id, callback) {
 	document.getElementById(id).addEventListener('click', callback);
 }
 
-// Shows an error
+//Shows an error
 function showError(error) {
 	sendMessage({
 		to: "background",
@@ -129,19 +129,19 @@ function showError(error) {
 
 
 
-// Creates the port
+//Creates the port
 var port = chrome.extension.connect({
 	name: "popup"
 });
 
-// Tells the background script the content script has opened
+//Tells the background script the content script has opened
 sendMessage({
 	to: "background",
 	from: "popup",
 	action: "open"
 });
 
-// Creates the capability to receive messages from the background script
+//Creates the capability to receive messages from the background script
 port.onMessage.addListener((msg) => {
 	if (msg.to != "popup") {
 		return;
@@ -169,14 +169,14 @@ port.onMessage.addListener((msg) => {
 			break;
 		case "start_stop":
 			console.log(msg.currentSite.url);
-			document.getElementById('start_stop_button').disabled = (msg.currentSite.url.indexOf("chrome:// ") == 0);
+			document.getElementById('start_stop_button').disabled = (msg.currentSite.url.indexOf("chrome://") == 0);
 			break;
 		}
 		break;
 	}
 });
 
-// Creates the capability to send messages to the background script
+//Creates the capability to send messages to the background script
 function sendMessage(msg) {
 	port.postMessage(msg);
 }
@@ -187,14 +187,14 @@ function sendMessage(msg) {
 
 
 
-// Called when the popup loads
+//Called when the popup loads
 document.addEventListener('DOMContentLoaded', () => {
 
 	document.getElementById('color_chooser').addEventListener('change', () => {
 		color = hexToRgba(document.getElementById('color_chooser').value);
 	});
 	
-	// Adds a session to the queue
+	//Adds a session to the queue
 	addClickListener('add_session_button', () => {
 		var time = document.getElementById('time_input').value;
 		if (time.length == 0) {
@@ -208,7 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	});
 	
-	// Starts or stops the session
+	//Starts or stops the session
 	addClickListener('start_stop_button', () => {
 		if (sessions.length == 0) {
 			showError("No sessions!");
