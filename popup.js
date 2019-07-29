@@ -168,6 +168,7 @@ port.onMessage.addListener((msg) => {
 			document.getElementById('css_file').href = msg.theme;
 			break;
 		case "start_stop":
+			console.log(msg.currentSite.url);
 			document.getElementById('start_stop_button').disabled = (msg.currentSite.url.indexOf("chrome://") == 0);
 			break;
 		}
