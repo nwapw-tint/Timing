@@ -1,23 +1,15 @@
 var sites;
-var input = document.getElementById('sites');
 
 function saveOptions() {
-	sites = input.value;
+	sites = document.getElementById('sites').value;
 	chrome.storage.sync.set({
 		sites: sites
-	}, () => {
-		var status = document.getElementById('status');
-		status.textContent = 'Just Saved';
-		setTimeout(() => {
-			status.textContent = 'Automatically Saved';
-		}, 750);
-		sendSites(sites)
-	});
+	}, reassureUser);
 }
 
 function restoreOptions() {
 	chrome.storage.sync.get({
-		sites: "Enter sites to blacklist, separated by a new line."
+		sites: ""
 	}, (items) => {
 		document.getElementById('sites').value = items.sites;
 	});
@@ -28,8 +20,16 @@ function sendSites(sites) {
         to: "background",
         from: "options",
         action: "blacklist",
-        sites: sites
-    });
+		sites: sites
+	});
+}
+
+function reassureUser() {
+	let status = document.getElementById('status');
+	status.textContent = 'Just saved';
+	setTimeout(() => {
+		status.textContent = "";
+	}, 750);
 }
 
 
@@ -40,7 +40,7 @@ function sendSites(sites) {
 
 document.addEventListener('DOMContentLoaded', () => {
 	restoreOptions();
-	input.addEventListener("blur", (e) => {
+	document.getElementById('sites').addEventListener('blur', (e) => {
 		console.log("saving");
 		saveOptions();
 	});
