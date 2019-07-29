@@ -1,7 +1,8 @@
 var fadeDuration = 700;
 var fadeStep = 50;
 isBlacklisted = false;
-//Sets the tint's color
+
+// Sets the tint's color
 function setTint(color) {
 	let div = document.getElementById("tint");
 	if (div && color) {
@@ -9,12 +10,12 @@ function setTint(color) {
 	}
 }
   
-//Enables the tint
+// Enables the tint
 function enableTint(color) {
 	if (!document.getElementById("tint")) {
 		var tintDiv = document.createElement("div");
 		tintDiv.id = "tint";
-		console.log("tintDiv has been created and named")
+		// console.log("tintDiv has been created and named");
 		appendFonts();
 		styleDiv(tintDiv);
 		setupText();
@@ -23,7 +24,8 @@ function enableTint(color) {
 		setTint(color);
 	}
 }
-//Creates an empty text wrapper, allowing innerHTML to be added
+
+// Creates an empty text wrapper, allowing innerHTML to be added
 function setupText() {
 	var textDiv = document.createElement("div");
 	textDiv.id = "textDiv";
@@ -40,16 +42,16 @@ function setupText() {
 	tintDiv.appendChild(textDiv);
 }
 
-//Appends fonts
+// Appends fonts
 function appendFonts() {
 	let link = document.createElement('link');
 	link.setAttribute('rel', 'stylesheet');
 	link.setAttribute('type', 'text/css');
-	link.setAttribute('href', "https://fonts.googleapis.com/css?family=Roboto&display=swap");
+	link.setAttribute('href', "https:// fonts.googleapis.com/css?family=Roboto&display=swap");
 	document.documentElement.appendChild(link);
 }
 
-//Styles the tint div
+// Styles the tint div
 function styleDiv(div) {
 	div.style.mixBlendMode = "multiply";
 	div.style.width = "100%";
@@ -62,12 +64,12 @@ function styleDiv(div) {
 	div.style.display = "inline-block";
 	document.body.appendChild(div);
 }
-//Disables the tint
+// Disables the tint
 function pauseTint() {
 	setTint(CLEAR_COLOR);
 }
 
-//Removes the tint
+// Removes the tint
 function removeTint() {	
 	let div = document.getElementById("tint");
 	if (div) {
@@ -84,19 +86,19 @@ function removeTint() {
 
 
 
-//Creates the port
+// Creates the port
 var port = chrome.extension.connect({
 	name: "content"
 });
 
-//Tells the background script the content script has opened
+// Tells the background script the content script has opened
 sendMessage({
 	to: "background",
 	from: "content",
 	action: "open"
 });
 
-//Creates the capability to receive messages from the background script
+// Creates the capability to receive messages from the background script
 port.onMessage.addListener((msg) => {
 	if (msg.to != "content") {
 		return;
@@ -120,7 +122,7 @@ port.onMessage.addListener((msg) => {
 			setTint(msg.color);
 			break;
 		case "blackout":
-			setBlackout(msg.color);
+			setBlackout(msg.text,msg.time);
 		}
 		break;
 	case "add_text":
@@ -129,12 +131,12 @@ port.onMessage.addListener((msg) => {
 	}
 });
 
-//Creates the capability to send messages to the background script
+// Creates the capability to send messages to the background script
 function sendMessage(msg) {
 	port.postMessage(msg);
 }
 
-//Once the page has loaded, check the running status and updates the tint accordingly
+// Once the page has loaded, check the running status and updates the tint accordingly
 document.addEventListener('DOMContentLoaded', () => {
 	sendMessage({
 		to: "background",
@@ -149,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-//Adds the text to the div
+// Adds the text to the div
 function addText(text, time) {
 	charCount = text.length;
     textDiv = document.getElementById("textDiv")
@@ -164,7 +166,7 @@ function addText(text, time) {
 		}, 1400);
         setTimeout(() => {
             textDiv.innerHTML = text + " " + timeToDigital(time - 1);
-        }, 1000); //faux dynamic feeling
+        }, 1000); // faux dynamic feeling
     }
 }
 
@@ -177,7 +179,7 @@ function addText(text, time) {
 var fadingOut = false, fadingIn = false;
 var fadeOutEffect, fadeInEffect;
 
-//Fades the target element color property to an alpha of 0.
+// Fades the target element color property to an alpha of 0.
 function fadeOut(fadeTarget, fadeStep, fadeDuration) {
 	if (fadingOut) {
 		return;
@@ -199,7 +201,7 @@ function fadeOut(fadeTarget, fadeStep, fadeDuration) {
 	}, fadeStep);
 }
 
-//Fades the target element into a target color
+// Fades the target element into a target color
 function fadeIn(fadeTarget, color, fadeStep, fadeDuration) {
 	if (fadingIn) {
 		return;
@@ -212,7 +214,7 @@ function fadeIn(fadeTarget, color, fadeStep, fadeDuration) {
 		if (currentA < targetA - 0.01) {
 			fadeTarget.style.backgroundColor = "rgba(" + cA[0] + "," + cA[1] + "," + cA[2] + "," + currentA + ")";
 			currentA += (fadeStep * targetA) / fadeDuration;
-		} else {//we reached the target alpha value
+		} else {// we reached the target alpha value
 			fadeTarget.style.backgroundColor = "rgba(" + cA[0] + "," + cA[1] + "," + cA[2] + "," + targetA + ")";
 			clearInterval(fadeInEffect);
 			fadingIn = false;
@@ -220,21 +222,6 @@ function fadeIn(fadeTarget, color, fadeStep, fadeDuration) {
 	}, fadeStep);
 }
 
-function setBlackout(color) {
-	console.log(color);
-/* 	let cA = color.replace(/[^\d,.]/g, '').split(',');
-	let opaqColor = "rgba(" + cA[0] + "," + cA[1] + "," + cA[2] + "," + "1)";
-	if (!isBlacklisted) {
-		console.log(opaqColor + " on " + location);
-		isBlacklisted = true;
-		let blackDiv = document.createElement("div");
-		blackDiv.id = "black";
-		styleDiv(blackDiv);
-		fadeIn(blackDiv, opaqColor, fadeStep, fadeDuration);
-	} else if (!fadingIn) {
-		let blackDiv = document.getElementById("black");
-		if (blackDiv.style.backgroundColor != opaqColor) {
-			blackDiv.style.backgroundColor = opaqColor;
-		}
-	}*/
+function setBlackout(text, time) {
+	alert("This site has been blacklisted!")
 }

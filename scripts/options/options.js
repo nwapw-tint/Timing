@@ -1,6 +1,7 @@
 var sites;
 
 function saveOptions() {
+  console.log("sites are being saved to storage")
 	sites = document.getElementById('sites').value;
 	chrome.storage.sync.set({
 		sites: sites
@@ -8,8 +9,9 @@ function saveOptions() {
 }
 
 function restoreOptions() {
+  console.log("sites are being restored from storage")
 	chrome.storage.sync.get({
-		sites: ""
+		sites: "beep beep"
 	}, (items) => {
 		document.getElementById('sites').value = items.sites;
 	});

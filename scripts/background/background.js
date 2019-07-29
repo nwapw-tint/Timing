@@ -27,10 +27,14 @@ function timeoutUpdate() {
 
 // Starts a session
 function startSession() {
-	enableContentTint();
 	if (!sessionRunning) {
 		timeout = setInterval(timeoutUpdate, 1000);
 		sessionRunning = true;
+	}
+	if(!useBlacklist(currentSite.url))
+	{
+	console.log("enabling content tint");
+	enableContentTint();
 	}
 }
 
@@ -78,7 +82,7 @@ chrome.extension.onConnect.addListener((port) => {
 			});
 			break;
 		case "timer":
-			if (currentSite.url.indexOf("chrome://") != 0) {
+			if (currentSite.url.indexOf("chrome:// ") != 0) {
 				switch (msg.mode) {
 				case "start":
 					startSession();
@@ -155,7 +159,7 @@ function sendMessage(msg) {
 
 
 
-//Updates the content tint to the specified color
+// Updates the content tint to the specified color
 function updateContentTint() {
 	sendMessage({
 		to: "content",
@@ -203,7 +207,8 @@ function sendBlackout(){
 		from: "background",
 		action: "tint",
 		mode: "blackout",
-		color: getTint()
+		text: sessions[0].name,
+		time: sessions[0].time
 	});
 }
 
@@ -279,9 +284,9 @@ function updateTabInfo(url, tabId) {
 		url: url,
 		tabId: tabId
 	};
-	//console.log("onActivated calls check on"+ currentSite.url);
-	//useBlacklist(currentSite.url);
-	if (currentSite.url.indexOf("chrome://") == 0) {
+	// console.log("onActivated calls check on"+ currentSite.url);
+	// useBlacklist(currentSite.url);
+	if (currentSite.url.indexOf("chrome:// ") == 0) {
 		onChromeSite = true;
 		updatePopupStartStopButton();
 		if (sessionRunning) {
@@ -289,7 +294,7 @@ function updateTabInfo(url, tabId) {
 			sessionRunning = false;
 			updatePopupSessionRunning();
 		}
-	} else if (onChromeSite && currentSite.url.indexOf("chrome://") != 0) {
+	} else if (onChromeSite && currentSite.url.indexOf("chrome:// ") != 0) {
 		onChromeSite = false;
 		updatePopupStartStopButton();
 		if (sessions.length > 0 && runningBeforeOnChromeSite) {
@@ -349,18 +354,20 @@ function useBlacklist(url) {
 		} else {
 			blacklist = items.sites.split('\n');
 			for (let i = 0; i < blacklist.length; i++) {
-				console.log("checking " + blacklist[i] + " against " + url + " which is " + url.includes(blacklist[i]));
+				// console.log("checking " + blacklist[i] + " against " + url + " which is " + url.includes(blacklist[i]));
 				// If a match is found and a session is running
 				if (url.includes(blacklist[i]) && sessionRunning) {
-					console.log("sending blackout");
+					console.log("sent a blackout request");
 					sendBlackout();
-				}
+					return true;
+				} else if(url.includes(blacklist[i])){console.log("a match was found but no session running")}
 			}
 		}
+		return false;
 	});
 }
 
-//Invoked with Ctrl+Space
+// Invoked with Ctrl+Space
 chrome.commands.onCommand.addListener((command) => {
 	if (command == "display_text" && sessionRunning) {
 		sendMessage({
