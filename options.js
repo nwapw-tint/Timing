@@ -1,27 +1,56 @@
 var sites;
-input = document.getElementById('sites');
-function save_options() {
-    sites = input.value;
-    chrome.storage.sync.set({
-      sites:sites
-    }, function() {var status = document.getElementById('status');
-    status.textContent = 'Just saved.';
-    setTimeout(function() {
-      status.textContent = 'Automatically Saved.';
-    }, 750);
-    sendSites(sites)});
-  }
+var input = document.getElementById('sites');
 
-  function restore_options() {
-    chrome.storage.sync.get({
-      sites: "Enter sites to blacklist, separated by a newline."
-    }, function(items) {
-      document.getElementById('sites').value = items.sites;
+function saveOptions() {
+	sites = input.value;
+	chrome.storage.sync.set({
+		sites: sites
+	}, () => {
+		var status = document.getElementById('status');
+		status.textContent = 'Just Saved';
+		setTimeout(() => {
+			status.textContent = 'Automatically Saved';
+		}, 750);
+		sendSites(sites)
+	});
+}
+
+function restoreOptions() {
+	chrome.storage.sync.get({
+		sites: "Enter sites to blacklist, separated by a new line."
+	}, (items) => {
+		document.getElementById('sites').value = items.sites;
+	});
+}
+
+function sendSites(sites) {
+    sendMessage({
+        to: "background",
+        from: "options",
+        action: "blacklist",
+        sites: sites
     });
-  }
+}
 
-document.addEventListener('DOMContentLoaded', restore_options);
-input.addEventListener("blur", function(event){console.log("saving");save_options()});
+
+
+/*-------------------------On Load-------------------------*/
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+	restoreOptions();
+	input.addEventListener("blur", (e) => {
+		console.log("saving");
+		saveOptions();
+	});
+});
+
+
+
+/*-------------------------Communiaction-------------------------*/
+
+
 
 var port = chrome.extension.connect({
 	name: "options"
@@ -39,19 +68,14 @@ port.onMessage.addListener((msg) => {
 	if (msg.to != "options") {
 		return;
     }
-    //all message to all ports
+    switch (msg.action) {
+	case "open":
+		console.log("Connected to the background script");
+		break;
+	}
 });
 
 //Creates the capability to send messages to the background script
 function sendMessage(msg) {
 	port.postMessage(msg);
-}
-function sendSites(sites)
-{
-    sendMessage({
-        to: "background",
-        from: "options",
-        action: "blacklist",
-        sites: sites
-    })
 }
