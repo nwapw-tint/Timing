@@ -14,7 +14,7 @@ function enableTint(color) {
 	if (!document.getElementById("tint")) {
 		var tintDiv = document.createElement("div");
 		tintDiv.id = "tint";
-		console.log("tintDiv has been created and named")
+		//console.log("tintDiv has been created and named")
 		appendFonts();
 		styleDiv(tintDiv);
 		setupText();

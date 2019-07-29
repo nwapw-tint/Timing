@@ -279,8 +279,8 @@ function updateTabInfo(url, tabId) {
 		url: url,
 		tabId: tabId
 	};
-	//console.log("onActivated calls check on"+ currentSite.url);
-	//useBlacklist(currentSite.url);
+	console.log("onActivated calls check on"+ currentSite.url);
+	useBlacklist(currentSite.url);
 	if (currentSite.url.indexOf("chrome://") == 0) {
 		onChromeSite = true;
 		updatePopupStartStopButton();
