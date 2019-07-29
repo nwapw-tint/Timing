@@ -6,7 +6,8 @@ var sitesVisited = [];
 var timeout;
 
 var theme;
-//The hidden timer
+
+// The hidden timer
 function timeoutUpdate() {
 	if (sessionRunning) {
 		sessions[0].time = Math.max(sessions[0].time - 1, 0);
@@ -24,7 +25,7 @@ function timeoutUpdate() {
 	}
 }
 
-//Starts a session
+// Starts a session
 function startSession() {
 	enableContentTint();
 	if (!sessionRunning) {
@@ -33,14 +34,14 @@ function startSession() {
 	}
 }
 
-//Stops a session
+// Stops a session
 function stopSession() {
 	clearInterval(timeout);
 	removeContentTint();
 	sessionRunning = false;
 }
 
-//Gets the tint
+// Gets the tint
 function getTint() {
 	if (sessions.length > 0) {
 		return sessions[0].color;
@@ -57,9 +58,9 @@ function getTint() {
 
 var ports = [];
 
-//Called when something connects to this
+// Called when something connects to this
 chrome.extension.onConnect.addListener((port) => {
-	//Creates the capability to receive messages from different scripts
+	// Creates the capability to receive messages from different scripts
 	port.onMessage.addListener((msg) => {
 		if (msg.to != "background") {
 			return;
@@ -139,7 +140,7 @@ chrome.extension.onConnect.addListener((port) => {
 	ports.push(port);
 });
 
-//Sends a message through all of its ports
+// Sends a message through all of its ports
 function sendMessage(msg) {
 	for (port of ports) {
 		if (port.index != -1) {
@@ -152,6 +153,8 @@ function sendMessage(msg) {
 
 /*-------------------------Update Content-------------------------*/
 
+
+
 //Updates the content tint to the specified color
 function updateContentTint() {
 	sendMessage({
@@ -163,7 +166,7 @@ function updateContentTint() {
 	});
 }
 
-//Enables the content tint
+// Enables the content tint
 function enableContentTint() {
 	sendMessage({
 		to: "content",
@@ -174,7 +177,7 @@ function enableContentTint() {
 	});
 }
 
-//Pauses the content tint
+// Pauses the content tint
 function pauseContentTint() {
 	sendMessage({
 		to: "content",
@@ -184,8 +187,8 @@ function pauseContentTint() {
 	});
 }
 
-//Removes the content tint
-function removeContentTint(){
+// Removes the content tint
+function removeContentTint() {
 	sendMessage({
 		to: "content",
 		from: "background",
@@ -210,7 +213,7 @@ function sendBlackout(){
 
 
 
-//Updates the popup sessions
+// Updates the popup sessions
 function updatePopupSessions() {
 	sendMessage({
 		to: "popup",
@@ -221,7 +224,7 @@ function updatePopupSessions() {
 	});
 }
 
-//Updates the popup sessions running
+// Updates the popup sessions running
 function updatePopupSessionRunning() {
 	sendMessage({
 		to: "popup",
@@ -233,7 +236,7 @@ function updatePopupSessionRunning() {
 	});
 }
 
-//Updates the popup theme
+// Updates the popup theme
 function updatePopupTheme() {
 	if (theme)
 		sendMessage({
@@ -245,7 +248,7 @@ function updatePopupTheme() {
 		});
 }
 
-//Updates the popup start stop button
+// Updates the popup start stop button
 function updatePopupStartStopButton() {
 	sendMessage({
 		to: "popup",
@@ -256,7 +259,7 @@ function updatePopupStartStopButton() {
 	});
 }
 
-//Updates the popup
+// Updates the popup
 function updatePopup() {
 	updatePopupSessions();
 	updatePopupSessionRunning();
@@ -270,8 +273,8 @@ function updatePopup() {
 
 var runningBeforeOnChromeSite = false;
 
-//Checks the current site to see if it has been filtered. If it hasn't been visited, add it to visited.
-//Detects when the user changes tabs
+// Checks the current site to see if it has been filtered. If it hasn't been visited, add it to visited.
+// Detects when the user changes tabs
 chrome.tabs.onActivated.addListener((activeInfo) => {
 	chrome.tabs.query({
 		currentWindow: true,
@@ -286,20 +289,20 @@ chrome.tabs.onActivated.addListener((activeInfo) => {
 			//useBlacklist(currentSite.url);
 			if (currentSite.url.indexOf("chrome://") == 0) {
 				onChromeSite = true;
-				updatePopupStartStopButton();
 				if (sessionRunning) {
 					runningBeforeOnChromeSite = true;
 					sessionRunning = false;
 					updatePopupSessionRunning();
 				}
+				updatePopupStartStopButton();
 			} else if (onChromeSite) {
 				onChromeSite = false;
-				updatePopupStartStopButton();
 				if (sessions.length > 0 && runningBeforeOnChromeSite) {
 					runningBeforeOnChromeSite = false;
 					sessionRunning = true;
 					updatePopupSessionRunning();
 				}
+				updatePopupStartStopButton();
 			}
 			if (hasVisitedSite(currentSite)) {
 				updateContentTint();
@@ -331,19 +334,18 @@ chrome.tabs.onCreated.addListener(function(tab) {
 	console.log("###onCreated calls on "+tab.url);
 	useBlacklist(tab.url);
 });
-//use case: whenever the active tab updates its url.
-function useBlacklist(url)
-{
-	var blacklist;
-	chrome.storage.sync.get('sites', function(items) {
-		if (typeof items.sites === 'undefined') 
-		{
+
+// Use case: whenever the active tab updates its url.
+function useBlacklist(url) {
+	let blacklist;
+	chrome.storage.sync.get('sites', (items) => {
+		if (items.sites === undefined) {
 			console.log("we tried to check the blacklist, but it hasn't been set yet")
 		} 
 		else 	
 		{
 			blacklist = items.sites.split('\n')
-			for(i = 0; i<blacklist.length; i++)
+			for(let i = 0; i<blacklist.length; i++)
 			{
 				console.log("checking "+blacklist[i]+" against "+url+" which is "+url.includes(blacklist[i]))
 				if(url.includes(blacklist[i]) && sessionRunning) //if a match is found and a session is running
@@ -353,8 +355,9 @@ function useBlacklist(url)
 				}
 			}
 		}
-	  });
+	});
 }
+
 //Invoked with Ctrl+Space
 chrome.commands.onCommand.addListener((command) => {
 	if (command == "display_text" && sessionRunning) {
@@ -367,3 +370,20 @@ chrome.commands.onCommand.addListener((command) => {
 		});
 	}
 });
+
+// Invoked immediately
+(() => {
+	chrome.tabs.getSelected(null, (tab) => {
+		console.log(tab);
+		currentSite = {
+			url: tab.url,
+			tabId: tab.id
+		};
+		sitesVisited.push(currentSite);
+		if (currentSite.url.indexOf("chrome://") == 0) {
+			onChromeSite = true;
+			runningBeforeOnChromeSite = false;
+			updatePopupStartStopButton();
+		}
+	});
+})();

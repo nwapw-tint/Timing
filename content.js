@@ -220,24 +220,21 @@ function fadeIn(fadeTarget, color, fadeStep, fadeDuration) {
 	}, fadeStep);
 }
 
-function setBlackout(color)
-{
-	alert(color);
-/* 	var cA = color.replace(/[^\d,.]/g, '').split(',');
-	var opaqColor = "rgba("+cA[0]+","+cA[1]+","+cA[2]+","+"1)"
-	if(!isBlacklisted)
-	{
-	alert(opaqColor+ " on "+location);
-	isBlacklisted = true;
-	let blackDiv = document.createElement("div");
-	blackDiv.id = "black";
-	styleDiv(blackDiv);
-	fadeIn(blackDiv, opaqColor, fadeStep, fadeDuration);
-	}
-	else if (!fadingIn)
-	{
-	let blackDiv = document.getElementById("black");
-	if(blackDiv.style.backgroundColor != opaqColor)
-	blackDiv.style.backgroundColor = opaqColor; 
+function setBlackout(color) {
+	console.log(color);
+/* 	let cA = color.replace(/[^\d,.]/g, '').split(',');
+	let opaqColor = "rgba(" + cA[0] + "," + cA[1] + "," + cA[2] + "," + "1)";
+	if (!isBlacklisted) {
+		console.log(opaqColor + " on " + location);
+		isBlacklisted = true;
+		let blackDiv = document.createElement("div");
+		blackDiv.id = "black";
+		styleDiv(blackDiv);
+		fadeIn(blackDiv, opaqColor, fadeStep, fadeDuration);
+	} else if (!fadingIn) {
+		let blackDiv = document.getElementById("black");
+		if (blackDiv.style.backgroundColor != opaqColor) {
+			blackDiv.style.backgroundColor = opaqColor;
+		}
 	}*/
 }
