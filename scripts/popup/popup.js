@@ -241,9 +241,9 @@ document.addEventListener('DOMContentLoaded', () => {
 		if (document.getElementById('css_file').href.indexOf("windows_theme") != -1) {
 			return;
 		} else if (document.getElementById('css_file').href.indexOf("modern_dark") != -1) {
-			document.getElementById('css_file').href = "css/modern_light.css";
+			document.getElementById('css_file').href = "../../css/modern_light.css";
 		} else if (document.getElementById('css_file').href.indexOf("modern_light") != -1) {
-			document.getElementById('css_file').href = "css/modern_dark.css";
+			document.getElementById('css_file').href = "../../css/modern_dark.css";
 		}
 		sendMessage({
 			to: "background",
