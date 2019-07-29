@@ -213,6 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			showError("No sessions!");
 		} else if (sessionRunning) {
 			sessionRunning = false;
+			console.log("stopping timer")
 			sendMessage({
 				to: "background",
 				from: "popup",
@@ -221,6 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			});
 			document.getElementById('start_stop_text').innerHTML = "Start";
 		} else {
+			console.log("starting timer")
 			sessionRunning = true;
 			sendMessage({
 				to: "background",

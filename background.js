@@ -285,7 +285,9 @@ chrome.tabs.onActivated.addListener((activeInfo) => {
 				url: tabs[0].url,
 				tabId: activeInfo.tabId
 			};
+
 			console.log("onActivated calls " + useBlacklist(currentSite.url));
+			useBlacklist(currentSite.url);
 
 			if (currentSite.url.indexOf("chrome://") == 0) {
 				onChromeSite = true;
@@ -326,33 +328,32 @@ chrome.tabs.onActivated.addListener((activeInfo) => {
 });
 
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+	console.log("onUpdated calls on "+tab.url);
 	useBlacklist(tab.url);
 });
 
-chrome.tabs.onCreated.addListener(function(tab) {   
+chrome.tabs.onCreated.addListener(function(tab) {  
+	console.log("onCreated calls on "+tab.url);
 	useBlacklist(tab.url);
 });
 
-var foundUrl = false;
-
+// Use case: whenever the active tab updates its url.
 function useBlacklist(url) {
-	var blacklist;
+	let blacklist;
 	chrome.storage.sync.get('sites', (items) => {
 		if (items.sites === undefined) {
-			console.log("we tried to check the blacklist, but it hasn't been set yet");
+			console.log("we tried to check the blacklist, but it hasn't been set yet")
 		} else {
-			blacklist = items.sites.split('\n')
+			blacklist = items.sites.split('\n');
 			for (let i = 0; i < blacklist.length; i++) {
 				console.log("checking " + blacklist[i] + " against " + url + " which is " + url.includes(blacklist[i]));
 				if (url.includes(blacklist[i])) {
-					foundUrl = true;
+					console.log("sending blackout");
+					sendBlackout();
 				}
 			}
 		}
-	  });
-	if (foundUrl) {
-		sendBlackout();
-	}
+	});
 }
 
 //Invoked with Ctrl+Space
