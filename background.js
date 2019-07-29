@@ -255,7 +255,7 @@ function updatePopupStartStopButton() {
 		from: "background",
 		action: "update",
 		place: "start_stop",
-		disabled: onChromeSite
+		currentSite: currentSite
 	});
 }
 
