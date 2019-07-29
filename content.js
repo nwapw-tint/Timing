@@ -1,6 +1,6 @@
 var fadeDuration = 700;
 var fadeStep = 50;
-
+isBlacklisted = false;
 //Sets the tint's color
 function setTint(color) {
 	let div = document.getElementById("tint");
@@ -14,54 +14,54 @@ function enableTint(color) {
 	if (!document.getElementById("tint")) {
 		var tintDiv = document.createElement("div");
 		tintDiv.id = "tint";
+		console.log("tintDiv has been created and named")
 		appendFonts();
-		styleTint(tintDiv);
+		styleDiv(tintDiv);
 		setupText();
 		fadeIn(tintDiv, color, fadeStep, fadeDuration);
 	} else {
 		setTint(color);
 	}
-
-	//Creates an empty text wrapper, allowing innerHTML to be added
-	function setupText() {
-		var textDiv = document.createElement("div");
-		textDiv.id = "textDiv";
-		textDiv.style.fontFamily = "Roboto,sans-serif";
-		textDiv.style.position = "absolute";
-		textDiv.style.top = "50%";
-		textDiv.style.left = "50%";
-		textDiv.style.marginBottom = "-50%";
-		textDiv.style.marginRight = "-50%";
-		textDiv.style.transform = "translate(-50%, -50%)";
-		textDiv.style.color = "rgba(255, 255, 255, 0)"; 
-		textDiv.style.zIndex = MAX_Z_VALUE;
-		tintDiv.appendChild(textDiv);
-	}
-
-	//Appends fonts
-	function appendFonts() {
-		let link = document.createElement('link');
-		link.setAttribute('rel', 'stylesheet');
-		link.setAttribute('type', 'text/css');
-		link.setAttribute('href', "https://fonts.googleapis.com/css?family=Roboto&display=swap");
-		document.documentElement.appendChild(link);
-	}
-
-	//Styles the tint div
-	function styleTint(div) {
-		div.style.mixBlendMode = "multiply";
-		div.style.width = "100%";
-		div.style.height = "100%";
-		div.style.pointerEvents = "none";	
-		div.style.zIndex = MAX_Z_VALUE;
-		div.style.top = 0;
-		div.style.left = 0;
-		div.style.position = "fixed";
-		div.style.display = "inline-block";
-		document.body.appendChild(tintDiv);
-	}
+}
+//Creates an empty text wrapper, allowing innerHTML to be added
+function setupText() {
+	var textDiv = document.createElement("div");
+	textDiv.id = "textDiv";
+	textDiv.style.fontFamily = "Roboto,sans-serif";
+	textDiv.style.position = "absolute";
+	textDiv.style.top = "50%";
+	textDiv.style.left = "50%";
+	textDiv.style.marginBottom = "-50%";
+	textDiv.style.marginRight = "-50%";
+	textDiv.style.transform = "translate(-50%, -50%)";
+	textDiv.style.color = "rgba(255, 255, 255, 0)"; 
+	textDiv.style.zIndex = MAX_Z_VALUE;
+	tintDiv = getElementById("tint");
+	tintDiv.appendChild(textDiv);
 }
 
+//Appends fonts
+function appendFonts() {
+	let link = document.createElement('link');
+	link.setAttribute('rel', 'stylesheet');
+	link.setAttribute('type', 'text/css');
+	link.setAttribute('href', "https://fonts.googleapis.com/css?family=Roboto&display=swap");
+	document.documentElement.appendChild(link);
+}
+
+//Styles the tint div
+function styleDiv(div) {
+	div.style.mixBlendMode = "multiply";
+	div.style.width = "100%";
+	div.style.height = "100%";
+	div.style.pointerEvents = "none";	
+	div.style.zIndex = MAX_Z_VALUE;
+	div.style.top = 0;
+	div.style.left = 0;
+	div.style.position = "fixed";
+	div.style.display = "inline-block";
+	document.body.appendChild(div);
+}
 //Disables the tint
 function pauseTint() {
 	setTint(CLEAR_COLOR);
@@ -212,7 +212,7 @@ function fadeIn(fadeTarget, color, fadeStep, fadeDuration) {
 		if (currentA < targetA - 0.01) {
 			fadeTarget.style.backgroundColor = "rgba(" + cA[0] + "," + cA[1] + "," + cA[2] + "," + currentA + ")";
 			currentA += (fadeStep * targetA) / fadeDuration;
-		} else {	//we reached the target alpha value
+		} else {//we reached the target alpha value
 			fadeTarget.style.backgroundColor = "rgba(" + cA[0] + "," + cA[1] + "," + cA[2] + "," + targetA + ")";
 			clearInterval(fadeInEffect);
 			fadingIn = false;
@@ -222,5 +222,22 @@ function fadeIn(fadeTarget, color, fadeStep, fadeDuration) {
 
 function setBlackout(color)
 {
-	alert("a blackout of color "+color);
+	alert(color);
+/* 	var cA = color.replace(/[^\d,.]/g, '').split(',');
+	var opaqColor = "rgba("+cA[0]+","+cA[1]+","+cA[2]+","+"1)"
+	if(!isBlacklisted)
+	{
+	alert(opaqColor+ " on "+location);
+	isBlacklisted = true;
+	let blackDiv = document.createElement("div");
+	blackDiv.id = "black";
+	styleDiv(blackDiv);
+	fadeIn(blackDiv, opaqColor, fadeStep, fadeDuration);
+	}
+	else if (!fadingIn)
+	{
+	let blackDiv = document.getElementById("black");
+	if(blackDiv.style.backgroundColor != opaqColor)
+	blackDiv.style.backgroundColor = opaqColor; 
+	}*/
 }
