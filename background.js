@@ -16,6 +16,7 @@ function timeoutUpdate() {
 			updatePopupSessions();
 			if (sessions.length == 0) {
 				stopSession();
+				updateETA()
 			} else {
 				updateContentTint();
 			}
@@ -35,6 +36,7 @@ function startSession() {
 	{
 	console.log("enabling content tint");
 	enableContentTint();
+	updateETA();
 	}
 }
 
@@ -96,6 +98,7 @@ chrome.extension.onConnect.addListener((port) => {
 		case "push":
 			if (msg.place == "sessions") {
 				sessions.push(msg.session);
+				updateETA();
 			}
 			break;
 		case "shift":
@@ -115,6 +118,7 @@ chrome.extension.onConnect.addListener((port) => {
 				} else {
 					updateContentTint();
 				}
+				updateETA();
 				break;
 			case "theme": 
 				theme = msg.theme;
@@ -217,6 +221,18 @@ function sendBlackout(){
 /*-------------------------Update Popup-------------------------*/
 
 
+
+function updatePopupETA(text)
+{
+	sendMessage(
+		{
+			to: "popup",
+			from: "background",
+			action: "update",
+			place: "ETA",
+			text:text
+		});
+}
 
 // Updates the popup sessions
 function updatePopupSessions() {
@@ -398,3 +414,18 @@ chrome.commands.onCommand.addListener((command) => {
 		updatePopupStartStopButton();
 	});
 })();
+
+function updateETA()
+{
+	totalTime = 0;
+	for(a of sessions)
+	{
+		totalTime += a.time;
+	}
+	var d = new Date(); // for now
+	d.setSeconds(d.getSeconds() + totalTime);
+	latin = "AM";
+	hourformatString = d.getHours();
+	if(hourformatString > 12){hourformatString-=12; latin = "PM"}
+	updatePopupETA(hourformatString+":"+d.getMinutes()+" "+latin);
+}
