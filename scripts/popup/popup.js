@@ -176,7 +176,7 @@ port.onMessage.addListener((msg) => {
 		case "update":
 			switch (msg.place) {
 				case "ETA":
-					document.getElementById('session_label').innerHTML = "Sessions &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + msg.text;
+					document.getElementById('session_label').innerHTML = "Sessions &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + msg.text;
 					break;
 				case "sessions":
 					sessions = msg.sessions;
