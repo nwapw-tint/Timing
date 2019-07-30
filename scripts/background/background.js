@@ -32,11 +32,10 @@ function startSession() {
 		timeout = setInterval(timeoutUpdate, 1000);
 		sessionRunning = true;
 	}
-	if(!useBlacklist(currentSite.url))
-	{
-	console.log("enabling content tint");
-	enableContentTint();
-	updateETA();
+	if (!useBlacklist(currentSite.url)) {
+		console.log("enabling content tint");
+		enableContentTint();
+		updateETA();
 	}
 }
 
@@ -222,16 +221,15 @@ function sendBlackout(){
 
 
 
-function updatePopupETA(text)
-{
-	sendMessage(
-		{
-			to: "popup",
-			from: "background",
-			action: "update",
-			place: "ETA",
-			text:text
-		});
+// Updates the popup ETA
+function updatePopupETA(text) {
+	sendMessage({
+		to: "popup",
+		from: "background",
+		action: "update",
+		place: "ETA",
+		text: text
+	});
 }
 
 // Updates the popup sessions
@@ -363,12 +361,11 @@ chrome.tabs.onCreated.addListener((tab) => {
 
 // Use case: whenever the active tab updates its url
 function useBlacklist(url) {
-	let blacklist;
 	chrome.storage.sync.get('sites', (items) => {
 		if (items.sites === undefined) {
 			console.log("we tried to check the blacklist, but it hasn't been set yet")
 		} else {
-			blacklist = items.sites.split('\n');
+			let blacklist = items.sites.split('\n');
 			for (let i = 0; i < blacklist.length; i++) {
 				//console.log("checking " + blacklist[i] + " against " + url + " which is " + url.includes(blacklist[i]));
 				// If a match is found and a session is running
@@ -376,7 +373,9 @@ function useBlacklist(url) {
 					console.log("sent a blackout request");
 					sendBlackout();
 					return true;
-				} else if(url.includes(blacklist[i])){console.log("a match was found but no session running")}
+				} else if (url.includes(blacklist[i])) {
+					console.log("a match was found but no session running");
+				}
 			}
 		}
 		return false;
@@ -399,7 +398,6 @@ chrome.commands.onCommand.addListener((command) => {
 // Invoked immediately
 (() => {
 	chrome.tabs.getSelected(null, (tab) => {
-		console.log(tab);
 		currentSite = {
 			url: tab.url,
 			tabId: tab.id
@@ -415,20 +413,26 @@ chrome.commands.onCommand.addListener((command) => {
 	});
 })();
 
-function updateETA()
-{
-	totalTime = 0;
-	for(a of sessions)
-	{
+
+
+/*-------------------------ETA-------------------------*/
+
+
+
+function updateETA() {
+	let totalTime = 0;
+	for (a of sessions) {
 		totalTime += a.time;
 	}
-	if(totalTime != 0)
-	{
-	var d = new Date(); // for now
-	d.setSeconds(d.getSeconds() + totalTime);
-	latin = "AM";
-	hourformatString = d.getHours();
-	if(hourformatString > 12){hourformatString-=12; latin = "PM"}
-	updatePopupETA("ETA "+hourformatString+":"+d.getMinutes()+" "+latin);
+	if (totalTime != 0) {
+		var d = new Date(); // for now
+		d.setSeconds(d.getSeconds() + totalTime);
+		latin = "AM";
+		hourformatString = d.getHours();
+		if (hourformatString > 12) {
+			hourformatString -= 12;
+			latin = "PM";
+		}
+		updatePopupETA("ETA " + hourformatString + ":" + d.getMinutes() + " " + latin);
 	}
 }

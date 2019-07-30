@@ -30,11 +30,12 @@ function updateSessionText() {
 			let end = "- " + timeToDigital(sessions[i].time);
 			let nameAndTime = shortName + end;
 			if (stringWidth(nameAndTime, updateSessionText.fontFamily, updateSessionText.fontSize) > maxLength) {
-				while (stringWidth(shortName + '...' + end, updateSessionText.fontFamily, updateSessionText.fontSize) > maxLength && shortName.length > 0)
+				while (stringWidth(shortName + '...' + end, updateSessionText.fontFamily, updateSessionText.fontSize) > maxLength && shortName.length > 0) {
 					shortName = shortName.substring(0, shortName.length - 1);
+				}
 				nameAndTime = shortName + '...' + end;
 			}
-			sessionText += '<div class="time" draggable="true" style=" margin-bottom:5px; height:20px; width:150px; border-radius:7px; background-color:' + sessions[i].color + ';"><p style=" position:relative; top:-3px; margin:0px; padding:0px; line-height:20px"><button style="position:relative; top:3px;outline:none; height:20px; width:20px; border-radius:7px 0px 0px 7px; font-size:15px;" id="close_button_' + i + '">x</button>  ' + nameAndTime + "</p></div>";
+			sessionText += '<div id="close_paragraph_' + i + '" class="time" draggable="true" style="margin-bottom:5px; height:20px; width:150px; border-radius:7px; background-color:' + sessions[i].color + ';"><p style="position:relative; top:-3px; margin:0px; padding:0px; line-height:20px"><button style="position:relative; top:3px;outline:none; height:20px; width:20px; border-radius:7px 0px 0px 7px; font-size:15px;" id="close_button_' + i + '">x</button>  ' + nameAndTime + "</p></div>";
 		}
 		document.getElementById('sessions_text').innerHTML = sessionText;
 
@@ -154,6 +155,7 @@ port.onMessage.addListener((msg) => {
 		switch (msg.place) {
 			case "ETA":
 			document.getElementById('session_label').innerHTML = "Sessions "+msg.text;
+			break;
 		case "sessions":
 			sessions = msg.sessions;
 			if (sessions.length == 0) {
@@ -170,7 +172,6 @@ port.onMessage.addListener((msg) => {
 			document.getElementById('css_file').href = msg.theme;
 			break;
 		case "start_stop":
-			console.log(msg.currentSite.url);
 			document.getElementById('start_stop_button').disabled = (msg.currentSite.url.indexOf("chrome://") == 0);
 			break;
 		}
@@ -216,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			showError("No sessions!");
 		} else if (sessionRunning) {
 			sessionRunning = false;
-			console.log("stopping timer")
+			console.log("stopping timer");
 			sendMessage({
 				to: "background",
 				from: "popup",
@@ -225,7 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			});
 			document.getElementById('start_stop_text').innerHTML = "Start";
 		} else {
-			console.log("starting timer")
+			console.log("starting timer");
 			sessionRunning = true;
 			sendMessage({
 				to: "background",
