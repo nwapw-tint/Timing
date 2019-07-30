@@ -160,8 +160,13 @@ port.onMessage.addListener((msg) => {
 		break;
 	case "update":
 		switch (msg.place) {
+<<<<<<< HEAD
 			case "ETA":
 			document.getElementById('session_label').innerHTML = "Sessions &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp"+msg.text;
+=======
+		case "ETA":
+			document.getElementById('session_label').innerHTML = "Sessions " + msg.text;
+>>>>>>> 704220308d97851350df7031e5662c6ddeac47d6
 			break;
 		case "sessions":
 			sessions = msg.sessions;
@@ -213,6 +218,8 @@ document.addEventListener('DOMContentLoaded', () => {
 			showError("Time is not a number!");
 		} else if (time > maxTime) {
 			showError("Time is too long!");
+		} else if (time <= 0) {
+			showError("Time is too short");
 		} else {
 			addSession(time);
 		}
