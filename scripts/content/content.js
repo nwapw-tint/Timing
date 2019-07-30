@@ -1,5 +1,6 @@
 var fadeDuration = 700;
 var fadeStep = 50;
+var textOn = false
 isBlacklisted = false;
 //Sets the tint's color
 function setTint(color) {
@@ -28,10 +29,9 @@ function setupText() {
 	var textDiv = document.createElement("div");
 	textDiv.style.mixBlendMode = "normal"
 	textDiv.setAttribute('style', 'mixBlendMode:"normal"; !important' );
-	alert(textDiv.getAttribute('style'));
 	textDiv.id = "textDiv";
 	textDiv.style.fontFamily = "Roboto,sans-serif";
-	textDiv.style.position = "absolute";
+	textDiv.style.position = "fixed";
 	textDiv.style.top = "50%";
 	textDiv.style.left = "50%";
 	textDiv.style.marginBottom = "-50%";
@@ -40,7 +40,7 @@ function setupText() {
 	textDiv.style.color = "rgba(255, 255, 255, 0)"; 
 	textDiv.style.zIndex = MAX_Z_VALUE;
 	tintDiv = document.getElementById("tint");
-	tintDiv.appendChild(textDiv);
+	document.documentElement.appendChild(textDiv);
 }
 
 //Appends fonts
@@ -154,22 +154,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
 //Adds the text to the div
 function addText(text, time) {
-	charCount = text.length;
-    textDiv = document.getElementById("textDiv")
-    if (textDiv) {    
-		textDiv.style.mixBlendMode = "normal";
-		textDiv.style.opacity = 1;
-		textDiv.style.fontSize = (120+(Math.floor(120/charCount)))+"px";
-		textDiv.style.wordWrap = "break-word";
-		textDiv.innerHTML = text + " " + timeToDigital(time);
-		textDiv.style.color = "rgba(255,255,255,1)";
-		setTimeout(() => {
-			textDiv.style.color = "rgba(255,255,255,0)";
-		}, 1400);
-        setTimeout(() => {
-            textDiv.innerHTML = text + " " + timeToDigital(time - 1);
-        }, 1000); //faux dynamic feeling
-    }
+	console.log(textOn);
+	if(textOn == false)
+	{
+		textOn = true;
+		charCount = text.length;
+		textDiv = document.getElementById("textDiv")
+		if (textDiv) {    
+			textDiv.style.mixBlendMode = "normal";
+			textDiv.style.opacity = 1;
+			textDiv.style.fontSize = (120+(Math.floor(120/charCount)))+"px";
+			textDiv.style.wordWrap = "break-word";
+			textDiv.innerHTML = text + " " + timeToDigital(time);
+			textDiv.style.color = "rgba(255,255,255,1)";
+			setTimeout(() => {
+				textDiv.style.color = "rgba(255,255,255,0)";
+				textOn = false;
+			}, 1400);
+			setTimeout(() => {
+				textDiv.innerHTML = text + " " + timeToDigital(time - 1);
+			}, 1000); //faux dynamic feeling
+		}
+	}
 }
 
 
@@ -226,7 +232,7 @@ function fadeIn(fadeTarget, color, fadeStep, fadeDuration) {
 
 function setBlackout(color) {
 	console.log(color); //undefined?
-	
+
 /* 	let cA = color.replace(/[^\d,.]/g, '').split(',');
 	let opaqColor = "rgba(" + cA[0] + "," + cA[1] + "," + cA[2] + "," + "1)";
 	if (!isBlacklisted) {
