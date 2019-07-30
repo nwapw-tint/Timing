@@ -248,11 +248,11 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 
 	addClickListener('css_button', () => {
-		if (document.getElementById('css_file').href.indexOf("windows_theme") != -1) {
+		if (document.getElementById('css_file').href.includes("windows_theme")) {
 			return;
-		} else if (document.getElementById('css_file').href.indexOf("modern_dark") != -1) {
+		} else if (document.getElementById('css_file').href.includes("modern_dark")) {
 			document.getElementById('css_file').href = "../../css/modern_light.css";
-		} else if (document.getElementById('css_file').href.indexOf("modern_light") != -1) {
+		} else if (document.getElementById('css_file').href.includes("modern_light")) {
 			document.getElementById('css_file').href = "../../css/modern_dark.css";
 		}
 		sendMessage({
