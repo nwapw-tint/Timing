@@ -2,8 +2,8 @@
 	src: url("../fonts/orkney-regular.otf");
 	font-family: Orkney;
 }
-*{
-	font-family:Orkney;
+* {
+	font-family: Orkney;
 }
 html {
 	height: 238px;
@@ -14,7 +14,7 @@ html {
 	transition-duration: 0.4s;
 }
 .topbar {
-	font-size:10px;
+	font-size: 10px;
 	width: 400px;
 	height: 21px;
 	background-color: #40525e;
@@ -136,7 +136,7 @@ input[type=color] {
 }
 #start_stop_text {
 	position: fixed; 
-	top: 187px; 
+	top: 188px; 
 	left: 15px;
 	padding: 0px;
 	transition-duration: 0.4s;
@@ -164,6 +164,10 @@ sesh-top {
 	transition-duration:0.4s;
 }
 
+.close_button{
+	background-image: url("../images/x_dark.png");
+	background-size:cover;
+}
 /*SCROLLBAR*/
 
 /*width*/

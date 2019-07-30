@@ -116,9 +116,11 @@ function addSession(time) {
 	}
 
 	function readTimeInput(time) {
-		if (time.includes(":")) {
+		if(time.includes(":"))
+		{
 			return readNormalTime(time.split(':'));
-		} else {
+		}
+		 else {
 			return time * 60;
 		}
 	}
@@ -235,10 +237,10 @@ document.addEventListener('DOMContentLoaded', () => {
 					break;
 				}
 			}
-		} else if (isNaN(time)) {
-			showError("Time is not a number!")
-			return null;
-		} else {
+		}else if (isNaN(time)) {
+				showError("Time is not a number!")
+				return null;
+			} else {
 			addSession(time);
 		}
 	});
