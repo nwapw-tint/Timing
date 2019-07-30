@@ -31,7 +31,8 @@
 		"background",
 		"tabs",
 		"<all_urls>",
-		"storage"
+		"storage",
+		"alarms"
 	],
 	"omnibox": {
 		"keyword": "tint"

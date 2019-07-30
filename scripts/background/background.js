@@ -1,5 +1,6 @@
 var sessions = [];
-var sessionRunning = false, onChromeSite = false;
+var sessionRunning = false,
+	onChromeSite = false;
 
 var currentSite = "";
 var sitesVisited = [];
@@ -16,7 +17,7 @@ function timeoutUpdate() {
 			updatePopupSessions();
 			if (sessions.length == 0) {
 				stopSession();
-				updateETA()
+				updatePopupETA()
 			} else {
 				updateContentTint();
 			}
@@ -35,7 +36,8 @@ function startSession() {
 	if (!useBlacklist(currentSite.url)) {
 		console.log("enabling content tint");
 		enableContentTint();
-		updateETA();
+		updatePopupETA();
+		startPeriodicETAUpdate();
 	}
 }
 
@@ -44,6 +46,13 @@ function stopSession() {
 	clearInterval(timeout);
 	removeContentTint();
 	sessionRunning = false;
+}
+
+function startPeriodicETAUpdate()
+{
+	chrome.alarms.create({
+		periodInMinutes: 1
+	})
 }
 
 // Gets the tint
@@ -71,71 +80,71 @@ chrome.extension.onConnect.addListener((port) => {
 			return;
 		}
 		switch (msg.action) {
-		case "open":
-			console.log("The port \"" + port.name + "\" has been connected");
-			if (port.name == "popup") {
-				updatePopup();
-			}
-			port.postMessage({
-				to: port.name,
-				from: "background",
-				action: "open"
-			});
-			break;
-		case "timer":
-			if (currentSite.url.indexOf("chrome://") != 0) {
-				switch (msg.mode) {
-				case "start":
-					startSession();
-					break;
-				case "stop":
-					stopSession();
-					break;
+			case "open":
+				console.log("The port \"" + port.name + "\" has been connected");
+				if (port.name == "popup") {
+					updatePopup();
 				}
-			}
-			break;
-		case "push":
-			if (msg.place == "sessions") {
-				sessions.push(msg.session);
-				updateETA();
-			}
-			break;
-		case "shift":
-			if (msg.place == "sessions") {
-				sessions.shift();
-				if (sessions.length == 0) {
-					stopSession();
-				}
-			}
-			break;
-		case "update":
-			switch (msg.place) {
-			case "sessions":
-				sessions = msg.sessions;
-				if (sessions.length == 0) {
-					stopSession();
-				} else {
-					updateContentTint();
-				}
-				updateETA();
+				port.postMessage({
+					to: port.name,
+					from: "background",
+					action: "open"
+				});
 				break;
-			case "theme": 
-				theme = msg.theme;
+			case "timer":
+				if (currentSite.url.indexOf("chrome://") != 0) {
+					switch (msg.mode) {
+						case "start":
+							startSession();
+							break;
+						case "stop":
+							stopSession();
+							break;
+					}
+				}
 				break;
-			}
-			break;
-		case "checkRunning":
-			if (sessionRunning) {
-				enableContentTint();
-			}
-			break;
-		case "error":
-			alert(msg.error);
-			break;
+			case "push":
+				if (msg.place == "sessions") {
+					sessions.push(msg.session);
+					updatePopupETA();
+				}
+				break;
+			case "shift":
+				if (msg.place == "sessions") {
+					sessions.shift();
+					if (sessions.length == 0) {
+						stopSession();
+					}
+				}
+				break;
+			case "update":
+				switch (msg.place) {
+					case "sessions":
+						sessions = msg.sessions;
+						if (sessions.length == 0) {
+							stopSession();
+						} else {
+							updateContentTint();
+						}
+						updatePopupETA();
+						break;
+					case "theme":
+						theme = msg.theme;
+						break;
+				}
+				break;
+			case "checkRunning":
+				if (sessionRunning) {
+					enableContentTint();
+				}
+				break;
+			case "error":
+				alert(msg.error);
+				break;
 		}
 	});
 	port.index = ports.length;
-	
+
 	port.onDisconnect.addListener(() => {
 		if (port.index == -1) {
 			return;
@@ -204,7 +213,7 @@ function removeContentTint() {
 	});
 }
 
-function sendBlackout(){
+function sendBlackout() {
 	sendMessage({
 		to: "content",
 		from: "background",
@@ -223,12 +232,36 @@ function sendBlackout(){
 
 // Updates the popup ETA
 function updatePopupETA(text) {
+	let updateText = "";
+	let totalTime = 0;
+	for (a of sessions) {
+		totalTime += a.time;
+	}
+	if (totalTime != 0) {
+		var d = new Date(); // for now
+		d.setSeconds(d.getSeconds() + totalTime);
+		latin = "AM";
+		hourformatString = d.getHours();
+		if (hourformatString > 12) {
+			hourformatString -= 12;
+			latin = "PM";
+		}
+		minuteformatString = d.getMinutes();
+		if (minuteformatString < 10) {
+			minuteformatString = "0" + minuteformatString;
+		}
+		updateText = "ETA " + hourformatString + ":" + minuteformatString + " " + latin
+		if (sessions.length == 0) {
+			updateText = "";
+			alert("no sessions read by eta")
+		};
+	}
 	sendMessage({
 		to: "popup",
 		from: "background",
 		action: "update",
 		place: "ETA",
-		text: text
+		text: updateText
 	});
 }
 
@@ -284,6 +317,7 @@ function updatePopup() {
 	updatePopupSessionRunning();
 	updatePopupTheme();
 	updatePopupStartStopButton();
+	updatePopupETA();
 }
 
 
@@ -323,7 +357,7 @@ function updateTabInfo(url, tabId) {
 		sitesVisited.push(currentSite);
 		chrome.tabs.reload(currentSite.tabId);
 	}
-	
+
 	function hasVisitedSite(site) {
 		for (let i = 0; i < sitesVisited.length; i++) {
 			if (sitesVisited[i].tabId == site.tabId) {
@@ -354,7 +388,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 	updateTabInfo(tab.url, tabId);
 });
 
-chrome.tabs.onCreated.addListener((tab) => {  
+chrome.tabs.onCreated.addListener((tab) => {
 	console.log("###onCreated calls on " + tab.url);
 	useBlacklist(tab.url);
 });
@@ -419,25 +453,6 @@ chrome.commands.onCommand.addListener((command) => {
 
 
 
-function updateETA() {
-	let totalTime = 0;
-	for (a of sessions) {
-		totalTime += a.time;
-	}
-	if (totalTime != 0) {
-		var d = new Date(); // for now
-		d.setSeconds(d.getSeconds() + totalTime);
-		latin = "AM";
-		hourformatString = d.getHours();
-		if (hourformatString > 12) {
-			hourformatString -= 12;
-			latin = "PM";
-		}	
-		minuteformatString = d.getMinutes();
-		if(minuteformatString < 10)
-		{
-			minuteformatString = "0"+minuteformatString;
-		}
-		updatePopupETA("ETA " + hourformatString + ":" + minuteformatString + " " + latin);
-	}
-}
+chrome.alarms.onAlarm.addListener(() => {
+	updatePopupETA();
+});
