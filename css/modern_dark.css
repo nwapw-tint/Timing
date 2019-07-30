@@ -2,8 +2,8 @@
 	src: url("../fonts/orkney-regular.otf");
 	font-family: Orkney;
 }
-*{
-	font-family:Orkney;
+* {
+	font-family: Orkney;
 }
 html {
 	height: 238px;
@@ -14,7 +14,7 @@ html {
 	transition-duration: 0.4s;
 }
 .topbar {
-	font-size:10px;
+	font-size: 10px;
 	width: 400px;
 	height: 21px;
 	background-color: #40525e;
