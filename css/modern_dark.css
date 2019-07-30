@@ -1,5 +1,13 @@
+@font-face {
+	src: url("../fonts/RobotoMono-Regular.ttf");
+	font-family: Roboto;
+}
+@font-face {
+	src: url("../fonts/RobotoMono-Bold.ttf");
+	font-family: RobotoBold;
+}
 *{
-	font-family: 'Fira Code', monospace;
+	font-family: Roboto
 }
 html {
 	height: 237px;
@@ -10,6 +18,7 @@ html {
 	transition-duration: 0.4s;
 }
 .topbar {
+	font-family: RobotoBold;
 	width: 400px;
 	height: 21px;
 	background-color: #40525e;
@@ -24,7 +33,7 @@ button {
 	border-style: solid;
 	border-color: #40525e;
 	background-color: #40525e;
-	font-family: Mont;
+	font-family: Roboto;
 	outline-color: #40525e;
 	color: #8ca7b8;
 	border-radius: 4%;
@@ -45,12 +54,12 @@ button {
 	color:#8ca7b8;
 }
 p {
-	font-family: Mont;
+	font-family: Roboto;
 	color: Gainsboro;
 }
 input[type=text] {
-	font-size: 12px;
-	font-family: Mont;
+	font-size: 10px;
+	font-family: Roboto;
 	width: 118px;
 	height: 18px;
 	position: absolute;
