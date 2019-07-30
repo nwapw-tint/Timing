@@ -189,6 +189,11 @@ sesh-top {
 	transition-duration:0.4s;
 }
 
+.close_button{
+	background-image: url("../images/x_good.png");
+	background-size:cover;
+}
+
 /*SCROLLBAR*/
 
 /*width*/
