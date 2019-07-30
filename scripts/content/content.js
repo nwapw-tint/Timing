@@ -26,6 +26,7 @@ function enableTint(color) {
 //Creates an empty text wrapper, allowing innerHTML to be added
 function setupText() {
 	var textDiv = document.createElement("div");
+	textDiv.style.mixBlendMode = "normal !important";
 	textDiv.id = "textDiv";
 	textDiv.style.fontFamily = "Roboto,sans-serif";
 	textDiv.style.position = "absolute";

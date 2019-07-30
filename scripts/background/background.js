@@ -433,6 +433,12 @@ function updateETA() {
 			hourformatString -= 12;
 			latin = "PM";
 		}
-		updatePopupETA("ETA " + hourformatString + ":" + d.getMinutes() + " " + latin);
+		minuteformatString = d.getMinutes();
+		alert(minuteformatString)
+		if(minuteformatString < 10)
+		{
+			minuteformatString = "0"+minuteformatString;
+		}
+		updatePopupETA("ETA " + hourformatString + ":" + minuteformatString + " " + latin);
 	}
 }
