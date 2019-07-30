@@ -422,10 +422,13 @@ function updateETA()
 	{
 		totalTime += a.time;
 	}
+	if(totalTime != 0)
+	{
 	var d = new Date(); // for now
 	d.setSeconds(d.getSeconds() + totalTime);
 	latin = "AM";
 	hourformatString = d.getHours();
 	if(hourformatString > 12){hourformatString-=12; latin = "PM"}
-	updatePopupETA(hourformatString+":"+d.getMinutes()+" "+latin);
+	updatePopupETA("ETA "+hourformatString+":"+d.getMinutes()+" "+latin);
+	}
 }
