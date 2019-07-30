@@ -3,7 +3,11 @@
 	font-family: Orkney;
 }
 *{
+<<<<<<< HEAD
 	font-family: Orkney;
+=======
+	font-family: Roboto;
+>>>>>>> d513045a97ca3909b92d84bff1770b46c68c70fa
 }
 html {
 	height: 238px;
