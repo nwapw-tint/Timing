@@ -432,7 +432,7 @@ function updateETA() {
 		if (hourformatString > 12) {
 			hourformatString -= 12;
 			latin = "PM";
-		}
+		}	
 		minuteformatString = d.getMinutes();
 		if(minuteformatString < 10)
 		{

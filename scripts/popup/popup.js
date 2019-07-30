@@ -13,7 +13,7 @@ function updateSessionText() {
 	} else {
 		document.addEventListener('DOMContentLoaded', ust);
 	}
-	
+
 	//Update session text
 	function ust() {
 		if (updateSessionText.fontSize === undefined) {
@@ -98,7 +98,7 @@ function addSession(time) {
 		showError("Name is empty!");
 	} else {
 		let session = {
-			time: time * 60,
+			time: readTimeInput(time),
 			name: name,
 			color: color
 		};
@@ -113,6 +113,21 @@ function addSession(time) {
 		updateSessionText();
 		document.getElementById('time_input').value = "";
 		document.getElementById('name_input').value = "";
+	}
+
+	function readTimeInput(time) {
+		if (time.includes(":")) {
+			return readNormalTime(time.split(':'));
+		} else {
+			return time * 60;
+		}
+	}
+
+	function readNormalTime(timeA) {
+		if (timeA.length == 0) {
+			return 0;
+		}
+		return Number(timeA.pop()) + Number(60 * readNormalTime(timeA));
 	}
 }
 
@@ -155,34 +170,34 @@ port.onMessage.addListener((msg) => {
 		return;
 	}
 	switch (msg.action) {
-	case "open":
-		console.log("Connected to the background script");
-		break;
-	case "update":
-		switch (msg.place) {
-			case "ETA":
-			document.getElementById('session_label').innerHTML = "Sessions &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp"+msg.text;
+		case "open":
+			console.log("Connected to the background script");
 			break;
-		case "sessions":
-			sessions = msg.sessions;
-			if (sessions.length == 0) {
-				sessionRunning = false;
-				document.getElementById('start_stop_text').innerHTML = "Start";
+		case "update":
+			switch (msg.place) {
+				case "ETA":
+					document.getElementById('session_label').innerHTML = "Sessions &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + msg.text;
+					break;
+				case "sessions":
+					sessions = msg.sessions;
+					if (sessions.length == 0) {
+						sessionRunning = false;
+						document.getElementById('start_stop_text').innerHTML = "Start";
+					}
+					updateSessionText();
+					break;
+				case "sessionRunning":
+					sessionRunning = msg.sessionRunning;
+					document.getElementById('start_stop_text').innerHTML = sessionRunning || (msg.runningBeforeOnChromeSite && sessions.length > 0) ? "Stop" : "Start";
+					break;
+				case "theme":
+					document.getElementById('css_file').href = msg.theme;
+					break;
+				case "start_stop":
+					document.getElementById('start_stop_button').disabled = (msg.currentSite.url.indexOf("chrome://") == 0);
+					break;
 			}
-			updateSessionText();
 			break;
-		case "sessionRunning":
-			sessionRunning = msg.sessionRunning;
-			document.getElementById('start_stop_text').innerHTML = sessionRunning || (msg.runningBeforeOnChromeSite && sessions.length > 0) ? "Stop" : "Start";
-			break;
-		case "theme":
-			document.getElementById('css_file').href = msg.theme;
-			break;
-		case "start_stop":
-			document.getElementById('start_stop_button').disabled = (msg.currentSite.url.indexOf("chrome://") == 0);
-			break;
-		}
-		break;
 	}
 });
 
@@ -203,23 +218,31 @@ document.addEventListener('DOMContentLoaded', () => {
 	document.getElementById('color_chooser').addEventListener('change', () => {
 		color = hexToRgba(document.getElementById('color_chooser').value);
 	});
-	
+
 	//Adds a session to the queue
 	addClickListener('add_session_button', () => {
 		var time = document.getElementById('time_input').value;
 		if (time.length == 0) {
 			showError("Time is empty!");
-		} else if (isNaN(time)) {
-			showError("Time is not a number!");
 		} else if (time > maxTime) {
 			showError("Time is too long!");
 		} else if (time <= 0) {
 			showError("Time is too short");
+		} else if (time.includes(":")) {
+			for (x of time.split(":")) {
+				if (isNaN(x) || x > 60) {
+					showError("Time is invalid!")
+					break;
+				}
+			}
+		} else if (isNaN(time)) {
+			showError("Time is not a number!")
+			return null;
 		} else {
 			addSession(time);
 		}
 	});
-	
+
 	//Starts or stops the session
 	addClickListener('start_stop_button', () => {
 		if (sessions.length == 0) {
