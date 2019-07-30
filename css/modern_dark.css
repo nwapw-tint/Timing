@@ -164,6 +164,10 @@ sesh-top {
 	transition-duration:0.4s;
 }
 
+.close_button{
+	background-image: url("../images/x_dark.png");
+	background-size:cover;
+}
 /*SCROLLBAR*/
 
 /*width*/
