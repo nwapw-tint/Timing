@@ -68,9 +68,9 @@ input[type=text] {
 input[type=color] {
 	border: 1px solid #8ca7b8;
 	width: 114px;
-	height: 30px;
+	height: 27px;
 	position: absolute;
-	top: 150px;
+	top: 154px;
 	left: 210px;
 	border-radius: 4%;
 	background-color: #40525e;
@@ -78,8 +78,9 @@ input[type=color] {
 #session_label {
 	position: fixed;
 	top: 22px;
-	left: 55px;
 	font-size: 13px;
+	text-align:left;
+	padding-left:7px;
 }
 #sessions_bar {
 	width:180px;

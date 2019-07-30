@@ -59,16 +59,15 @@ input[type=text] {
 	outline: none;
 }
 input[type=color] {
-	border-color: 1px solid Gainsboro;
+	border: 1px solid Gainsboro;
 	width: 114px;
-	height: 30px;
+	height: 27px;
 	position: absolute;
-	top: 150px;
+	top: 154px;
 	left: 210px;
 	border-radius: 4%;
 	background-color: Gainsboro;
 	transition-duration: 0.4s;
-	border: 1px solid DimGray;
 	outline: none;
 }
 .checkbox-label input {
@@ -101,8 +100,9 @@ input[type=color] {
 #session_label {
 	position: fixed;
 	top: 22px;
-	left: 55px;
 	font-size: 13px;
+	text-align:left;
+	padding-left:7px;
 }
 #sessions_bar {
 	width: 180px;
