@@ -34,7 +34,7 @@ function updateSessionText() {
 					shortName = shortName.substring(0, shortName.length - 1);
 				nameAndTime = shortName + '...' + end;
 			}
-			sessionText += '<div class="time" draggable="true" style=" margin-bottom:5px; height:20px; width:150px; border-radius:7px; background-color:' + sessions[i].color + ';"><p style=" margin:0px; padding:0px; line-height:20px"><button style="outline:none; height:20px; width:20px; border-radius:7px 0px 0px 7px; font-size:15px;" id="close_button_' + i + '">x</button>  ' + nameAndTime + "</p></div>";
+			sessionText += '<div class="time" draggable="true" style=" margin-bottom:5px; height:20px; width:150px; border-radius:7px; background-color:' + sessions[i].color + ';"><p style=" position:relative; top:-3px; margin:0px; padding:0px; line-height:20px"><button style="position:relative; top:3px;outline:none; height:20px; width:20px; border-radius:7px 0px 0px 7px; font-size:15px;" id="close_button_' + i + '">x</button>  ' + nameAndTime + "</p></div>";
 		}
 		document.getElementById('sessions_text').innerHTML = sessionText;
 
