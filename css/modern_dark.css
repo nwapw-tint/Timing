@@ -1,13 +1,9 @@
 @font-face {
-	src: url("../fonts/RobotoMono-Regular.ttf");
-	font-family: Roboto;
-}
-@font-face {
-	src: url("../fonts/RobotoMono-Bold.ttf");
-	font-family: RobotoBold;
+	src: url("../fonts/orkney-regular.otf");
+	font-family: Orkney;
 }
 *{
-	font-family: Roboto
+	font-family:Orkney;
 }
 html {
 	height: 238px;
@@ -18,7 +14,7 @@ html {
 	transition-duration: 0.4s;
 }
 .topbar {
-	font-family: RobotoBold;
+	font-size:10px;
 	width: 400px;
 	height: 21px;
 	background-color: #40525e;
@@ -33,7 +29,7 @@ button {
 	border-style: solid;
 	border-color: #40525e;
 	background-color: #40525e;
-	font-family: Roboto;
+	font-family: Orkney;
 	outline-color: #40525e;
 	color: #8ca7b8;
 	border-radius: 4%;
@@ -54,12 +50,11 @@ button {
 	color:#8ca7b8;
 }
 p {
-	font-family: Roboto;
 	color: Gainsboro;
 }
 input[type=text] {
 	font-size: 10px;
-	font-family: Roboto;
+	font-family: Orkney;
 	width: 118px;
 	height: 18px;
 	position: absolute;
