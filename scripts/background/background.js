@@ -434,7 +434,6 @@ function updateETA() {
 			latin = "PM";
 		}
 		minuteformatString = d.getMinutes();
-		alert(minuteformatString)
 		if(minuteformatString < 10)
 		{
 			minuteformatString = "0"+minuteformatString;

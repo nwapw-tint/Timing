@@ -26,7 +26,9 @@ function enableTint(color) {
 //Creates an empty text wrapper, allowing innerHTML to be added
 function setupText() {
 	var textDiv = document.createElement("div");
-	textDiv.style.mixBlendMode = "normal !important";
+	textDiv.style.mixBlendMode = "normal"
+	textDiv.setAttribute('style', 'mixBlendMode:"normal"; !important' );
+	alert(textDiv.getAttribute('style'));
 	textDiv.id = "textDiv";
 	textDiv.style.fontFamily = "Roboto,sans-serif";
 	textDiv.style.position = "absolute";
@@ -56,7 +58,7 @@ function styleDiv(div) {
 	div.style.width = "100%";
 	div.style.height = "100%";
 	div.style.pointerEvents = "none";	
-	div.style.zIndex = MAX_Z_VALUE;
+	div.style.zIndex = MAX_Z_VALUE-1;
 	div.style.top = 0;
 	div.style.left = 0;
 	div.style.position = "fixed";
@@ -223,7 +225,8 @@ function fadeIn(fadeTarget, color, fadeStep, fadeDuration) {
 }
 
 function setBlackout(color) {
-	console.log(color);
+	console.log(color); //undefined?
+	
 /* 	let cA = color.replace(/[^\d,.]/g, '').split(',');
 	let opaqColor = "rgba(" + cA[0] + "," + cA[1] + "," + cA[2] + "," + "1)";
 	if (!isBlacklisted) {
