@@ -1,6 +1,9 @@
 @font-face {
-	src: url("../fonts/Montserrat-Medium.ttf");
-	font-family: Mont;
+	src: url("../fonts/orkney-regular.otf");
+	font-family: Orkney;
+}
+*{
+	font-family: Orkney;
 }
 html {
 	height: 238px;
@@ -11,6 +14,7 @@ html {
 	transition-duration: 0.4s;
 }
 .topbar {
+	font-size:10px;
 	width: 400px;
 	height: 21px;
 	background-color: Silver;
@@ -25,7 +29,6 @@ button {
 	border-style: solid;
 	border-color: Silver;
 	background-color: Silver;
-	font-family: Mont;
 	outline-color: Silver;
 	color: Black;
 	border-radius: 4%;
@@ -41,12 +44,10 @@ button {
 	height: 22px;
 }
 p {
-	font-family: Mont;
 	color: Black;
 }
 input[type=text] {
 	font-size: 12px;
-	font-family: Mont;
 	width: 118px;
 	height: 18px;
 	position: absolute;
@@ -58,16 +59,15 @@ input[type=text] {
 	outline: none;
 }
 input[type=color] {
-	border-color: 1px solid Gainsboro;
+	border: 1px solid Gainsboro;
 	width: 114px;
-	height: 30px;
+	height: 27px;
 	position: absolute;
-	top: 150px;
+	top: 154px;
 	left: 210px;
 	border-radius: 4%;
 	background-color: Gainsboro;
 	transition-duration: 0.4s;
-	border: 1px solid DimGray;
 	outline: none;
 }
 .checkbox-label input {
@@ -100,8 +100,9 @@ input[type=color] {
 #session_label {
 	position: fixed;
 	top: 22px;
-	left: 55px;
 	font-size: 13px;
+	text-align:left;
+	padding-left:7px;
 }
 #sessions_bar {
 	width: 180px;
