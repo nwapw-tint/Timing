@@ -154,6 +154,7 @@ function addText(text, time) {
 	charCount = text.length;
     textDiv = document.getElementById("textDiv")
     if (textDiv) {    
+		textDiv.style.mixBlendMode = "normal";
 		textDiv.style.opacity = 1;
 		textDiv.style.fontSize = (120+(Math.floor(120/charCount)))+"px";
 		textDiv.style.wordWrap = "break-word";
