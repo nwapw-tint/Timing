@@ -48,8 +48,7 @@ function stopSession() {
 	sessionRunning = false;
 }
 
-function startPeriodicETAUpdate()
-{
+function startPeriodicETAUpdate() {
 	chrome.alarms.create({
 		periodInMinutes: 1
 	})

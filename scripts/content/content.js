@@ -9,7 +9,7 @@ function setTint(color) {
 		div.style.backgroundColor = color;
 	}
 }
-  
+
 //Enables the tint
 function enableTint(color) {
 	if (!document.getElementById("tint")) {
@@ -28,7 +28,7 @@ function enableTint(color) {
 function setupText() {
 	var textDiv = document.createElement("div");
 	textDiv.style.mixBlendMode = "normal"
-	textDiv.setAttribute('style', 'mixBlendMode:"normal"; !important' );
+	textDiv.setAttribute('style', 'mixBlendMode:"normal"; !important');
 	textDiv.id = "textDiv";
 	textDiv.style.fontFamily = "Roboto,sans-serif";
 	textDiv.style.position = "fixed";
@@ -37,7 +37,7 @@ function setupText() {
 	textDiv.style.marginBottom = "-50%";
 	textDiv.style.marginRight = "-50%";
 	textDiv.style.transform = "translate(-50%, -50%)";
-	textDiv.style.color = "rgba(255, 255, 255, 0)"; 
+	textDiv.style.color = "rgba(255, 255, 255, 0)";
 	textDiv.style.zIndex = MAX_Z_VALUE;
 	tintDiv = document.getElementById("tint");
 	document.documentElement.appendChild(textDiv);
@@ -57,8 +57,8 @@ function styleDiv(div) {
 	div.style.mixBlendMode = "multiply";
 	div.style.width = "100%";
 	div.style.height = "100%";
-	div.style.pointerEvents = "none";	
-	div.style.zIndex = MAX_Z_VALUE-1;
+	div.style.pointerEvents = "none";
+	div.style.zIndex = MAX_Z_VALUE - 1;
 	div.style.top = 0;
 	div.style.left = 0;
 	div.style.position = "fixed";
@@ -71,7 +71,7 @@ function pauseTint() {
 }
 
 //Removes the tint
-function removeTint() {	
+function removeTint() {
 	let div = document.getElementById("tint");
 	if (div) {
 		fadeOut(div, fadeStep, fadeDuration);
@@ -105,30 +105,30 @@ port.onMessage.addListener((msg) => {
 		return;
 	}
 	switch (msg.action) {
-	case "open":
-		console.log("Connected to the background script");
-		break;
-	case "tint":
-		switch (msg.mode) {
-		case "enable":
-			enableTint(msg.color);
+		case "open":
+			console.log("Connected to the background script");
 			break;
-		case "pause":
-			pauseTint();
+		case "tint":
+			switch (msg.mode) {
+				case "enable":
+					enableTint(msg.color);
+					break;
+				case "pause":
+					pauseTint();
+					break;
+				case "remove":
+					removeTint();
+					break;
+				case "change":
+					setTint(msg.color);
+					break;
+				case "blackout":
+					setBlackout(msg.color);
+			}
 			break;
-		case "remove":
-			removeTint();
+		case "add_text":
+			addText(msg.text, msg.time);
 			break;
-		case "change":
-			setTint(msg.color);
-			break;
-		case "blackout":
-			setBlackout(msg.color);
-		}
-		break;
-	case "add_text":
-		addText(msg.text, msg.time);
-		break;
 	}
 });
 
@@ -155,15 +155,14 @@ document.addEventListener('DOMContentLoaded', () => {
 //Adds the text to the div
 function addText(text, time) {
 	console.log(textOn);
-	if(textOn == false)
-	{
+	if (textOn == false) {
 		textOn = true;
 		charCount = text.length;
 		textDiv = document.getElementById("textDiv")
-		if (textDiv) {    
+		if (textDiv) {
 			textDiv.style.mixBlendMode = "normal";
 			textDiv.style.opacity = 1;
-			textDiv.style.fontSize = (120+(Math.floor(120/charCount)))+"px";
+			textDiv.style.fontSize = (120 + (Math.floor(120 / charCount))) + "px";
 			textDiv.style.wordWrap = "break-word";
 			textDiv.innerHTML = text + " " + timeToDigital(time);
 			textDiv.style.color = "rgba(255,255,255,1)";
@@ -233,19 +232,19 @@ function fadeIn(fadeTarget, color, fadeStep, fadeDuration) {
 function setBlackout(color) {
 	console.log(color); //undefined?
 
-/* 	let cA = color.replace(/[^\d,.]/g, '').split(',');
-	let opaqColor = "rgba(" + cA[0] + "," + cA[1] + "," + cA[2] + "," + "1)";
-	if (!isBlacklisted) {
-		console.log(opaqColor + " on " + location);
-		isBlacklisted = true;
-		let blackDiv = document.createElement("div");
-		blackDiv.id = "black";
-		styleDiv(blackDiv);
-		fadeIn(blackDiv, opaqColor, fadeStep, fadeDuration);
-	} else if (!fadingIn) {
-		let blackDiv = document.getElementById("black");
-		if (blackDiv.style.backgroundColor != opaqColor) {
-			blackDiv.style.backgroundColor = opaqColor;
-		}
-	}*/
+	/* 	let cA = color.replace(/[^\d,.]/g, '').split(',');
+		let opaqColor = "rgba(" + cA[0] + "," + cA[1] + "," + cA[2] + "," + "1)";
+		if (!isBlacklisted) {
+			console.log(opaqColor + " on " + location);
+			isBlacklisted = true;
+			let blackDiv = document.createElement("div");
+			blackDiv.id = "black";
+			styleDiv(blackDiv);
+			fadeIn(blackDiv, opaqColor, fadeStep, fadeDuration);
+		} else if (!fadingIn) {
+			let blackDiv = document.getElementById("black");
+			if (blackDiv.style.backgroundColor != opaqColor) {
+				blackDiv.style.backgroundColor = opaqColor;
+			}
+		}*/
 }

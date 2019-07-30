@@ -16,10 +16,10 @@ function restoreOptions() {
 }
 
 function sendSites(sites) {
-    sendMessage({
-        to: "background",
-        from: "options",
-        action: "blacklist",
+	sendMessage({
+		to: "background",
+		from: "options",
+		action: "blacklist",
 		sites: sites
 	});
 }
@@ -67,11 +67,11 @@ sendMessage({
 port.onMessage.addListener((msg) => {
 	if (msg.to != "options") {
 		return;
-    }
-    switch (msg.action) {
-	case "open":
-		console.log("Connected to the background script");
-		break;
+	}
+	switch (msg.action) {
+		case "open":
+			console.log("Connected to the background script");
+			break;
 	}
 });
 
