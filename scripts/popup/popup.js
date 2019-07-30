@@ -4,7 +4,7 @@ var sessionRunning = false;
 var color = "rgba(0, 255, 0, " + alpha + ")";
 
 const maxTime = 1440;
-const maxLength = 130;
+const maxLength = 120;
 
 //Updates the session text only after the dom content loads
 function updateSessionText() {
@@ -17,9 +17,8 @@ function updateSessionText() {
 	//Update session text
 	function ust() {
 		if (updateSessionText.fontSize === undefined) {
-			//The reason why 'name_input' is used is it was first in the file that had both the font-family and font-size in the css
-			updateSessionText.fontSize = getPropertyFromElement(document.getElementById('name_input'), 'font-size');
-			updateSessionText.fontFamily = getPropertyFromElement(document.getElementById('name_input'), 'font-family');
+			updateSessionText.fontSize = getPropertyFromElement(document.getElementById('sessions_text'), 'font-size');
+			updateSessionText.fontFamily = getPropertyFromElement(document.getElementById('sessions_text'), 'font-family');
 		}
 
 		let sessionText = "";
@@ -161,7 +160,7 @@ port.onMessage.addListener((msg) => {
 	case "update":
 		switch (msg.place) {
 			case "ETA":
-			document.getElementById('session_label').innerHTML = "Sessions &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp"+msg.text;
+			document.getElementById('session_label').innerHTML = "Sessions &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + msg.text;
 			break;
 		case "sessions":
 			sessions = msg.sessions;
@@ -179,6 +178,7 @@ port.onMessage.addListener((msg) => {
 			document.getElementById('css_file').href = msg.theme;
 			break;
 		case "start_stop":
+			// TODO: change this back to have the message send disabled instead of the current site
 			document.getElementById('start_stop_button').disabled = (msg.currentSite.url.indexOf("chrome://") == 0);
 			break;
 		}
