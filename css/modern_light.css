@@ -113,6 +113,7 @@ input[type=color] {
 	transition-duration: 0.4s;
 	padding: 0px;
 	margin: 0 auto;
+	outline:none;
 	font-size:16px;
 }
 .add_button:hover {
@@ -121,6 +122,7 @@ input[type=color] {
 	color: White;
 	display: block;
 	height: 30px;
+	outline:none;
 	padding: 0px;
 	margin: 0 auto;
 }
@@ -129,6 +131,7 @@ input[type=color] {
 	top: 198px;
 	left: 15px;
 	width: 174px;
+	outline:none;
 	height: 30px;
 	font-size: 16px;
 	transition-duration: 0.4s;
@@ -138,6 +141,7 @@ input[type=color] {
 	top: 188px; 
 	left: 15px;
 	padding: 0px;
+	outline:none;
 	transition-duration: 0.4s;
 	height: 22px;
 	width: 170px;
