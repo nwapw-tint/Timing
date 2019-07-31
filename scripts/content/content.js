@@ -63,7 +63,9 @@ function appendFonts() {
 
 //Styles the tint div
 function styleDiv(div) {
-	div.style.mixBlendMode = "multiply";
+	div.style = "display: block; transition: none 0s ease 0s; margin: 0px; padding: 0px; border-radius: 0px; border: none; outline: none; visibility: visible; max-height: none; max-width: none; clip: unset; overflow: visible; opacity: 1; position: fixed; top: -10%; right: -10%; bottom: -10%; left: -10%; width: auto; height: auto; z-index: "+(MAX_Z_VALUE-1)+"; mix-blend-mode: multiply;"
+	div.style.pointerEvents = "none";
+	/* 	div.style.mixBlendMode = "multiply";
 	div.style.width = "100%";
 	div.style.height = "100%";
 	div.style.pointerEvents = "none";
@@ -71,7 +73,7 @@ function styleDiv(div) {
 	div.style.top = 0;
 	div.style.left = 0;
 	div.style.position = "fixed";
-	div.style.display = "inline-block";
+	div.style.display = "inline-block";*/
 	document.body.appendChild(div);
 }
 //Disables the tint
@@ -174,6 +176,7 @@ function addText(text, time) {
 		charCount = text.length;
 		textDiv = document.getElementById("textDiv")
 		if (textDiv) {
+			textDiv.style.pointerEvents = "none";
 			textDiv.style.mixBlendMode = "normal";
 			textDiv.style.opacity = 1;
 			textDiv.style.fontSize = (120 + (Math.floor(120 / charCount))) + "px";
