@@ -241,18 +241,20 @@ function updatePopupETA(text) {
 		d.setSeconds(d.getSeconds() + totalTime);
 		latin = "AM";
 		hourformatString = d.getHours();
+		if (hourformatString > 11) {
+			latin = "PM";
+		}
 		if (hourformatString > 12) {
 			hourformatString -= 12;
-			latin = "PM";
 		}
 		minuteformatString = d.getMinutes();
 		if (minuteformatString < 10) {
 			minuteformatString = "0" + minuteformatString;
 		}
-		updateText = "ETA " + hourformatString + ":" + minuteformatString + " " + latin
+		updateText = "ETA " + hourformatString + ":" + minuteformatString + " " + latin;
 		if (sessions.length == 0) {
 			updateText = "";
-			alert("no sessions read by eta")
+			alert("no sessions read by eta");
 		};
 	}
 	sendMessage({
