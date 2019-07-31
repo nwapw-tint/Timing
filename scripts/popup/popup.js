@@ -281,7 +281,7 @@ clickedRecently = false;
 		setTimeout(function(){clickedRecently = false}, fadeDuration);
 	});
 
-	addClickListener('css_button', () => {
+	addClickListener('moon', () => {
 		if (document.getElementById('css_file').href.indexOf("windows_theme") != -1) {
 			return;
 		} else if (document.getElementById('css_file').href.indexOf("modern_dark") != -1) {

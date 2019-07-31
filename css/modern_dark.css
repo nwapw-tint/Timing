@@ -170,11 +170,20 @@ sesh-top {
 	border-radius: 25%;
 	transition-duration:0.4s;
 }
-#icon{
+#moon{
 	background-image: url("../images/sun.png");	
 	transition-duration:0.4s;
 }
 
+#quest{
+	background-image: url("../images/questionmark.png");	
+	transition-duration:0.4s;
+}
+
+#x{
+	background-image: url("../images/x_good.png");	
+	transition-duration:0.4s;
+}
 .close_button{
 	background-image: url("../images/x_dark.png");
 	background-size:10px;

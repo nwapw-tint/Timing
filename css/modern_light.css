@@ -173,8 +173,18 @@ sesh-top {
 	background-repeat:no-repeat;
 	background-position:center;
 }
-#icon{
-	background-image: url("../images/moon.png");
+#moon{
+	background-image: url("../images/moon.png");	
+	transition-duration:0.4s;
+}
+
+#quest{
+	background-image: url("../images/questionmark.png");	
+	transition-duration:0.4s;
+}
+
+#x{
+	background-image: url("../images/x_good.png");	
 	transition-duration:0.4s;
 }
 /*SCROLLBAR*/
