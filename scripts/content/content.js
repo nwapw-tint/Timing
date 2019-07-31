@@ -1,7 +1,10 @@
 var textOn = false
-isBlacklisted = false;
-var fadeOutEffect, fadeInEffect;
+
+var isBlacklisted = false;
+
 var fading = false;
+var fadeOutEffect, fadeInEffect;
+
 //Sets the tint's color
 function setTint(color) {
 	if (fading) {
@@ -9,10 +12,7 @@ function setTint(color) {
 	}
 	let div = document.getElementById("tint");
 	if (div && color) {
-		fadeOut(div, fadeStep, fadeDuration / 2,
-			fadeIn(div, color, fadeStep, fadeDuration / 2)
-		);
-
+		fadeOut(div, fadeStep, fadeDuration / 2, fadeIn(div, color, fadeStep, fadeDuration / 2));
 	} else {
 		console.log("no div found, not setting a color")
 	}
@@ -26,13 +26,12 @@ function enableTint(color) {
 		appendFonts();
 		styleDiv(tintDiv);
 		setupText();
-		//console.log("calling fadeIn() from EnableTint()");
 		fadeIn(tintDiv, color, fadeStep, fadeDuration);
 	} else {
-		//console.log("enableTint calls setTint (existing tint)");
 		setTint(color);
 	}
 }
+
 //Creates an empty text wrapper, allowing innerHTML to be added
 function setupText() {
 	var textDiv = document.createElement("div");
@@ -76,11 +75,10 @@ function styleDiv(div) {
 }
 //Disables the tint
 function pauseTint() {
-	//console.log("attempting to pause the tint")
 	if (document.getElementById("tint"))
-		fadeOut(document.getElementById("tint"), fadeStep, fadeDuration)
+		fadeOut(document.getElementById("tint"), fadeStep, fadeDuration);
 	else {
-		alert("no tint to pause")
+		alert("no tint to pause");
 	}
 }
 
@@ -158,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		from: "content",
 		action: "checkRunning"
 	});
-}, false);
+});
 
 
 
@@ -168,7 +166,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 //Adds the text to the div
 function addText(text, time) {
-	console.log(textOn);
 	if (textOn == false) {
 		textOn = true;
 		charCount = text.length;
@@ -179,9 +176,9 @@ function addText(text, time) {
 			textDiv.style.fontSize = (120 + (Math.floor(120 / charCount))) + "px";
 			textDiv.style.wordWrap = "break-word";
 			textDiv.innerHTML = text + " " + timeToDigital(time);
-			textDiv.style.color = "rgba(255,255,255,1)";
+			textDiv.style.color = "rgba(255, 255, 255, 1)";
 			setTimeout(() => {
-				textDiv.style.color = "rgba(255,255,255,0)";
+				textDiv.style.color = "rgba(255, 255, 255, 0)";
 				textOn = false;
 			}, 1400);
 			setTimeout(() => {
@@ -195,11 +192,12 @@ function addText(text, time) {
 
 /*-------------------------Fading-------------------------*/
 
+
+
 //Fades the target element color property to an alpha of 0.
-function fadeOut(fadeTarget, fadeStep, fadeDuration, callback = function () {}) {
+function fadeOut(fadeTarget, fadeStep, fadeDuration, callback = () => {}) {
 	console.log("fadeOut reads: " + fading)
 	if (fading) {
-		"ABORT OCCURRED THE CODE SUCKS";
 		return;
 	}
 	fading = true;
@@ -231,7 +229,6 @@ function fadeOut(fadeTarget, fadeStep, fadeDuration, callback = function () {}) 
 function fadeIn(fadeTarget, color, fadeStep, fadeDuration) {
 	console.log("fadeIn reads: " + fading)
 	if (fading) {
-		console.log("ABORT OCCURED THE CODE SUCKS");
 		return;
 	}
 	fading = true;

@@ -28,7 +28,6 @@
 		"default_title": "Edit the sessions and settings here!"
 	},
 	"permissions": [
-		"background",
 		"tabs",
 		"<all_urls>",
 		"storage",

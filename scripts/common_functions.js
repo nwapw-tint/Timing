@@ -49,7 +49,7 @@ function getPropertyFromElement(element, property) {
 
 const alpha = 0.4;
 
-const CLEAR_COLOR = "rgba(0,0,0,0)"
+const CLEAR_COLOR = "rgba(0, 0, 0, 0)"
 const fadeDuration = 700;
 const fadeStep = 10;
 const MAX_Z_VALUE = 2147483647;
