@@ -12,7 +12,7 @@ function setTint(color) {
 	}
 	let div = document.getElementById("tint");
 	if (div && color) {
-		fadeOut(div, fadeStep, fadeDuration / 2, fadeIn(div, color, fadeStep, fadeDuration / 2));
+		fadeOut(div, fadeStep, fadeDuration, fadeIn(div, color, fadeStep, fadeDuration));
 	} else {
 		console.log("no div found, not setting a color")
 	}
@@ -221,9 +221,9 @@ function fadeOut(fadeTarget, fadeStep, fadeDuration, callback = () => {}) {
 		} else {
 			fadeTarget.style.backgroundColor = "rgba(" + cA[0] + "," + cA[1] + "," + cA[2] + "," + 0 + ")";
 			clearInterval(fadeOutEffect);
-			callback();
 			fading = false;
-			console.log("fadeOut over, fading is now " + fading)
+			console.log("fadeOut over, fading is now " + fading);
+			callback();
 		}
 	}, fadeStep);
 }
