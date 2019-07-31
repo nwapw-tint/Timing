@@ -44,7 +44,7 @@ function startSession() {
 // Stops a session
 function stopSession() {
 	clearInterval(timeout);
-	removeContentTint();
+	pauseContentTint();
 	sessionRunning = false;
 }
 
@@ -134,6 +134,7 @@ chrome.extension.onConnect.addListener((port) => {
 				break;
 			case "checkRunning":
 				if (sessionRunning) {
+					console.log("checkRunning calls enableContentTint")
 					enableContentTint();
 				}
 				break;
@@ -194,6 +195,7 @@ function enableContentTint() {
 
 // Pauses the content tint
 function pauseContentTint() {
+	console.log("pausing tint");
 	sendMessage({
 		to: "content",
 		from: "background",

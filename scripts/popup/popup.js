@@ -2,10 +2,10 @@
 var sessions = [];
 var sessionRunning = false;
 var color = "rgba(0, 255, 0, " + alpha + ")";
-
 const maxTime = 1440;
 const maxLength = 130;
 
+var recentChangeInvolvingFade = false;
 //Updates the session text only after the dom content loads
 function updateSessionText() {
 	if (document.getElementById('sessions_text')) {
@@ -43,6 +43,8 @@ function updateSessionText() {
 		for (let i = 0; i < sessions.length; i++) {
 			let id = 'close_button_' + i;
 			addClickListener(id, () => {
+				if (recentChangeInvolvingFade){console.log("user attempted to cancel but it was rejected");return;}
+				recentChangeInvolvingFade = true;
 				sessions.splice(i, 1);
 				if (sessions.length == 0) {
 					sessionRunning = false;
@@ -56,6 +58,9 @@ function updateSessionText() {
 					place: "sessions",
 					sessions: sessions
 				});
+				setTimeout(() => {
+					recentChangeInvolvingFade = false;
+				}, fadeDuration * 2);
 			});
 			id = 'close_paragraph_' + i;
 			document.getElementById(id).addEventListener('dragstart', (e) => {
@@ -221,6 +226,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	//Adds a session to the queue
 	addClickListener('add_session_button', () => {
+		if(recentChangeInvolvingFade){console.log("user attempted to add but it was rejected");return;}
+		recentChangeInvolvingFade = true;
 		var time = document.getElementById('time_input').value;
 		if (time.length == 0) {
 			showError("Time is empty!");
@@ -241,10 +248,13 @@ document.addEventListener('DOMContentLoaded', () => {
 		} else {
 			addSession(time);
 		}
+		setTimeout(function(){recentChangeInvolvingFade = false;},fadeDuration);
 	});
-
+clickedRecently = false;
 	//Starts or stops the session
 	addClickListener('start_stop_button', () => {
+		if(clickedRecently){return;}
+		clickedRecently = true;
 		if (sessions.length == 0) {
 			showError("No sessions!");
 		} else if (sessionRunning) {
@@ -268,6 +278,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			});
 			document.getElementById('start_stop_text').innerHTML = "Stop";
 		}
+		setTimeout(function(){clickedRecently = false}, fadeDuration);
 	});
 
 	addClickListener('css_button', () => {

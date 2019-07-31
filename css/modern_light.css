@@ -162,7 +162,7 @@ sesh-top {
 	border-color: Gainsboro;
 }
 #css_button {
-	background-image: url("../images/moon.png");
+
 	border-radius: 25%;
 	transition-duration:0.4s;
 }
@@ -173,7 +173,10 @@ sesh-top {
 	background-repeat:no-repeat;
 	background-position:center;
 }
-
+#icon{
+	background-image: url("../images/moon.png");
+	transition-duration:0.4s;
+}
 /*SCROLLBAR*/
 
 /*width*/
