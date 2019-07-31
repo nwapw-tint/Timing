@@ -1,13 +1,18 @@
-var fadeDuration = 700;
-var fadeStep = 50;
 var textOn = false
 isBlacklisted = false;
+var fadeOutEffect, fadeInEffect;
+var fading = false;
 //Sets the tint's color
 function setTint(color) {
+	if(fading){return;}
 	let div = document.getElementById("tint");
 	if (div && color) {
-		div.style.backgroundColor = color;
+		fadeOut(div, fadeStep, fadeDuration/2, 
+			fadeIn(div,color,fadeStep, fadeDuration/2)
+			);
+		
 	}
+	else{console.log("no div found, not setting a color")}
 }
   
 //Enables the tint
@@ -15,12 +20,13 @@ function enableTint(color) {
 	if (!document.getElementById("tint")) {
 		var tintDiv = document.createElement("div");
 		tintDiv.id = "tint";
-		console.log("tintDiv has been created and named");
 		appendFonts();
 		styleDiv(tintDiv);
 		setupText();
+		//console.log("calling fadeIn() from EnableTint()");
 		fadeIn(tintDiv, color, fadeStep, fadeDuration);
 	} else {
+		//console.log("enableTint calls setTint (existing tint)");
 		setTint(color);
 	}
 }
@@ -67,17 +73,23 @@ function styleDiv(div) {
 }
 //Disables the tint
 function pauseTint() {
-	setTint(CLEAR_COLOR);
+	//console.log("attempting to pause the tint")
+	if(document.getElementById("tint"))
+	fadeOut(document.getElementById("tint"), fadeStep, fadeDuration)
+	else{alert("no tint to pause")}
 }
 
 //Removes the tint
 function removeTint() {	
+	if(addingTint)
+	{
 	let div = document.getElementById("tint");
 	if (div) {
 		fadeOut(div, fadeStep, fadeDuration);
 		setTimeout(() => {
-			div.parentNode.removeChild(div);
+			div.remove();
 		}, fadeDuration);
+	}
 	}
 }
 
@@ -114,13 +126,16 @@ port.onMessage.addListener((msg) => {
 			enableTint(msg.color);
 			break;
 		case "pause":
+			console.log("pauseContentTint calls pauseTint, calls fadeOut()")
 			pauseTint();
 			break;
 		case "remove":
 			removeTint();
 			break;
 		case "change":
+			console.log("updatePopupTint() calls setTint, calls fade")
 			setTint(msg.color);
+			
 			break;
 		case "blackout":
 			setBlackout(msg.color);
@@ -182,39 +197,35 @@ function addText(text, time) {
 
 /*-------------------------Fading-------------------------*/
 
-
-
-var fadingOut = false, fadingIn = false;
-var fadeOutEffect, fadeInEffect;
-
 //Fades the target element color property to an alpha of 0.
-function fadeOut(fadeTarget, fadeStep, fadeDuration) {
-	if (fadingOut) {
-		return;
-	}
-	fadingOut = true;
+function fadeOut(fadeTarget, fadeStep, fadeDuration,callback = function(){}) {
+	console.log("fadeOut reads: "+fading)
+	if(fading){"ABORT OCCURRED THE CODE SUCKS";return;}
+	fading = true;
 	var cA = fadeTarget.style.backgroundColor.replace(/[^\d,.]/g, '').split(',');
 	var currentA = Number(cA[3]);
+	if(currentA < 0.01){fading = false;console.log("the screen is already clear\nfadeOut over");return;}
 	var totalA = currentA;
 	var stepsToTake = fadeDuration / fadeStep;
 	fadeOutEffect = setInterval(() => {
 		if (currentA > 0.01) {
 			fadeTarget.style.backgroundColor = "rgba(" + cA[0] + "," + cA[1] + "," + cA[2] + "," + currentA + ")";
 			currentA -= totalA / stepsToTake;
+			console.log("fadeOut is still looping")
 		} else {
 			fadeTarget.style.backgroundColor = "rgba(" + cA[0] + "," + cA[1] + "," + cA[2] + "," + 0 + ")";
 			clearInterval(fadeOutEffect);
-			fadingOut = false;
+			callback();
+			fading = false; console.log("fadeOut over, fading is now "+fading)
 		}
 	}, fadeStep);
 }
 
 //Fades the target element into a target color
 function fadeIn(fadeTarget, color, fadeStep, fadeDuration) {
-	if (fadingIn) {
-		return;
-	}
-	fadingIn = true;
+	console.log("fadeIn reads: "+fading)
+	if(fading){console.log("ABORT OCCURED THE CODE SUCKS");return;}
+	fading = true;
 	var cA = color.replace(/[^\d,.]/g, '').split(',');
 	var targetA = Number(cA[3]);
 	var currentA = 0;
@@ -222,16 +233,17 @@ function fadeIn(fadeTarget, color, fadeStep, fadeDuration) {
 		if (currentA < targetA - 0.01) {
 			fadeTarget.style.backgroundColor = "rgba(" + cA[0] + "," + cA[1] + "," + cA[2] + "," + currentA + ")";
 			currentA += (fadeStep * targetA) / fadeDuration;
+			console.log("fadeIn is looping")
 		} else {//we reached the target alpha value
 			fadeTarget.style.backgroundColor = "rgba(" + cA[0] + "," + cA[1] + "," + cA[2] + "," + targetA + ")";
 			clearInterval(fadeInEffect);
-			fadingIn = false;
+			fading = false; console.log("fadeIn over, fading is now "+fading)
 		}
 	}, fadeStep);
 }
 
 function setBlackout(color) {
-	console.log(color); //undefined?
+	console.log("if this worked it would black this page out to "+color); //undefined?
 
 /* 	let cA = color.replace(/[^\d,.]/g, '').split(',');
 	let opaqColor = "rgba(" + cA[0] + "," + cA[1] + "," + cA[2] + "," + "1)";
