@@ -47,7 +47,7 @@ function getPropertyFromElement(element, property) {
 	return window.getComputedStyle(element, null).getPropertyValue(property);
 }
 
-const alpha = 0.4;
+const alpha = 0.32;
 const CLEAR_COLOR = "rgba(0, 0, 0, 0)"
 const fadeDuration = 350;
 const fadeStep = 5;

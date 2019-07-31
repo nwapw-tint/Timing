@@ -3,7 +3,6 @@ var sessionRunning = false,
 	onChromeSite = false;
 
 var currentSite = "";
-var sitesVisited = [];
 var timeout;
 
 var theme;
@@ -19,7 +18,7 @@ function timeoutUpdate() {
 				stopSession();
 				updatePopupETA()
 			} else {
-				updateContentTint();
+				setContentTint();
 			}
 		} else {
 			updatePopupSessions();
@@ -33,18 +32,16 @@ function startSession() {
 		timeout = setInterval(timeoutUpdate, 1000);
 		sessionRunning = true;
 	}
-	if (!useBlacklist(currentSite.url)) {
 		console.log("enabling content tint");
-		enableContentTint();
+		setContentTint();
 		updatePopupETA();
 		startPeriodicETAUpdate();
 	}
-}
 
 // Stops a session
 function stopSession() {
 	clearInterval(timeout);
-	pauseContentTint();
+	clearContentTint();
 	sessionRunning = false;
 }
 
@@ -94,6 +91,7 @@ chrome.extension.onConnect.addListener((port) => {
 				if (currentSite.url.indexOf("chrome://") != 0) {
 					switch (msg.mode) {
 						case "start":
+							console.log("attempting to start session")
 							startSession();
 							break;
 						case "stop":
@@ -123,7 +121,7 @@ chrome.extension.onConnect.addListener((port) => {
 						if (sessions.length == 0) {
 							stopSession();
 						} else {
-							updateContentTint();
+							setContentTint();
 						}
 						updatePopupETA();
 						break;
@@ -134,8 +132,8 @@ chrome.extension.onConnect.addListener((port) => {
 				break;
 			case "checkRunning":
 				if (sessionRunning) {
-					console.log("checkRunning calls enableContentTint")
-					enableContentTint();
+					console.log("checkRunning calls setContentTint")
+					setContentTint();
 				}
 				break;
 			case "error":
@@ -172,65 +170,27 @@ function sendMessage(msg) {
 
 
 //Updates the content tint to the specified color
-function updateContentTint() {
+function setContentTint() {
 	sendMessage({
 		to: "content",
 		from: "background",
 		action: "tint",
-		mode: "change",
+		mode: "set",
 		color: getTint()
 	});
 }
-
-// Enables the content tint
-function enableContentTint() {
-	sendMessage({
-		to: "content",
-		from: "background",
-		action: "tint",
-		mode: "enable",
-		color: getTint()
-	});
-}
-
 // Pauses the content tint
-function pauseContentTint() {
-	console.log("pausing tint");
+function clearContentTint() {
 	sendMessage({
 		to: "content",
 		from: "background",
 		action: "tint",
-		mode: "pause"
+		mode: "clear"
 	});
 }
-
-// Removes the content tint
-function removeContentTint() {
-	sendMessage({
-		to: "content",
-		from: "background",
-		action: "tint",
-		mode: "remove"
-	});
-}
-
-function sendBlackout() {
-	sendMessage({
-		to: "content",
-		from: "background",
-		action: "tint",
-		mode: "blackout",
-		text: sessions[0].name,
-		time: sessions[0].time
-	});
-}
-
 
 
 /*-------------------------Update Popup-------------------------*/
-
-
-
 // Updates the popup ETA
 function updatePopupETA(text) {
 	let updateText = "";
@@ -335,8 +295,6 @@ function updateTabInfo(url, tabId) {
 		url: url,
 		tabId: tabId
 	};
-	//console.log("onActivated calls check on"+ currentSite.url);
-	//useBlacklist(currentSite.url);
 	if (currentSite.url.indexOf("chrome://") == 0) {
 		onChromeSite = true;
 		updatePopupStartStopButton();
@@ -354,21 +312,7 @@ function updateTabInfo(url, tabId) {
 			updatePopupSessionRunning();
 		}
 	}
-	if (hasVisitedSite(currentSite)) {
-		updateContentTint();
-	} else {
-		sitesVisited.push(currentSite);
-		chrome.tabs.reload(currentSite.tabId);
-	}
-
-	function hasVisitedSite(site) {
-		for (let i = 0; i < sitesVisited.length; i++) {
-			if (sitesVisited[i].tabId == site.tabId) {
-				return true;
-			}
-		}
-		return false;
-	}
+	setContentTint();
 }
 
 // Detects when the user changes tabs
@@ -387,37 +331,14 @@ chrome.tabs.onActivated.addListener((activeInfo) => {
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 	console.log("###onUpdated calls on " + tab.url);
-	useBlacklist(tab.url);
 	updateTabInfo(tab.url, tabId);
 });
 
 chrome.tabs.onCreated.addListener((tab) => {
 	console.log("###onCreated calls on " + tab.url);
-	useBlacklist(tab.url);
+
 });
 
-// Use case: whenever the active tab updates its url
-function useBlacklist(url) {
-	chrome.storage.sync.get('sites', (items) => {
-		if (items.sites === undefined) {
-			console.log("we tried to check the blacklist, but it hasn't been set yet")
-		} else {
-			let blacklist = items.sites.split('\n');
-			for (let i = 0; i < blacklist.length; i++) {
-				//console.log("checking " + blacklist[i] + " against " + url + " which is " + url.includes(blacklist[i]));
-				// If a match is found and a session is running
-				if (url.includes(blacklist[i]) && sessionRunning) {
-					console.log("sent a blackout request");
-					sendBlackout();
-					return true;
-				} else if (url.includes(blacklist[i])) {
-					console.log("a match was found but no session running");
-				}
-			}
-		}
-		return false;
-	});
-}
 
 //Invoked with Ctrl+Space
 chrome.commands.onCommand.addListener((command) => {
@@ -439,7 +360,6 @@ chrome.commands.onCommand.addListener((command) => {
 			url: tab.url,
 			tabId: tab.id
 		};
-		sitesVisited.push(currentSite);
 		onChromeSite = true;
 		if (sessionRunning) {
 			runningBeforeOnChromeSite = true;

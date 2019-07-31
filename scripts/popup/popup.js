@@ -3,7 +3,7 @@ var sessions = [];
 var sessionRunning = false;
 var color = "rgba(0, 255, 0, " + alpha + ")";
 const maxTime = 1440;
-const maxLength = 130;
+const maxLength = 120;
 
 var recentChangeInvolvingFade = false;
 //Updates the session text only after the dom content loads
