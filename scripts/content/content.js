@@ -1,8 +1,8 @@
 var textOn = false
 
 var fadeOutEffect, fadeInEffect;
-
 setTint(CLEAR_COLOR);
+
 //Sets the tint's color
 function setTint(color) {
 	tintDiv = document.getElementById("tint");
@@ -17,7 +17,6 @@ function setTint(color) {
 		setupText();
 	}
 	tintDiv.style.backgroundColor = color;
-	console.log("set tint completed with color "+color)
 }
 
 //Creates an empty text wrapper, allowing innerHTML to be added
@@ -33,7 +32,8 @@ function setupText() {
 	textDiv.style.marginBottom = "-50%";
 	textDiv.style.marginRight = "-50%";
 	textDiv.style.transform = "translate(-50%, -50%)";
-	textDiv.style.color = "rgba(255, 255, 255, 0)";
+	textDiv.style.color = CLEAR_COLOR;
+	textDiv.style.opacity = 1;
 	textDiv.style.zIndex = MAX_Z_VALUE;
 	tintDiv = document.getElementById("tint");
 	document.documentElement.appendChild(textDiv);
@@ -83,9 +83,6 @@ port.onMessage.addListener((msg) => {
 		return;
 	}
 	switch (msg.action) {
-		case "open":
-			console.log("Connected to the background script");
-			break;
 		case "tint":
 			switch (msg.mode) {
 				case "set":
@@ -123,7 +120,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 //Adds the text to the div
 function addText(text, time) {
-	console.log(text)
 	if (textOn == false) {
 		textOn = true;
 		charCount = text.length;
@@ -131,28 +127,36 @@ function addText(text, time) {
 		if (textDiv) {
 			textDiv.style.pointerEvents = "none";
 			textDiv.style.mixBlendMode = "darken";
-			textDiv.style.opacity = 0.7;
+
+			i = 0;
+			var blurFade = setInterval(function(){
+				document.body.style.filter = "blur("+i/20+"rem)";
+				textDiv.style.color = "rgba(70,70,70,"+i/10+")"
+				 i+=0.1;
+				 if(i > 8){clearInterval(blurFade);}
+				},5) //80 intervals of 5 ms
+			}
+
 			textDiv.style.fontSize = (120 + (Math.floor(120 / charCount))) + "px";
 			textDiv.style.wordWrap = "break-word";
 			textDiv.innerHTML = text + " " + timeToDigital(time);
-			textDiv.style.color = "rgba(70, 70, 70, 1)";
 			setTimeout(() => {
-				textDiv.style.color = "rgba(255, 255, 255, 0)";
+				textDiv.style.color = CLEAR_COLOR;
 				textOn = false;
+				document.body.style.filter = "none";
 			}, 1400);
 			setTimeout(() => {
 				textDiv.innerHTML = text + " " + timeToDigital(time - 1);
 			}, 1000); //faux dynamic feeling
 		}
 	}
-}
 
 
 
 /*-------------------------Fading-------------------------*/
 
 
-/*
+
 //Fades the target element color property to an alpha of 0.
 function fadeOut(fadeTarget, fadeStep, fadeDuration, callback = () => {}) {
 	var cA = fadeTarget.style.backgroundColor.replace(/[^\d,.]/g, '').split(',');
@@ -175,7 +179,6 @@ function fadeOut(fadeTarget, fadeStep, fadeDuration, callback = () => {}) {
 		}
 	}, fadeStep);
 }
-
 //Fades the target element into a target color
 function fadeIn(fadeTarget, color, fadeStep, fadeDuration) {
 	var cA = color.replace(/[^\d,.]/g, '').split(',');
@@ -192,4 +195,3 @@ function fadeIn(fadeTarget, color, fadeStep, fadeDuration) {
 		}
 	}, fadeStep);
 }
-*/
