@@ -58,7 +58,9 @@ function updateSessionText() {
 					place: "sessions",
 					sessions: sessions
 				});
-				setTimeout(function(){recentChangeInvolvingFade = false;},fadeDuration);
+				setTimeout(() => {
+					recentChangeInvolvingFade = false;
+				}, fadeDuration * 2);
 			});
 			id = 'close_paragraph_' + i;
 			document.getElementById(id).addEventListener('dragstart', (e) => {
