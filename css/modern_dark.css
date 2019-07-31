@@ -73,6 +73,7 @@ input[type=color] {
 	position: absolute;
 	top: 154px;
 	left: 210px;
+	outline:none;
 	border-radius: 8px;
 	background-color: #40525e;
 }
@@ -114,6 +115,7 @@ input[type=color] {
 	transition-duration: 0.4s;
 	padding: 0px;
 	font-size:16px;
+	outline:none;
 	text-align:center;
 	
 }
@@ -124,6 +126,7 @@ input[type=color] {
 	display: block;
 	height: 30px;
 	padding: 0px;
+	outline:none;
 	margin: 0 auto;
 }
 #start_stop_button {
@@ -131,6 +134,7 @@ input[type=color] {
 	top: 198px;
 	left: 15px;
 	width: 174px;
+	outline:none;
 	height: 30px;
 	font-size: 16px;
 	transition-duration: 0.4s;
@@ -145,6 +149,7 @@ input[type=color] {
 	width: 170px;
 	border-radius: 4%;
 	color: #8ca7b8;
+	outline:none;
 	background:none;
 }
 sesh-top {
