@@ -1,8 +1,8 @@
 var textOn = false
 
 var fadeOutEffect, fadeInEffect;
-setTint(CLEAR_COLOR);
 
+setTint(CLEAR_COLOR);
 //Sets the tint's color
 function setTint(color) {
 	tintDiv = document.getElementById("tint");
@@ -10,7 +10,6 @@ function setTint(color) {
 	{
 		var tintDiv = document.createElement("tint");
 		tintDiv.id = "tint"
-		appendFonts();
 		tintDiv.style = "display: block; transition: none 0s ease 0s; margin: 0px; padding: 0px; border-radius: 0px; border: none; outline: none; visibility: visible; max-height: none; max-width: none; clip: unset; overflow: visible; opacity: 1; position: fixed; top: -10%; right: -10%; bottom: -10%; left: -10%; width: auto; height: auto; z-index: "+(MAX_Z_VALUE-1)+"; mix-blend-mode: multiply;"
 		tintDiv.style.pointerEvents = "none";
 		document.documentElement.appendChild(tintDiv);
@@ -25,7 +24,7 @@ function setupText() {
 	textDiv.style.mixBlendMode = "normal"
 	textDiv.setAttribute('style', 'mixBlendMode:"normal"; !important');
 	textDiv.id = "textDiv";
-	textDiv.style.fontFamily = "Roboto,sans-serif";
+	textDiv.style.fontFamily = "Orkney,sans-serif";
 	textDiv.style.position = "fixed";
 	textDiv.style.top = "50%";
 	textDiv.style.left = "50%";
@@ -37,14 +36,15 @@ function setupText() {
 	textDiv.style.zIndex = MAX_Z_VALUE;
 	tintDiv = document.getElementById("tint");
 	document.documentElement.appendChild(textDiv);
-}
-//Appends fonts
-function appendFonts() {
-	let link = document.createElement('link');
-	link.setAttribute('rel', 'stylesheet');
-	link.setAttribute('type', 'text/css');
-	link.setAttribute('href', "https://fonts.googleapis.com/css?family=Roboto&display=swap");
-	document.documentElement.appendChild(link);
+	
+	var newStyle = document.createElement('style');
+	newStyle.appendChild(document.createTextNode("\
+    @font-face {\
+    font-family: 'Orkney';\
+    src: url('chrome-extension://__MSG_@@extension_id__/../fonts/orkney-regular.otf') format('otf');\
+    }\
+    "));
+	document.documentElement.appendChild(newStyle);
 }
 
 //Disables the tint
@@ -127,7 +127,6 @@ function addText(text, time) {
 		if (textDiv) {
 			textDiv.style.pointerEvents = "none";
 			textDiv.style.mixBlendMode = "darken";
-
 			i = 0;
 			var blurFade = setInterval(function(){
 				document.body.style.filter = "blur("+i/20+"rem)";
@@ -162,7 +161,6 @@ function fadeOut(fadeTarget, fadeStep, fadeDuration, callback = () => {}) {
 	var cA = fadeTarget.style.backgroundColor.replace(/[^\d,.]/g, '').split(',');
 	var currentA = Number(cA[3]);
 	if (currentA < 0.01) {
-		console.log("the screen is already clear\nfadeOut over");
 		return;
 	}
 	var totalA = currentA;
@@ -171,7 +169,6 @@ function fadeOut(fadeTarget, fadeStep, fadeDuration, callback = () => {}) {
 		if (currentA > 0.01) {
 			fadeTarget.style.backgroundColor = "rgba(" + cA[0] + "," + cA[1] + "," + cA[2] + "," + currentA + ")";
 			currentA -= totalA / stepsToTake;
-			console.log("fadeOut is still looping")
 		} else {
 			fadeTarget.style.backgroundColor = "rgba(" + cA[0] + "," + cA[1] + "," + cA[2] + "," + 0 + ")";
 			clearInterval(fadeOutEffect);
@@ -188,7 +185,6 @@ function fadeIn(fadeTarget, color, fadeStep, fadeDuration) {
 		if (currentA < targetA - 0.01) {
 			fadeTarget.style.backgroundColor = "rgba(" + cA[0] + "," + cA[1] + "," + cA[2] + "," + currentA + ")";
 			currentA += (fadeStep * targetA) / fadeDuration;
-			console.log("fadeIn is looping")
 		} else { //we reached the target alpha value
 			fadeTarget.style.backgroundColor = "rgba(" + cA[0] + "," + cA[1] + "," + cA[2] + "," + targetA + ")";
 			clearInterval(fadeInEffect);
