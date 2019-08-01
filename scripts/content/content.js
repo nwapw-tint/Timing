@@ -120,6 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 //Adds the text to the div
 function addText(text, time) {
+	console.log("adding text");
 	if (textOn == false) {
 		textOn = true;
 		charCount = text.length;
@@ -134,6 +135,7 @@ function addText(text, time) {
 				 i+=0.1;
 				 if(i > 8){clearInterval(blurFade);}
 				},5) //80 intervals of 5 ms
+			setTimeout(function(){clearInterval(blurFade)},400);
 			}
 
 			textDiv.style.fontSize = (120 + (Math.floor(120 / charCount))) + "px";
