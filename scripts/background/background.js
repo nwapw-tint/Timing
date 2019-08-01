@@ -1,8 +1,8 @@
 var sessions = [];
-var sessionRunning = false,
-	onChromeSite = false;
+var sessionRunning = false, onChromeSite = false;
 
 var currentSite = "";
+var sitesVisited = [];
 var timeout;
 
 var theme;
@@ -120,7 +120,7 @@ chrome.extension.onConnect.addListener((port) => {
 						sessions = msg.sessions;
 						if (sessions.length == 0) {
 							stopSession();
-						} else {
+						} else if (sessionRunning) {
 							setContentTint();
 						}
 						updatePopupETA();
@@ -190,7 +190,11 @@ function clearContentTint() {
 }
 
 
+
 /*-------------------------Update Popup-------------------------*/
+
+
+
 // Updates the popup ETA
 function updatePopupETA(text) {
 	let updateText = "";
@@ -312,17 +316,33 @@ function updateTabInfo(url, tabId) {
 			updatePopupSessionRunning();
 		}
 	}
-	setContentTint();
+	if (hasVisitedSite(currentSite)) {
+		setContentTint();
+	} else {
+		sitesVisited.push(currentSite);
+		chrome.tabs.reload(currentSite.tabId);
+	}
+
+	function hasVisitedSite(site) {
+		for (let i = 0; i < sitesVisited.length; i++) {
+			if (sitesVisited[i].tabId == site.tabId) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
 
 // Detects when the user changes tabs
 chrome.tabs.onActivated.addListener((activeInfo) => {
+	console.log("Activated");
 	chrome.tabs.query({
 		currentWindow: true,
 		active: true
 	}, (tabs) => {
 		try {
 			updateTabInfo(tabs[0].url, activeInfo.tabId);
+			console.log("Success");
 		} catch (error) {
 			console.log("tabs are null");
 		}
@@ -360,6 +380,7 @@ chrome.commands.onCommand.addListener((command) => {
 			url: tab.url,
 			tabId: tab.id
 		};
+		sitesVisited.push(currentSite);
 		onChromeSite = true;
 		if (sessionRunning) {
 			runningBeforeOnChromeSite = true;

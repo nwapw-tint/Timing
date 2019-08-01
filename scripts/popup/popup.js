@@ -3,7 +3,7 @@ var sessions = [];
 var sessionRunning = false;
 var color = "rgba(0, 255, 0, " + alpha + ")";
 const maxTime = 1440;
-const maxLength = 120;
+const maxLength = 110;
 
 var recentChangeInvolvingFade = false;
 //Updates the session text only after the dom content loads
@@ -43,7 +43,9 @@ function updateSessionText() {
 		for (let i = 0; i < sessions.length; i++) {
 			let id = 'close_button_' + i;
 			addClickListener(id, () => {
-				if (recentChangeInvolvingFade){console.log("user attempted to cancel but it was rejected");return;}
+				if (recentChangeInvolvingFade) {
+					return;
+				}
 				recentChangeInvolvingFade = true;
 				sessions.splice(i, 1);
 				if (sessions.length == 0) {
