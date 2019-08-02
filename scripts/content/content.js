@@ -4,7 +4,7 @@ var fadeOutEffect, fadeInEffect;
 setTint(CLEAR_COLOR);
 //Sets the tint's color
 function setTint(color) {
-	console.log("setting the tint div");
+	console.log("setting the tint div to "+color);
 	tintDiv = document.getElementById("tint");
 	if (!tintDiv) {
 		var tintDiv = document.createElement("tint");

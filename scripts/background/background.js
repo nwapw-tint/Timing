@@ -3,7 +3,7 @@ var sessionRunning = false, onChromeSite = false;
 
 var currentSite = "";
 var timeout;
-
+var sitesVisited = [];
 var theme;
 
 // The hidden timer
@@ -315,8 +315,12 @@ function updateTabInfo(url, tabId) {
 			updatePopupSessionRunning();
 		}
 	}
+	if (hasVisitedSite(currentSite)) {
 		setContentTint();
-/*
+	} else {
+		sitesVisited.push(currentSite);
+		chrome.tabs.reload(currentSite.tabId);
+	}
 	function hasVisitedSite(site) {
 		for (let i = 0; i < sitesVisited.length; i++) {
 			if (sitesVisited[i].tabId == site.tabId) {
@@ -324,7 +328,7 @@ function updateTabInfo(url, tabId) {
 			}
 		}
 		return false;
-	}*/
+	}
 }
 
 // Detects when the user changes tabs
@@ -387,6 +391,7 @@ function clearText(){
 			url: tab.url,
 			tabId: tab.id
 		};
+		sitesVisited.push(currentSite);
 		onChromeSite = true;
 		if (sessionRunning) {
 			runningBeforeOnChromeSite = true;
