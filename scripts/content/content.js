@@ -1,7 +1,10 @@
 var textOn = false
 
 var fadeOutEffect, fadeInEffect;
-setTint(CLEAR_COLOR);
+
+window.onload = function() {
+	setTint(CLEAR_COLOR);
+}
 //Sets the tint's color
 function setTint(color) {
 	console.log("setting the tint div to "+color);
