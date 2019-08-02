@@ -1,0 +1,58 @@
+﻿        
+           ~*~{ TINT TIMER INSTRUCTIONS }~*~
+     
+      This Chrome Extension is designed to be a 
+      productivity assistant that helps you focus
+      by tinting the screen of the chrome browser.
+
+   We were inspired by the Pomodoro Study Method, which
+   breaks study sessions into 25 minute intervals with 
+   short breaks inbetween. This extension allows 
+   sessions of time to be associated with a color tint on 
+   the screen. This allows the user to pyschologically 
+   associate certain colors with certain tasks, and plan
+   out their day more effectively.This color tint will 
+   serve as an active reminder to focus on the current task.
+
+
+   Features:
+
+   Create different sessions, each with individual
+   colors and names. Once started, your sessions will
+   activate, tinting your screen and beginning the
+   countdown until your sessions end. Pausing will
+   remove the tint and stop the timer until you resume
+   your session. At the top there is an ETA that will 
+   tell you when all your sessions will finish.
+
+-------------------------------------------------------------
+ *Open the extension by clicking the Color Wheel image in
+       the top right corner of your chrome window*
+
+
+   HOW TO USE:
+	1. Enter Session Name
+	2. Enter Session Time
+	3. Choose Session Color
+	4. Add Session to Session List
+	5. Repeat Steps 1-4 as many times as you want
+	6. Hit Start Button :-)
+
+-------------------------------------------------------------
+  TIPS AND TRICKS:
+                            
+			     Click Here to Toggle Theme!     
+   _________________________________________________↓___
+  |______________________________________________Theme|*| 
+  |      SESSIONS      |                                |
+  | ------------------ |  While sessions are running    |
+  |                    |  press CTRL-SPACE for an       |
+  |  You can drag      |  on-screen update!             |
+  |  and drop sessions |                                |
+  |  to change their   |  Custom colors will be saved   |
+  |  order!!           |  and stored, even with the     |
+  |                    |  extension closed!             |  
+   _____________________________________________________
+
+-------------------------------------------------------------
+Created by NWAPW Team Eric, Bruce, Nate, and Fiona         =)
