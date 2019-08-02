@@ -52,3 +52,4 @@ const CLEAR_COLOR = "rgba(0, 0, 0, 0)"
 const fadeDuration = 350;
 const fadeStep = 5;
 const MAX_Z_VALUE = 2147483647;
+const textDisplayLength = 1400;

@@ -2,7 +2,6 @@ var sessions = [];
 var sessionRunning = false, onChromeSite = false;
 
 var currentSite = "";
-var sitesVisited = [];
 var timeout;
 
 var theme;
@@ -316,13 +315,8 @@ function updateTabInfo(url, tabId) {
 			updatePopupSessionRunning();
 		}
 	}
-	if (hasVisitedSite(currentSite)) {
 		setContentTint();
-	} else {
-		sitesVisited.push(currentSite);
-		chrome.tabs.reload(currentSite.tabId);
-	}
-
+/*
 	function hasVisitedSite(site) {
 		for (let i = 0; i < sitesVisited.length; i++) {
 			if (sitesVisited[i].tabId == site.tabId) {
@@ -330,11 +324,12 @@ function updateTabInfo(url, tabId) {
 			}
 		}
 		return false;
-	}
+	}*/
 }
 
 // Detects when the user changes tabs
 chrome.tabs.onActivated.addListener((activeInfo) => {
+	clearText();
 	console.log("Activated");
 	chrome.tabs.query({
 		currentWindow: true,
@@ -359,10 +354,13 @@ chrome.tabs.onCreated.addListener((tab) => {
 
 });
 
-
+commandedRecently = false;
 //Invoked with Ctrl+Space
 chrome.commands.onCommand.addListener((command) => {
+	if(commandedRecently){return;}
+	commandedRecently = true;
 	if (command == "display_text" && sessionRunning) {
+		console.log("sending display text message");
 		sendMessage({
 			to: "content",
 			from: "background",
@@ -370,9 +368,18 @@ chrome.commands.onCommand.addListener((command) => {
 			text: sessions[0].name,
 			time: sessions[0].time
 		});
+		setTimeout(function(){
+			commandedRecently = false;
+		},textDisplayLength)
 	}
 });
-
+function clearText(){
+	sendMessage({
+	to: "content",
+	from: "background",
+	action: "remove_text"
+	});
+}
 // Invoked immediately
 (() => {
 	chrome.tabs.getSelected(null, (tab) => {
@@ -380,7 +387,6 @@ chrome.commands.onCommand.addListener((command) => {
 			url: tab.url,
 			tabId: tab.id
 		};
-		sitesVisited.push(currentSite);
 		onChromeSite = true;
 		if (sessionRunning) {
 			runningBeforeOnChromeSite = true;
