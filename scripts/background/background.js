@@ -367,6 +367,7 @@ var commandedRecently = false;
 
 //Invoked with Ctrl + Space
 chrome.commands.onCommand.addListener((command) => {
+	console.log("ctrl+space pressed");
 	if(commandedRecently){return;}
 	commandedRecently = true;
 	if (command == "display_text" && sessionRunning) {
