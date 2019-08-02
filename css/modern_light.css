@@ -34,7 +34,6 @@ button {
 	border-radius: 8px;
 	transition-duration: 0.4s;
 	height: 22px;
-	
 }
 .hover:hover {
 	background-color: #cfcfcf;
@@ -68,6 +67,7 @@ input[type=color] {
 	border-radius: 8px;
 	background-color: Gainsboro;
 	transition-duration: 0.4s;
+	border: 1px solid DimGray;
 	outline: none;
 }
 #session_label {
@@ -113,7 +113,7 @@ input[type=color] {
 	transition-duration: 0.4s;
 	padding: 0px;
 	margin: 0 auto;
-	outline:none;
+	outline: none;
 	font-size:16px;
 }
 .add_button:hover {
@@ -122,16 +122,20 @@ input[type=color] {
 	color: White;
 	display: block;
 	height: 30px;
-	outline:none;
+	transition-duration: 0.4s;
+	outline: none;
 	padding: 0px;
 	margin: 0 auto;
+}
+#add_button_text {
+	transition-duration: 0.4s;
 }
 #start_stop_button {
 	position: absolute;
 	top: 198px;
 	left: 15px;
 	width: 174px;
-	outline:none;
+	outline: none;
 	height: 30px;
 	font-size: 16px;
 	transition-duration: 0.4s;
@@ -141,12 +145,12 @@ input[type=color] {
 	top: 188px; 
 	left: 15px;
 	padding: 0px;
-	outline:none;
+	outline: none;
 	transition-duration: 0.4s;
 	height: 22px;
 	width: 170px;
 	border-radius: 4%;
-	background:none;
+	background: none;
 }
 sesh-top {
 	position: absolute;
@@ -166,26 +170,25 @@ sesh-top {
 	border-radius: 25%;
 	transition-duration:0.4s;
 }
-
-.close_button{
+.close_button {
 	background-image: url("../images/x_good.png");
-	background-size:10px;
-	background-repeat:no-repeat;
-	background-position:center;
+	background-size: 10px;
+	background-repeat: no-repeat;
+	background-position: center;
 }
-#moon{
+#moon {
 	background-image: url("../images/moon.png");	
-	transition-duration:0.4s;
+	transition-duration: 0.4s;
 }
 
-#quest{
+#quest {
 	background-image: url("../images/questionmark.png");	
-	transition-duration:0.4s;
+	transition-duration: 0.4s;
 }
 
-#x{
+#x {
 	background-image: url("../images/x_good.png");	
-	transition-duration:0.4s;
+	transition-duration: 0.4s;
 }
 /*SCROLLBAR*/
 

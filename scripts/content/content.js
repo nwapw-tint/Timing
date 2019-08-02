@@ -2,6 +2,7 @@ var textOn = false
 
 var fadeOutEffect, fadeInEffect;
 setTint(CLEAR_COLOR);
+
 //Sets the tint's color
 function setTint(color) {
 	console.log("setting the tint div to "+color);
@@ -120,34 +121,37 @@ document.addEventListener('DOMContentLoaded', () => {
 /*-----------------------Add Text-----------------------*/
 
 
-addTextCalled = false;
-addId = 0;
+var addTextCalled = false;
+var addId = 0;
 var blurFade;
+
 //Adds the text to the div
 function addText(text, time) {
 	addTextCalled = true;
-	charCount = text.length;
-	textDiv = document.getElementById("textDiv")
-	i = 0.1;
-	blurAmount = 0;
-	iAlpha = 0;
-	if (textDiv && typeof(blurFade) === "undefined") {
-			blurFade = setInterval(function () {
+	let charCount = text.length;
+	let textDiv = document.getElementById("textDiv")
+	let i = 0.1;
+	let blurAmount = 0;
+	let iAlpha = 0;
+	if (textDiv && blurFade === undefined) {
+			blurFade = setInterval(() => {
 				if (iAlpha > 0.8)  {
 					clearInterval(blurFade);
-					console.log(iAlpha +"interval cleared");
+					console.log(iAlpha + "interval cleared");
 				}
-			blurAmount +=i/20;
-			iAlpha += i/10;
+			blurAmount += i / 20;
+			iAlpha += i / 10;
 			document.body.style.filter = "blur(" + blurAmount + "rem)";
-			textDiv.style.color = "rgba(70,70,70," + iAlpha + ")"
-		}, 5) //80 intervals of 5 ms
+			textDiv.style.color = "rgba(70, 70, 70, " + iAlpha + ")"
+		}, 5); //80 intervals of 5 ms
 		console.time("removeText");
-		setTimeout(function(){
+		setTimeout(() => {
 			removeText();
 			console.timeEnd("removeText");
 		}, textDisplayLength)
-	}else{console.log("???");}
+	} else {
+		console.log("???");
+	}
 	textDiv.style.fontSize = (120 + (Math.floor(120 / charCount))) + "px";
 	textDiv.style.wordWrap = "break-word";
 	textDiv.innerHTML = text + " " + timeToDigital(time);
@@ -159,15 +163,18 @@ function addText(text, time) {
 
 function removeText() {
 	textDiv = document.getElementById("textDiv");
-	if(textDiv && document.body){
-	textDiv.style.color = "rgba(70,70,70,0)"
-	document.body.style.filter = "none";
-	clearInterval(blurFade);
-	blurFade = undefined;
-	console.log("removeText cleared the fade")
+	if (textDiv && document.body) {
+		textDiv.style.color = "rgba(70, 70, 70, 0)"
+		document.body.style.filter = "none";
+		clearInterval(blurFade);
+		blurFade = undefined;
+		console.log("removeText cleared the fade");
+	} else {
+		console.log("textDiv or body not present, no clearing done");
 	}
-	else{console.log("textDiv or body not present, no clearing done")}
 }
+
+
 
 /*-------------------------Fading-------------------------*/
 

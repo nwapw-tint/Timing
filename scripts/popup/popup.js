@@ -1,11 +1,14 @@
 //Local copies
 var sessions = [];
 var sessionRunning = false;
+
 var color = "rgba(0, 255, 0, " + alpha + ")";
+
 const maxTime = 1440;
 const maxLength = 110;
 
 var recentChangeInvolvingFade = false;
+
 //Updates the session text only after the dom content loads
 function updateSessionText() {
 	if (document.getElementById('sessions_text')) {
@@ -228,7 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	//Adds a session to the queue
 	addClickListener('add_session_button', () => {
-		if(recentChangeInvolvingFade){console.log("user attempted to add but it was rejected");return;}
+		if (recentChangeInvolvingFade) { console.log("user attempted to add but it was rejected"); return; }
 		recentChangeInvolvingFade = true;
 		var time = document.getElementById('time_input').value;
 		if (time.length == 0) {
@@ -250,12 +253,15 @@ document.addEventListener('DOMContentLoaded', () => {
 		} else {
 			addSession(time);
 		}
-		setTimeout(function(){recentChangeInvolvingFade = false;},fadeDuration);
+		setTimeout(() => {
+			recentChangeInvolvingFade = false;
+		}, fadeDuration);
 	});
-clickedRecently = false;
+	clickedRecently = false;
+
 	//Starts or stops the session
 	addClickListener('start_stop_button', () => {
-		if(clickedRecently){return;}
+		if (clickedRecently) { return; }
 		clickedRecently = true;
 		if (sessions.length == 0) {
 			showError("No sessions!");
@@ -280,7 +286,9 @@ clickedRecently = false;
 			});
 			document.getElementById('start_stop_text').innerHTML = "Stop";
 		}
-		setTimeout(function(){clickedRecently = false}, fadeDuration);
+		setTimeout(() => {
+			clickedRecently = false
+		}, fadeDuration);
 	});
 
 	addClickListener('moon', () => {
@@ -298,5 +306,9 @@ clickedRecently = false;
 			place: "theme",
 			theme: document.getElementById('css_file').href
 		});
+	});
+
+	addClickListener('x', () => {
+		window.close();
 	});
 });

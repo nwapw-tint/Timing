@@ -31,23 +31,17 @@ function startSession() {
 		timeout = setInterval(timeoutUpdate, 1000);
 		sessionRunning = true;
 	}
-		console.log("enabling content tint");
-		setContentTint();
-		updatePopupETA();
-		startPeriodicETAUpdate();
-	}
+	console.log("enabling content tint");
+	setContentTint();
+	updatePopupETA();
+	startPeriodicETAUpdate();
+}
 
 // Stops a session
 function stopSession() {
 	clearInterval(timeout);
 	clearContentTint();
 	sessionRunning = false;
-}
-
-function startPeriodicETAUpdate() {
-	chrome.alarms.create({
-		periodInMinutes: 1
-	})
 }
 
 // Gets the tint
@@ -178,6 +172,7 @@ function setContentTint() {
 		color: getTint()
 	});
 }
+
 // Pauses the content tint
 function clearContentTint() {
 	sendMessage({
@@ -185,6 +180,15 @@ function clearContentTint() {
 		from: "background",
 		action: "tint",
 		mode: "clear"
+	});
+}
+
+// Clears the content text
+function clearText() {
+	sendMessage({
+		to: "content",
+		from: "background",
+		action: "remove_text"
 	});
 }
 
@@ -198,11 +202,11 @@ function clearContentTint() {
 function updatePopupETA(text) {
 	let updateText = "";
 	let totalTime = 0;
-	for (a of sessions) {
-		totalTime += a.time;
+	for (session of sessions) {
+		totalTime += session.time;
 	}
 	if (totalTime != 0) {
-		var d = new Date(); // for now
+		var d = new Date(); // For now
 		d.setSeconds(d.getSeconds() + totalTime);
 		latin = "AM";
 		hourformatString = d.getHours();
@@ -256,7 +260,7 @@ function updatePopupSessionRunning() {
 
 // Updates the popup theme
 function updatePopupTheme() {
-	if (theme)
+	if (theme) {
 		sendMessage({
 			to: "popup",
 			from: "background",
@@ -264,6 +268,7 @@ function updatePopupTheme() {
 			place: "theme",
 			theme: theme
 		});
+	}
 }
 
 // Updates the popup start stop button
@@ -279,11 +284,11 @@ function updatePopupStartStopButton() {
 
 // Updates the popup
 function updatePopup() {
+	updatePopupETA();
 	updatePopupSessions();
 	updatePopupSessionRunning();
 	updatePopupTheme();
 	updatePopupStartStopButton();
-	updatePopupETA();
 }
 
 
@@ -349,17 +354,18 @@ chrome.tabs.onActivated.addListener((activeInfo) => {
 });
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-	console.log("###onUpdated calls on " + tab.url);
+	console.log("onUpdated calls on " + tab.url);
 	updateTabInfo(tab.url, tabId);
 });
 
 chrome.tabs.onCreated.addListener((tab) => {
-	console.log("###onCreated calls on " + tab.url);
+	console.log("onCreated calls on " + tab.url);
 
 });
 
-commandedRecently = false;
-//Invoked with Ctrl+Space
+var commandedRecently = false;
+
+//Invoked with Ctrl + Space
 chrome.commands.onCommand.addListener((command) => {
 	if(commandedRecently){return;}
 	commandedRecently = true;
@@ -372,18 +378,12 @@ chrome.commands.onCommand.addListener((command) => {
 			text: sessions[0].name,
 			time: sessions[0].time
 		});
-		setTimeout(function(){
+		setTimeout(() => {
 			commandedRecently = false;
-		},textDisplayLength)
+		}, textDisplayLength);
 	}
 });
-function clearText(){
-	sendMessage({
-	to: "content",
-	from: "background",
-	action: "remove_text"
-	});
-}
+
 // Invoked immediately
 (() => {
 	chrome.tabs.getSelected(null, (tab) => {
@@ -411,3 +411,9 @@ function clearText(){
 chrome.alarms.onAlarm.addListener(() => {
 	updatePopupETA();
 });
+
+function startPeriodicETAUpdate() {
+	chrome.alarms.create({
+		periodInMinutes: 1
+	});
+}
