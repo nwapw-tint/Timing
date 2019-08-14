@@ -3,7 +3,6 @@ var sessionRunning = false, onChromeSite = false;
 
 var currentSite = "";
 var timeout;
-var sitesVisited = [];
 var theme;
 
 // The hidden timer
@@ -40,6 +39,7 @@ function startSession() {
 // Stops a session
 function stopSession() {
 	clearInterval(timeout);
+	alert("session stopped!")
 	clearContentTint();
 	sessionRunning = false;
 }
@@ -129,8 +129,11 @@ chrome.extension.onConnect.addListener((port) => {
 					setContentTint();
 				}
 				break;
+			case "updateTT":
+				updateTT();
+				break;
 			case "error":
-				alert(msg.error);
+				alert("error: "+msg.error);
 				break;
 		}
 	});
@@ -160,7 +163,16 @@ function sendMessage(msg) {
 
 /*-------------------------Update Content-------------------------*/
 
-
+function updateTT()
+{
+	sendMessage({
+		to: "content",
+		from: "background",
+		action: "updateTT",
+		text: sessions[0].name,
+		time: sessions[0].time
+	});
+}
 
 //Updates the content tint to the specified color
 function setContentTint() {
@@ -180,15 +192,6 @@ function clearContentTint() {
 		from: "background",
 		action: "tint",
 		mode: "clear"
-	});
-}
-
-// Clears the content text
-function clearText() {
-	sendMessage({
-		to: "content",
-		from: "background",
-		action: "remove_text"
 	});
 }
 
@@ -320,25 +323,12 @@ function updateTabInfo(url, tabId) {
 			updatePopupSessionRunning();
 		}
 	}
-	if (hasVisitedSite(currentSite)) {
-		setContentTint();
-	} else {
-		sitesVisited.push(currentSite);
-		chrome.tabs.reload(currentSite.tabId);
-	}
-	function hasVisitedSite(site) {
-		for (let i = 0; i < sitesVisited.length; i++) {
-			if (sitesVisited[i].tabId == site.tabId) {
-				return true;
-			}
-		}
-		return false;
-	}
+	if(sessionRunning){
+	setContentTint();}
 }
 
 // Detects when the user changes tabs
 chrome.tabs.onActivated.addListener((activeInfo) => {
-	clearText();
 	console.log("Activated");
 	chrome.tabs.query({
 		currentWindow: true,
@@ -362,29 +352,6 @@ chrome.tabs.onCreated.addListener((tab) => {
 	console.log("onCreated calls on " + tab.url);
 
 });
-
-var commandedRecently = false;
-
-//Invoked with Ctrl + Space
-chrome.commands.onCommand.addListener((command) => {
-	console.log("ctrl+space pressed");
-	if(commandedRecently){return;}
-	commandedRecently = true;
-	if (command == "display_text" && sessionRunning) {
-		console.log("sending display text message");
-		sendMessage({
-			to: "content",
-			from: "background",
-			action: "add_text",
-			text: sessions[0].name,
-			time: sessions[0].time
-		});
-		setTimeout(() => {
-			commandedRecently = false;
-		}, textDisplayLength);
-	}
-});
-
 // Invoked immediately
 (() => {
 	chrome.tabs.getSelected(null, (tab) => {
@@ -392,7 +359,6 @@ chrome.commands.onCommand.addListener((command) => {
 			url: tab.url,
 			tabId: tab.id
 		};
-		sitesVisited.push(currentSite);
 		onChromeSite = true;
 		if (sessionRunning) {
 			runningBeforeOnChromeSite = true;

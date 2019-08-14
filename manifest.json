@@ -34,14 +34,5 @@
 	],
 	"omnibox": {
 		"keyword": "tint"
-	},
-	"commands": {
-		"display_text": {
-			"suggested_key": {
-				"default": "Ctrl+Space",
-				"mac": "Command+Space"
-			},
-			"description": "Displays the current task as text"
-		}
 	}
 }
