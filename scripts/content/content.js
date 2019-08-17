@@ -13,9 +13,9 @@ window.onload = () => {
 	});
 	//overlaidRecently = false;
 	document.addEventListener("keydown",event => {
-		if(event.keyCode == 81 && event.ctrlKey){
+		if(event.keyCode == 32 && event.ctrlKey){
 			//if(overlaidRecently){return;}
-			//overlaidRecently = true;
+			//overlaidRecently = true;	
 			displayText();
 			//setTimeout(function(){overlaidRecently = false;},10);
 		}
@@ -29,7 +29,7 @@ function displayText()
 	updateTT();
 	if(isRunning){
 		document.addEventListener("keyup",event => {
-		if(event.keyCode == 81 || event.ctrlKey){hideText()}
+		if(event.keyCode == 32 || event.ctrlKey){hideText()}
 		});
 	showText(text,time);
 	}
