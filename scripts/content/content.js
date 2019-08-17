@@ -1,5 +1,5 @@
 text = "";
-time = "";
+time = 0;
 
 window.onload = () => {
 	tintDiv = document.getElementById("tint");
@@ -19,7 +19,6 @@ window.onload = () => {
 
 function displayText()
 {
-	updateTT();
 		document.addEventListener("keyup",event => {
 		if(event.keyCode == 81 || event.ctrlKey){hideText()}
 		});
@@ -27,7 +26,6 @@ function displayText()
 }
 //Sets the tint's color
 function setTint(color) {
-	alert("setting the tint div to "+color);
 	tintDiv = document.getElementById("tint");
 	if (!tintDiv) {
 		var tintDiv = document.createElement("tint");
@@ -127,23 +125,24 @@ function sendMessage(msg) {
 
 //Adds the text to the div
 function showText(text,time) {
+	updateTT();
 	textDiv = document.getElementById("textDiv")
 	if(!textDiv){return;}	
-	else{textDiv.innerHTML = text;}
-	console.log("showing text");
+	else{textDiv.innerHTML = text +" "+timeToDigital(time);}
 	charCount = text.length;
 	textDiv.style.color = "rgba(70, 70, 70, 0.8)"
 	textDiv.style.fontSize = (120 + (Math.floor(120 / charCount))) + "px";
 	textDiv.style.wordWrap = "break-word";
-	all = document.getElementsByTagName("*");
-	for(a of all)
-	{if(typeof a.style !== 'undefined')
-		{
-			if(a != textDiv && a != document.documentElement)
-			{a.style.filter = "blur(0.5rem)";}
+
+		all = document.getElementsByTagName("*");
+		for(a of all)
+		{if(typeof a.style !== 'undefined')
+			{
+				if(a != textDiv && a != document.documentElement)
+				{a.style.filter = "blur(0.5rem)";}
+			}
 		}
 	}
-}
 
 function hideText(){
 	let textDiv = document.getElementById("textDiv")
