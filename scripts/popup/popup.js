@@ -307,8 +307,4 @@ document.addEventListener('DOMContentLoaded', () => {
 			theme: document.getElementById('css_file').href
 		});
 	});
-
-	addClickListener('x', () => {
-		window.close();
-	});
 });

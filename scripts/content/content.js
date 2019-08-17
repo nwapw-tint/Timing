@@ -50,8 +50,7 @@ function setTint(color) {
 //Creates an empty text wrapper, allowing innerHTML to be added
 function setupText() {
 	var textDiv = document.createElement("div");
-	textDiv.style.mixBlendMode = "normal"
-	textDiv.setAttribute('style', 'mixBlendMode:"normal"; !important');
+	textDiv.style.mixBlendMode = "difference";
 	textDiv.id = "textDiv";
 	textDiv.style.fontFamily = "Orkney,sans-serif";
 	textDiv.style.position = "fixed";
@@ -144,6 +143,7 @@ function showText(text,time) {
 	else{textDiv.innerHTML = text +" "+timeToDigital(time);}
 	charCount = text.length;
 	textDiv.style.color = "rgba(70, 70, 70, 0.8)"
+	textDiv.style.mixBlendMode = "difference";
 	textDiv.style.fontSize = (120 + (Math.floor(120 / charCount))) + "px";
 	textDiv.style.wordWrap = "break-word";
 
