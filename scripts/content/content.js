@@ -1,6 +1,6 @@
 text = "";
 time = 0;
-
+isRunning = false;
 window.onload = () => {
 	tintDiv = document.getElementById("tint");
 	if(!tintDiv){
@@ -11,18 +11,28 @@ window.onload = () => {
 		from: "content",
 		action: "checkRunning"
 	});
+	//overlaidRecently = false;
 	document.addEventListener("keydown",event => {
-		if(event.keyCode == 81 && event.ctrlKey){displayText()}
+		if(event.keyCode == 81 && event.ctrlKey){
+			//if(overlaidRecently){return;}
+			//overlaidRecently = true;
+			displayText();
+			//setTimeout(function(){overlaidRecently = false;},10);
+		}
 	});
 	setupText();
+	updateTT();
 }
 
 function displayText()
 {
+	updateTT();
+	if(isRunning){
 		document.addEventListener("keyup",event => {
 		if(event.keyCode == 81 || event.ctrlKey){hideText()}
 		});
 	showText(text,time);
+	}
 }
 //Sets the tint's color
 function setTint(color) {
@@ -113,6 +123,8 @@ port.onMessage.addListener((msg) => {
 		case "updateTT":
 			text = msg.text;
 			time = msg.time;
+			isRunning = msg.isRunning;
+			break;
 	}
 });
 
@@ -122,12 +134,13 @@ function sendMessage(msg) {
 }
 
 /*-----------------------Add Text-----------------------*/
-
 //Adds the text to the div
 function showText(text,time) {
+	//console.log("showing text");
+	textDiv.style.color = "rgba(70, 70, 70, 0)"
 	updateTT();
 	textDiv = document.getElementById("textDiv")
-	if(!textDiv){return;}	
+	if(!textDiv){console.log("no textDiv found"); return;}	
 	else{textDiv.innerHTML = text +" "+timeToDigital(time);}
 	charCount = text.length;
 	textDiv.style.color = "rgba(70, 70, 70, 0.8)"

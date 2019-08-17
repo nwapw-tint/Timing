@@ -4,7 +4,6 @@ var sessionRunning = false, onChromeSite = false;
 var currentSite = "";
 var timeout;
 var theme;
-
 // The hidden timer
 function timeoutUpdate() {
 	if (sessionRunning) {
@@ -39,7 +38,6 @@ function startSession() {
 // Stops a session
 function stopSession() {
 	clearInterval(timeout);
-	alert("session stopped!")
 	clearContentTint();
 	sessionRunning = false;
 }
@@ -133,7 +131,7 @@ chrome.extension.onConnect.addListener((port) => {
 				updateTT();
 				break;
 			case "error":
-				alert("error: "+msg.error);
+				alert(msg.error);
 				break;
 		}
 	});
@@ -165,12 +163,20 @@ function sendMessage(msg) {
 
 function updateTT()
 {
+	text = "foo";
+	time = "-1";
+	if(sessionRunning)
+	{	
+	text = sessions[0].name;
+	time = sessions[0].time;
+	}
 	sendMessage({
 		to: "content",
 		from: "background",
 		action: "updateTT",
-		text: sessions[0].name,
-		time: sessions[0].time
+		text: text,
+		time: time,
+		isRunning: sessionRunning
 	});
 }
 
