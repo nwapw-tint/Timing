@@ -127,7 +127,7 @@ chrome.extension.onConnect.addListener((port) => {
 				if (sessionRunning) {
 					console.log("checkRunning calls setContentTint")
 					setContentTint();
-				}
+				} else{clearContentTint()}
 				break;
 			case "updateTT":
 				updateTT();
@@ -176,6 +176,7 @@ function updateTT()
 
 //Updates the content tint to the specified color
 function setContentTint() {
+	console.log("setContentTint");
 	sendMessage({
 		to: "content",
 		from: "background",
@@ -187,6 +188,7 @@ function setContentTint() {
 
 // Pauses the content tint
 function clearContentTint() {
+	console.log("clearContentTint")
 	sendMessage({
 		to: "content",
 		from: "background",
@@ -329,14 +331,12 @@ function updateTabInfo(url, tabId) {
 
 // Detects when the user changes tabs
 chrome.tabs.onActivated.addListener((activeInfo) => {
-	console.log("Activated");
 	chrome.tabs.query({
 		currentWindow: true,
 		active: true
 	}, (tabs) => {
 		try {
 			updateTabInfo(tabs[0].url, activeInfo.tabId);
-			console.log("Success");
 		} catch (error) {
 			console.log("tabs are null");
 		}

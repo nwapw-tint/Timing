@@ -1,26 +1,33 @@
-var textOn = false
 text = "";
 time = "";
-var fadeOutEffect, fadeInEffect;
+
 window.onload = () => {
+	tintDiv = document.getElementById("tint");
+	if(!tintDiv){
 	setTint(CLEAR_COLOR);
+	}
 	sendMessage({
 		to: "background",
 		from: "content",
 		action: "checkRunning"
 	});
 	document.addEventListener("keydown",event => {
-		if(event.keyCode == 81 && event.ctrlKey){displayText()}});
+		if(event.keyCode == 81 && event.ctrlKey){displayText()}
+	});
+	setupText();
 }
+
 function displayText()
 {
-	document.addEventListener("keyup",event => {if(event.keyCode == 81 || event.ctrlKey){hideText()}});
 	updateTT();
+		document.addEventListener("keyup",event => {
+		if(event.keyCode == 81 || event.ctrlKey){hideText()}
+		});
 	showText(text,time);
 }
 //Sets the tint's color
 function setTint(color) {
-	console.log("setting the tint div to "+color);
+	alert("setting the tint div to "+color);
 	tintDiv = document.getElementById("tint");
 	if (!tintDiv) {
 		var tintDiv = document.createElement("tint");
@@ -28,7 +35,6 @@ function setTint(color) {
 		tintDiv.style = "display: block; transition: none 0s ease 0s; margin: 0px; padding: 0px; border-radius: 0px; border: none; outline: none; visibility: visible; max-height: none; max-width: none; clip: unset; overflow: visible; opacity: 1; position: fixed; top: -10%; right: -10%; bottom: -10%; left: -10%; width: auto; height: auto; z-index: " + (MAX_Z_VALUE - 1) + "; mix-blend-mode: multiply;"
 		tintDiv.style.pointerEvents = "none";
 		document.documentElement.appendChild(tintDiv);
-		setupText();
 	}
 	tintDiv.style.backgroundColor = color;
 }
@@ -52,15 +58,6 @@ function setupText() {
 	textDiv.style.opacity = 1;
 	textDiv.style.zIndex = MAX_Z_VALUE;
 	document.documentElement.appendChild(textDiv);
-/*
-	var newStyle = document.createElement('style');
-	newStyle.appendChild(document.createTextNode("\
-    @font-face {\
-    font-family: 'Orkney';\
-    src: url('chrome-extension://__MSG_@@extension_id__/../fonts/orkney-regular.otf') format('otf');\
-    }\
-    "));
-	document.documentElement.appendChild(newStyle);*/
 }
 
 //Disables the tint
@@ -68,8 +65,6 @@ function clearTint() {
 	let tintDiv = document.getElementById("tint");
 	if (tintDiv) {
 		tintDiv.style.backgroundColor = "rgba(0,0,0,0)";
-		console.log("clearTint caused removeText");
-		removeText();
 	} else {
 		alert("no tint to clear");
 	}
@@ -114,6 +109,7 @@ port.onMessage.addListener((msg) => {
 					break;
 				case "clear":
 					clearTint();
+					break;
 			}
 			break;
 		case "updateTT":
@@ -131,17 +127,30 @@ function sendMessage(msg) {
 
 //Adds the text to the div
 function showText(text,time) {
-	let charCount = text.length;
-	let textDiv = document.getElementById("textDiv")
-	textDiv.innerHTML = text;
-	document.body.style.filter = "blur(0.5rem)";
+	textDiv = document.getElementById("textDiv")
+	if(!textDiv){return;}	
+	else{textDiv.innerHTML = text;}
+	console.log("showing text");
+	charCount = text.length;
 	textDiv.style.color = "rgba(70, 70, 70, 0.8)"
 	textDiv.style.fontSize = (120 + (Math.floor(120 / charCount))) + "px";
 	textDiv.style.wordWrap = "break-word";
+	all = document.getElementsByTagName("*");
+	for(a of all)
+	{if(typeof a.style !== 'undefined')
+		{
+			if(a != textDiv && a != document.documentElement)
+			{a.style.filter = "blur(0.5rem)";}
+		}
+	}
 }
 
 function hideText(){
 	let textDiv = document.getElementById("textDiv")
-	document.body.style.filter = "none";
+	all = document.getElementsByTagName("*");
+	for(a of all)
+	{if(typeof a.style !== 'undefined')
+		{a.style.filter = "none";}
+	}
 	textDiv.style.color = "rgba(70, 70, 70, 0)"
 }
