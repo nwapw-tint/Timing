@@ -65,6 +65,7 @@ input[type=text] {
 	color: Gainsboro;
 	border: 1px solid #8ca7b8;
 	outline: none;
+	padding-left: 5px;
 }
 input[type=color] {
 	border: 1px solid #8ca7b8;
@@ -172,18 +173,16 @@ sesh-top {
 }
 #moon{
 	background-image: url("../images/sun.png");	
-	transition-duration:0.4s;
+	transition-duration: 0.4s;
+	cursor: pointer;
 }
 
 #quest{
 	background-image: url("../images/questionmark.png");	
-	transition-duration:0.4s;
+	transition-duration: 0.4s;
+	cursor: pointer;
 }
 
-#x{
-	background-image: url("../images/x_good.png");	
-	transition-duration:0.4s;
-}
 .close_button{
 	background-image: url("../images/x_dark.png");
 	background-size:10px;

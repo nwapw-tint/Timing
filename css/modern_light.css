@@ -56,6 +56,8 @@ input[type=text] {
 	color: Black;
 	border: 1px solid DimGray;
 	outline: none;
+	padding-left: 5px;
+	
 }
 input[type=color] {
 	border: 1px solid Gainsboro;
@@ -69,6 +71,7 @@ input[type=color] {
 	transition-duration: 0.4s;
 	border: 1px solid DimGray;
 	outline: none;
+	
 }
 #session_label {
 	position: fixed;
@@ -179,17 +182,15 @@ sesh-top {
 #moon {
 	background-image: url("../images/moon.png");	
 	transition-duration: 0.4s;
+	cursor: pointer;
 }
 
 #quest {
 	background-image: url("../images/questionmark.png");	
 	transition-duration: 0.4s;
+	cursor: pointer;
 }
 
-#x {
-	background-image: url("../images/x_good.png");	
-	transition-duration: 0.4s;
-}
 /*SCROLLBAR*/
 
 /*width*/
