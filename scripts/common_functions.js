@@ -39,15 +39,13 @@ function rgbaToRgb(rgba) {
 
 //Takes a string in hex and converts it to rgba
 function hexToRgba(hex) {
-	return "rgba(" + parseInt(hex.substring(1, 3), 16) + "," + parseInt(hex.substring(3, 5), 16) + "," + parseInt(hex.substring(5, 7), 16) + "," + alpha + ")";
+	return "rgba(" + parseInt(hex.substring(1, 3), 16) + "," + parseInt(hex.substring(3, 5), 16) + "," + parseInt(hex.substring(5, 7), 16) + "," + 1 + ")";
 }
 
 //Gets the property of the element
 function getPropertyFromElement(element, property) {
 	return window.getComputedStyle(element, null).getPropertyValue(property);
 }
-
-const alpha = 0.32;
 const CLEAR_COLOR = "rgba(0, 0, 0, 0)"
 const fadeDuration = 350;
 const fadeStep = 5;

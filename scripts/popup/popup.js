@@ -2,7 +2,7 @@
 var sessions = [];
 var sessionRunning = false;
 
-var color = "rgba(0, 255, 0, " + alpha + ")";
+var color = "rgba(0, 255, 0, " + 0.32 + ")";
 
 const maxTime = 1440;
 const maxLength = 110;

@@ -19,11 +19,29 @@ window.onload = () => {
 			displayText();
 			//setTimeout(function(){overlaidRecently = false;},10);
 		}
+		if(event.keyCode == 38 && event.ctrlKey)
+		{
+			updateAlpha(0.035);
+			console.log("updateAlpha+2")
+		}
+		if(event.keyCode == 40 && event.ctrlKey)
+		{
+			updateAlpha(-0.035);
+			console.log("updateAlpha-2")
+		}
 	});
 	setupText();
 	updateTT();
 }
-
+function updateAlpha(dalpha)
+{
+	sendMessage({ //updates universal alpha 
+		to:"background",
+		from: "content",
+		action: "updateAlpha",
+		dalpha: dalpha
+	})
+}
 function displayText()
 {
 	updateTT();

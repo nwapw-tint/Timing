@@ -1,7 +1,7 @@
 var sessions = [];
 var sessionRunning = false, onChromeSite = false;
-
 var currentSite = "";
+var alpha = 0.32;
 var timeout;
 var theme;
 // The hidden timer
@@ -45,7 +45,10 @@ function stopSession() {
 // Gets the tint
 function getTint() {
 	if (sessions.length > 0) {
-		return sessions[0].color;
+		carray = sessions[0].color.split(',');
+		finalColor= carray[0]+","+carray[1]+","+carray[2]+","+alpha+")";
+		console.log(finalColor);
+		return finalColor;
 	} else {
 		return CLEAR_COLOR;
 	}
@@ -129,6 +132,9 @@ chrome.extension.onConnect.addListener((port) => {
 				break;
 			case "updateTT":
 				updateTT();
+				break;
+			case "updateAlpha":
+				updateAlpha(msg.dalpha);
 				break;
 			case "error":
 				alert(msg.error);
@@ -375,7 +381,11 @@ chrome.tabs.onCreated.addListener((tab) => {
 	});
 })();
 
-
+function updateAlpha(dalpha)
+{
+alpha = alpha+ dalpha;
+setContentTint();
+}
 
 /*-------------------------ETA-------------------------*/
 
