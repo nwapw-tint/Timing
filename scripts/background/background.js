@@ -125,7 +125,10 @@ chrome.extension.onConnect.addListener((port) => {
 				}
 				break;
 			case "checkRunning":
-				syncTintStatus();
+				if (sessionRunning) {
+					console.log("checkRunning calls setContentTint")
+					setContentTint();
+				} else{clearContentTint()}
 				break;
 			case "updateTT":
 				updateTT();
@@ -312,23 +315,20 @@ function updatePopup() {
 var runningBeforeOnChromeSite = false;
 
 // Checks the current site to see if it has been filtered. If it hasn't been visited, add it to visited
-function updateTabInfo(url) {
+function updateTabInfo(url, tabId) {
 	currentSite = {
-		url: url
+		url: url,
+		tabId: tabId
 	};
-	if (currentSite.url.indexOf("chrome://") == 0) 
-	{
+	if (currentSite.url.indexOf("chrome://") == 0) {
 		onChromeSite = true;
 		updatePopupStartStopButton();
-		if (sessionRunning) 
-		{
+		if (sessionRunning) {
 			runningBeforeOnChromeSite = true;
 			sessionRunning = false;
 			updatePopupSessionRunning();
 		}
-	} 
-	else if (onChromeSite && currentSite.url.indexOf("chrome://") != 0) 
-	{
+	} else if (onChromeSite && currentSite.url.indexOf("chrome://") != 0) {
 		onChromeSite = false;
 		updatePopupStartStopButton();
 		if (sessions.length > 0 && runningBeforeOnChromeSite) {
@@ -337,32 +337,33 @@ function updateTabInfo(url) {
 			updatePopupSessionRunning();
 		}
 	}
-	syncTintStatus()
+	if(sessionRunning){
+	setContentTint();}
 }
 
 // Detects when the user changes tabs
 chrome.tabs.onActivated.addListener((activeInfo) => {
-	console.log("onActivated calls on ID" + activeInfo.tabId);
-	chrome.tabs.query({currentWindow: true, active: true}, (tabs) => {
+	chrome.tabs.query({
+		currentWindow: true,
+		active: true
+	}, (tabs) => {
 		try {
-			updateTabInfo(tabs[0].url);
-			}
-		 catch (error) {
-			console.log("no active tab");
+			updateTabInfo(tabs[0].url, activeInfo.tabId);
+		} catch (error) {
+			console.log("tabs are null");
 		}
 	});
 });
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 	console.log("onUpdated calls on " + tab.url);
-	updateTabInfo(tab.url);
+	updateTabInfo(tab.url, tabId);
 });
 
 chrome.tabs.onCreated.addListener((tab) => {
 	console.log("onCreated calls on " + tab.url);
-	updateTabInfo(tab.url);
-});
 
+});
 // Invoked immediately
 (() => {
 	chrome.tabs.getSelected(null, (tab) => {
@@ -384,18 +385,6 @@ function updateAlpha(dalpha)
 {
 alpha = alpha+ dalpha;
 setContentTint();
-}
-
-function syncTintStatus()
-{
-	if (sessionRunning) 
-	{
-		setContentTint();
-	} 
-	else
-	{
-		clearContentTint();
-	}
 }
 
 /*-------------------------ETA-------------------------*/

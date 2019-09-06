@@ -16,7 +16,6 @@ window.onload = () => {
 		if(event.keyCode == 32 && event.ctrlKey){
 			//if(overlaidRecently){return;}
 			//overlaidRecently = true;	
-			console.log("displaying text")
 			displayText();
 			//setTimeout(function(){overlaidRecently = false;},10);
 		}
@@ -50,14 +49,11 @@ function displayText()
 		document.addEventListener("keyup",event => {
 		if(event.keyCode == 32 || event.ctrlKey){hideText()}
 		});
-	console.time();
 	showText(text,time);
-	console.timeEnd();
 	}
 }
 //Sets the tint's color
 function setTint(color) {
-	console.log("setting tint color to "+color)
 	tintDiv = document.getElementById("tint");
 	if (!tintDiv) {
 		var tintDiv = document.createElement("tint");
@@ -92,7 +88,6 @@ function setupText() {
 //Disables the tint
 function clearTint() {
 	let tintDiv = document.getElementById("tint");
-	console.log("clearing tint")
 	if (tintDiv) {
 		tintDiv.style.backgroundColor = "rgba(0,0,0,0)";
 	} else {
@@ -138,7 +133,6 @@ port.onMessage.addListener((msg) => {
 					setTint(msg.color);
 					break;
 				case "clear":
-					console.log("clearmessage received");
 					clearTint();
 					break;
 			}
