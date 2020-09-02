@@ -1,12 +1,25 @@
 var sessions = [];
-var sessionRunning = false, onChromeSite = false;
-var currentSite = "";
+var isSessionRunning;
+
+chrome.storage.sync.set({sessionRunning: 0})
+
+chrome.storage.onChanged.addListener(function(changes, areaName){sessionRunning()});
+
+function sessionRunning()
+{
+	chrome.storage.sync.get('sessionRunning', function(result) {
+		isSessionRunning = result.sessionRunning;
+	  });
+}
+
+chrome.storage.sync.set({'currentSite':""});
+onChromeSite = false;
 var alpha = 0.32;
 var timeout;
 var theme;
 // The hidden timer
 function timeoutUpdate() {
-	if (sessionRunning) {
+	if (isSessionRunning) {
 		sessions[0].time = Math.max(sessions[0].time - 1, 0);
 		if (sessions[0].time == 0) {
 			sessions.shift();
@@ -25,9 +38,9 @@ function timeoutUpdate() {
 
 // Starts a session
 function startSession() {
-	if (!sessionRunning) {
+	if (!isSessionRunning) {
 		timeout = setInterval(timeoutUpdate, 1000);
-		sessionRunning = true;
+		chrome.storage.sync.set({'sessionRunning': 1});
 	}
 	console.log("enabling content tint");
 	setContentTint();
@@ -39,7 +52,7 @@ function startSession() {
 function stopSession() {
 	clearInterval(timeout);
 	clearContentTint();
-	sessionRunning = false;
+	chrome.storage.sync.set({'sessionRunning': 0});
 }
 
 // Gets the tint
@@ -70,6 +83,9 @@ chrome.extension.onConnect.addListener((port) => {
 			return;
 		}
 		switch (msg.action) {
+			case "setVars":
+				setVars();
+				break;
 			case "open":
 				console.log("The port \"" + port.name + "\" has been connected");
 				if (port.name == "popup") {
@@ -114,7 +130,7 @@ chrome.extension.onConnect.addListener((port) => {
 						sessions = msg.sessions;
 						if (sessions.length == 0) {
 							stopSession();
-						} else if (sessionRunning) {
+						} else if (isSessionRunning) {
 							setContentTint();
 						}
 						updatePopupETA();
@@ -124,14 +140,11 @@ chrome.extension.onConnect.addListener((port) => {
 						break;
 				}
 				break;
-			case "checkRunning":
-				if (sessionRunning) {
-					console.log("checkRunning calls setContentTint")
+			case "setInitStatus":
+				console.log("setting initial state")
+				if (isSessionRunning) {
 					setContentTint();
 				} else{clearContentTint()}
-				break;
-			case "updateTT":
-				updateTT();
 				break;
 			case "updateAlpha":
 				updateAlpha(msg.dalpha);
@@ -167,23 +180,13 @@ function sendMessage(msg) {
 
 /*-------------------------Update Content-------------------------*/
 
-function updateTT()
+function setVars()
 {
-	text = "foo";
-	time = "-1";
-	if(sessionRunning)
-	{	
-	text = sessions[0].name;
-	time = sessions[0].time;
-	}
-	sendMessage({
-		to: "content",
-		from: "background",
-		action: "updateTT",
-		text: text,
-		time: time,
-		isRunning: sessionRunning
-	});
+	if(sessions[0])
+	{
+	chrome.storage.sync.set({text: sessions[0].name});
+	chrome.storage.sync.set({time: sessions[0].time});
+	} else {console.log("no sessions found")}
 }
 
 //Updates the content tint to the specified color
@@ -270,7 +273,7 @@ function updatePopupSessionRunning() {
 		from: "background",
 		action: "update",
 		place: "sessionRunning",
-		sessionRunning: sessionRunning,
+		sessionRunning: isSessionRunning,
 		runningBeforeOnChromeSite: runningBeforeOnChromeSite
 	});
 }
@@ -288,7 +291,7 @@ function updatePopupTheme() {
 	}
 }
 
-// Updates the popup start stop button
+// Updates the popup start stop button with chrome status
 function updatePopupStartStopButton() {
 	sendMessage({
 		to: "popup",
@@ -323,9 +326,10 @@ function updateTabInfo(url, tabId) {
 	if (currentSite.url.indexOf("chrome://") == 0) {
 		onChromeSite = true;
 		updatePopupStartStopButton();
-		if (sessionRunning) {
+		if (isSessionRunning) {
 			runningBeforeOnChromeSite = true;
-			sessionRunning = false;
+			chrome.storage.sync.set({'sessionRunning': 0});
+
 			updatePopupSessionRunning();
 		}
 	} else if (onChromeSite && currentSite.url.indexOf("chrome://") != 0) {
@@ -333,11 +337,12 @@ function updateTabInfo(url, tabId) {
 		updatePopupStartStopButton();
 		if (sessions.length > 0 && runningBeforeOnChromeSite) {
 			runningBeforeOnChromeSite = false;
-			sessionRunning = true;
+			chrome.storage.sync.set({'sessionRunning': 1});
+			console.log("sessionRunning set to TRUE");
 			updatePopupSessionRunning();
 		}
 	}
-	if(sessionRunning){
+	if(isSessionRunning){
 	setContentTint();}
 }
 
@@ -364,6 +369,7 @@ chrome.tabs.onCreated.addListener((tab) => {
 	console.log("onCreated calls on " + tab.url);
 
 });
+
 // Invoked immediately
 (() => {
 	chrome.tabs.getSelected(null, (tab) => {
@@ -372,9 +378,9 @@ chrome.tabs.onCreated.addListener((tab) => {
 			tabId: tab.id
 		};
 		onChromeSite = true;
-		if (sessionRunning) {
+		if (isSessionRunning) {
 			runningBeforeOnChromeSite = true;
-			sessionRunning = false;
+			chrome.storage.sync.set({'sessionRunning': 0});
 			updatePopupSessionRunning();
 		}
 		updatePopupStartStopButton();

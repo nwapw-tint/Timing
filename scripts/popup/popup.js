@@ -1,13 +1,21 @@
 //Local copies
 var sessions = [];
-var sessionRunning = false;
-
+var isSessionRunning;
 var color = "rgba(0, 255, 0, " + 0.32 + ")";
 
 const maxTime = 1440;
 const maxLength = 110;
 
 var recentChangeInvolvingFade = false;
+
+chrome.storage.onChanged.addListener(function(changes, areaName){sessionRunning()});
+
+function sessionRunning()
+{
+	chrome.storage.sync.get('sessionRunning', function(result) {
+		isSessionRunning = result.sessionRunning;
+	  });
+}
 
 //Updates the session text only after the dom content loads
 function updateSessionText() {
@@ -52,7 +60,7 @@ function updateSessionText() {
 				recentChangeInvolvingFade = true;
 				sessions.splice(i, 1);
 				if (sessions.length == 0) {
-					sessionRunning = false;
+					chrome.storage.sync.set({sessionRunning: false});
 					document.getElementById('start_stop_text').innerHTML = "Start";
 				}
 				updateSessionText();
@@ -191,14 +199,13 @@ port.onMessage.addListener((msg) => {
 				case "sessions":
 					sessions = msg.sessions;
 					if (sessions.length == 0) {
-						sessionRunning = false;
+						chrome.storage.sync.set({sessionRunning: 0});
 						document.getElementById('start_stop_text').innerHTML = "Start";
 					}
 					updateSessionText();
 					break;
 				case "sessionRunning":
-					sessionRunning = msg.sessionRunning;
-					document.getElementById('start_stop_text').innerHTML = sessionRunning || (msg.runningBeforeOnChromeSite && sessions.length > 0) ? "Stop" : "Start";
+					document.getElementById('start_stop_text').innerHTML = isSessionRunning == 1 || (msg.runningBeforeOnChromeSite && sessions.length > 0) ? "Stop" : "Start";
 					break;
 				case "theme":
 					document.getElementById('css_file').href = msg.theme;
@@ -265,8 +272,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		clickedRecently = true;
 		if (sessions.length == 0) {
 			showError("No sessions!");
-		} else if (sessionRunning) {
-			sessionRunning = false;
+		} else if (isSessionRunning == 1) {
+			chrome.storage.sync.set({sessionRunning: 1});
 			console.log("stopping timer");
 			sendMessage({
 				to: "background",
@@ -277,7 +284,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			document.getElementById('start_stop_text').innerHTML = "Start";
 		} else {
 			console.log("starting timer");
-			sessionRunning = true;
+			chrome.storage.sync.set({sessionRunning: true});
 			sendMessage({
 				to: "background",
 				from: "popup",

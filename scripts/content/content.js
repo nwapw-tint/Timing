@@ -1,37 +1,41 @@
-text = "";
-time = 0;
-isRunning = false;
-window.onload = () => {
-	tintDiv = document.getElementById("tint");
-	if(!tintDiv){
-	setTint(CLEAR_COLOR);
-	}
+var isSessionRunning;
+function updateVars()
+{
 	sendMessage({
 		to: "background",
 		from: "content",
-		action: "checkRunning"
+		action: "setVars"
 	});
-	//overlaidRecently = false;
+}
+chrome.storage.onChanged.addListener(function(changes, areaName){sessionRunning()});
+function sessionRunning()
+{
+	chrome.storage.sync.get('sessionRunning', function(result) {
+		isSessionRunning = result.sessionRunning;
+	  });
+}
+
+window.onload = () => {
+	sendMessage({
+		to: "background",
+		from: "content",
+		action: "setInitStatus"
+	});
 	document.addEventListener("keydown",event => {
 		if(event.keyCode == 32 && event.ctrlKey){
-			//if(overlaidRecently){return;}
-			//overlaidRecently = true;	
 			displayText();
-			//setTimeout(function(){overlaidRecently = false;},10);
 		}
 		if(event.keyCode == 38 && event.ctrlKey)
 		{
 			updateAlpha(0.035);
-			console.log("updateAlpha+2")
 		}
 		if(event.keyCode == 40 && event.ctrlKey)
 		{
 			updateAlpha(-0.035);
-			console.log("updateAlpha-2")
 		}
 	});
 	setupText();
-	updateTT();
+	updateVars();
 }
 function updateAlpha(dalpha)
 {
@@ -44,9 +48,10 @@ function updateAlpha(dalpha)
 }
 function displayText()
 {
-	updateTT();
-	if(isRunning){
-		document.addEventListener("keyup",event => {
+	updateVars();
+	if(isSessionRunning == 1){
+		document.addEventListener("keyup",event => 
+		{
 		if(event.keyCode == 32 || event.ctrlKey){hideText()}
 		});
 	showText(text,time);
@@ -90,8 +95,6 @@ function clearTint() {
 	let tintDiv = document.getElementById("tint");
 	if (tintDiv) {
 		tintDiv.style.backgroundColor = "rgba(0,0,0,0)";
-	} else {
-		alert("no tint to clear");
 	}
 }
 
@@ -112,15 +115,6 @@ sendMessage({
 	from: "content",
 	action: "open"
 });
-
-function updateTT()
-{
-	sendMessage({
-		to:"background",
-		from: "content",
-		action: "updateTT"
-	})
-}
 //Creates the capability to receive messages from the background script
 port.onMessage.addListener((msg) => {
 	if (msg.to != "content") {
@@ -137,11 +131,6 @@ port.onMessage.addListener((msg) => {
 					break;
 			}
 			break;
-		case "updateTT":
-			text = msg.text;
-			time = msg.time;
-			isRunning = msg.isRunning;
-			break;
 	}
 });
 
@@ -155,7 +144,6 @@ function sendMessage(msg) {
 function showText(text,time) {
 	//console.log("showing text");
 	textDiv.style.color = "rgba(70, 70, 70, 0)"
-	updateTT();
 	textDiv = document.getElementById("textDiv")
 	if(!textDiv){console.log("no textDiv found"); return;}	
 	else{textDiv.innerHTML = text +" "+timeToDigital(time);}
